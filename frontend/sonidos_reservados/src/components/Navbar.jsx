@@ -94,7 +94,7 @@ const NavContainer = styled.nav`
         position: absolute;
         margin-left: auto;
         margint-right: auto;
-        top: 30%;
+        top: 120%;
         left: 0;
         right: 0;
         text-align: center;
@@ -113,19 +113,18 @@ const BgDiv = styled.div`
     position: absolute;
     background-color: #DCDCDC;
     opacity: 0.9;
-    top: -700px;
     left: -2000px;
     width: 100%;
     height: 100%;
-    z-index: -1;
+    z-index: -10;
     transition: all .6s ease;
     &.active{
-        border-radius: 0 0 80% 0;
-        top: 0;
+        border-radius: 0 0 40% 0;
+        top: 13vh;
         left: 0;
         width: 100%;
-        height: 80%;
-        z-index: -3;    
+        height: 250%;
+        z-index: -10;    
     }
 
 `
