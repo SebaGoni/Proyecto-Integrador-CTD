@@ -107,7 +107,7 @@ const NavContainer = styled.nav`
 const BgDiv = styled.div`
     position: absolute;
     background-color: #DCDCDC;
-    opacity: 0.5;
+    opacity: 0.9;
     top: -700px;
     left: -2000px;
     width: 100%;
