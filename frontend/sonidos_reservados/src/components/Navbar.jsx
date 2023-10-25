@@ -36,15 +36,20 @@ const Navbar = () => {
 export default Navbar
     
 const NavContainer = styled.nav`
-    .logo{
-        margin-left: 1rem;
-        cursor: pointer;
-    }
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
     padding: 1rem;
     background-color: black;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    
+    .logo{
+        margin-left: 1rem;
+        cursor: pointer;
+    }
     a{
         font-family: 'Concert One', sans-serif;
         order-left: .1px solid #2F4F4F;

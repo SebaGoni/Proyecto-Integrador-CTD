@@ -25,7 +25,9 @@ function Form() {
 export default Form
 
 const DivBusqueda = styled.div`
-    margin: 2rem;
+    margin-top: 20vh;
+    margin-left: 2rem;
+    margin-right: 2rem;
     background-color: #D9D9D9;
     border-radius: 60px;
     display: flex;
