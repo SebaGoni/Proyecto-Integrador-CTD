@@ -1,36 +1,47 @@
-import React from 'react';
-import styled from "styled-components";
+import React, { useEffect, useState } from 'react';
+import styled from 'styled-components';
 import { data } from '../data';
 
+const shuffleArray = (array) => {
+  const shuffledArray = [...array];
+  for (let i = shuffledArray.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
+  }
+  return shuffledArray;
+};
+
 const Cards = () => {
+  const [shuffledData, setShuffledData] = useState([]);
+
+  useEffect(() => {
+    const shuffled = shuffleArray(data);
+    const firstTenRandom = shuffled.slice(0, 10);
+    setShuffledData(firstTenRandom);
+  }, []);
+
   return (
     <Recomendaciones>
-        <div className='Productos'>
-            <h2>RECOMENDACIONES</h2>
-            <div>
-                <div className='container-items'>
-                    {data.map(product =>
-                        <div className='item' key={product.id}>
-                            <figure>
-                                <img src={product.image} alt={product.title} height="400px"/>
-                            </figure>
-                            <div className='info-product'>
-                                <h3>{product.title}</h3>
-                            </div>
-                        </div>
-                    )
-                    }                   
-
+      <div className='Productos'>
+        <h2>RECOMENDACIONES</h2>
+            <div className='container-items'>
+                {shuffledData.map(product => (
+                <div className='item' key={product.id}>
+                    <figure>
+                        <img src={product.image} alt={product.title} height="400px"/>
+                    </figure>
+                    <div className='info-product'>
+                        <h3>{product.title}</h3>
+                    </div>
                 </div>
-
+                ))}
             </div>
-
         </div>
     </Recomendaciones>
-  )
-}
+  );
+};
 
-export default Cards
+export default Cards;
 
 const Recomendaciones = styled.div`
     margin: 2rem;

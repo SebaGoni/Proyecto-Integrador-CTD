@@ -3,6 +3,7 @@ import Form from './components/Form';
 import Navbar from './components/Navbar';
 import Cards from './components/Cards';
 import Categorias from './components/Categorias';
+import Footer from './components/Footer';
 
 
 function App() {
@@ -12,6 +13,7 @@ function App() {
       <Form/>
       <Categorias/>
       <Cards/>
+      <Footer/>
     </>
   )
 }
