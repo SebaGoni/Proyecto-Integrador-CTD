@@ -10,7 +10,9 @@ import com.sonidos_reservados.sonidos_reservados.exceptions.ResourceNotFoundExce
 import com.sonidos_reservados.sonidos_reservados.repository.ProductoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -44,6 +46,30 @@ public class ProductoService {
         }
     }
 
+    public List<ProductoDto> obtenerPorNombre(String nombre) throws ResourceNotFoundException {
+        List<Producto> productos = productoRepository.findAllByNombre(nombre);
+
+        if (productos.isEmpty()) {
+            throw new ResourceNotFoundException("1011", "No se encontraron productos con el nombre: " + nombre);
+        }
+
+        // Mapear los productos encontrados a DTOs
+        return productos.stream()
+                .map(producto -> mapper.convertValue(producto, ProductoDto.class))
+                .collect(Collectors.toList());
+    }
+
+
+    public List<ProductoDto> buscarProductosPorCategoria(String categoria) {
+
+        List<Producto> listaProductos = productoRepository.findByCategoriaNombre(categoria);
+        return listaProductos
+                .stream()
+                .map(producto -> mapper.convertValue(producto, ProductoDto.class))
+                .collect(Collectors.toList());
+    }
+
+
     public ProductoDto agregar(ProductoRequest productoRequest) throws BadRequestException, ResourceNotFoundException {
         Long categoriaId = productoRequest.getCategoriaId();
         Categoria categoria = categoriaService.obtenerPorId(categoriaId);
@@ -52,6 +78,12 @@ public class ProductoService {
             throw new BadRequestException("1010", "No existe la categoria");
         }
 
+        String nombreProducto = productoRequest.getTitle();
+        Producto productoExistente = productoRepository.obtenerPorNombre(nombreProducto);
+
+        if (productoExistente != null) {
+            throw new BadRequestException("1011", "Ya existe un producto con el mismo nombre");
+        }
         // Crear un producto y establecer sus propiedades
         Producto producto = new Producto();
         producto.setTitle(productoRequest.getTitle());
@@ -62,12 +94,25 @@ public class ProductoService {
         // Obtener el nombre de la categoría
         String categoriaNombre = producto.getCategoria().getNombre();
 
-        // Subir la imagen a Amazon S3 y obtener la URL
-        String imageUrl = amazonS3Service.subirImagen(productoRequest.getImagen(), categoriaNombre);
+        // Crear una lista para almacenar las URLs de las imágenes
+        List<String> imageUrls = new ArrayList<>();
 
-        // Establecer la URL de la imagen en el producto
-        producto.setImage(imageUrl);
+        // Procesar y guardar las imágenes en la lista
+        if (productoRequest.getImagenes() != null) {
+            for (MultipartFile imagen : productoRequest.getImagenes()) {
+                String imageUrl = amazonS3Service.subirImagen(imagen, categoriaNombre);
+                imageUrls.add(imageUrl);
+            }
+        }
+        // Establecer la lista de URLs de imágenes en el producto
+        producto.setImagenes(imageUrls);
 
+        if (productoRequest.getImage() != null) {
+            String imagenPortadaUrl = amazonS3Service.subirImagen(productoRequest.getImage(), categoriaNombre);
+
+            // Establecer la URL de la imagen de portada del producto
+            producto.setImage(imagenPortadaUrl);
+        }
         // Guardar el producto en la base de datos
         productoRepository.save(producto);
 
@@ -75,12 +120,13 @@ public class ProductoService {
         return mapper.convertValue(producto, ProductoDto.class);
     }
 
-    public List<ProductoDto> buscarProductosPorCategoria(String categoria) {
 
-        List<Producto> listaProductos = productoRepository.findByCategoriaNombre(categoria);
-        return listaProductos
-                .stream()
-                .map(producto -> mapper.convertValue(producto, ProductoDto.class))
-                .collect(Collectors.toList());
+    public void eliminar(Integer id) throws ResourceNotFoundException, BadRequestException {
+        Optional<Producto> producto = productoRepository.findById(id);
+        if (producto.isPresent()) {
+            productoRepository.deleteById(id);
+        } else {
+            throw new ResourceNotFoundException("1011", "Producto no encontrado");
+        }
     }
 }

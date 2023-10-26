@@ -7,6 +7,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -16,5 +18,6 @@ public class ProductoRequest {
     private double price;
     private Long categoriaId;
     private String description;
-    private MultipartFile imagen;
+    private MultipartFile image;
+    private List<MultipartFile> imagenes;
 }
