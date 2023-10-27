@@ -9,7 +9,9 @@ function Form() {
     return (
         <DivBusqueda>
             <div className='containerInput'>
-                <input
+                <input 
+                type="text" 
+                id=""
                 className="form-control inputBuscar"
                 value={busqueda}
                 placeholder='Busca aqui'
