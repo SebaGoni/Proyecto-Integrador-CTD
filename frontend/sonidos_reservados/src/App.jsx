@@ -1,20 +1,17 @@
-import './App.css';
-import Form from './components/Form';
-import Navbar from './components/Navbar';
-import Cards from './components/Cards';
-import Categorias from './components/Categorias';
-import Footer from './components/Footer';
-
+import { BrowserRouter as Router, Route, Routes, BrowserRouter } from 'react-router-dom';
+import Home from '/src/routes/Home';
+import Details from '/src/routes/Details';
+import Admin from '/src/routes/Admin';
 
 function App() {
   return (
-    <>
-      <Navbar/>
-      <Form/>
-      <Categorias/>
-      <Cards/>
-      <Footer/>
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home/>}></Route>
+        <Route path="/details/:id" element={<Details/>}></Route>
+        <Route path="/Admin" element={<Admin/>}></Route>
+      </Routes>
+    </BrowserRouter>
   )
 }
 
