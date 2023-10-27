@@ -8,11 +8,9 @@ import Footer from '../components/Footer'
 const Home = () => {
   return (
     <main>
-      <Navbar/>
       <Form/>
       <Categorias/>
-      <Cards/>
-      <Footer/>      
+      <Cards/>    
     </main>
   )
 }
