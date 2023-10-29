@@ -1,10 +1,16 @@
 import React from 'react'
+import Navbar from '../components/Navbar'
+import Footer from '../components/Footer'
+import Products from '../components/Products'
+
 
 const Admin = () => {
   return (
-    <div>
-        <h2>En construccion</h2>
-    </div>
+    <main>
+      <Navbar/>
+      <Products/>
+      <Footer/>      
+    </main>
   )
 }
 
