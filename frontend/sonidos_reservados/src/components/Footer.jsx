@@ -21,6 +21,7 @@ const BlackFooter= styled.div`
     height: 350px;
     margin-left: -10px;
     margin-right: -10px;
+    bottom: 1px;
     .LogoFooter{
         margin-top: 1rem;
         padding: 1rem;
