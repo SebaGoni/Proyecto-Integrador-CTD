@@ -32,14 +32,14 @@ export const GlobalProvider = ({ children }) => {
 
   const getProductos = async () => {
     const productosData = await fetchData(
-      "http://ec2-3-81-113-87.compute-1.amazonaws.com:8080/productos"
+      "http://ec2-54-198-119-206.compute-1.amazonaws.com:8080/productos"
     );
     dispatch({ type: "setProductos", payload: productosData });
   };
 
   const getProductosById = async (id) => {
     const productoData = await fetchData(
-      `http://ec2-3-81-113-87.compute-1.amazonaws.com:8080/productos/${id}`
+      `http://ec2-54-198-119-206.compute-1.amazonaws.com:8080/productos/${id}`
     );
     return productoData;
   };
