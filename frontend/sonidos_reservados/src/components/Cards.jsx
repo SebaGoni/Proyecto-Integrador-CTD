@@ -1,52 +1,46 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { GlobalContext } from '../components/utils/global_context';
 
-const shuffleArray = (array) => {
-  const shuffledArray = [...array];
-  for (let i = shuffledArray.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
-  }
-  return shuffledArray;
-};
-
 const Cards = () => {
-
-  const { productos } = useContext(GlobalContext);
-  const [shuffledData, setShuffledData] = useState([]);
+  const { getProductosAleatorios, productosAleatorios } = useContext(GlobalContext);
+  const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
-    const shuffled = shuffleArray(productos);
-    const firstTenRandom = shuffled.slice(0, 10);
-    setShuffledData(firstTenRandom);
-  }, [productos]);
+    if (!loaded) {
+      // Llama a la función getProductosAleatorios solo una vez al cargar el componente
+      getProductosAleatorios();
+      setLoaded(true);
+    }
+  }, [getProductosAleatorios, loaded]);
 
   return (
     <Recomendaciones>
       <div className='Productos'>
         <h2>RECOMENDACIONES</h2>
-            <div className='container-items'>
-                {shuffledData.map(product => (
-                <Link className='link' to={`/details/${product.id}`}>
-                  <div className='item' key={product.id}>
-                      <figure>
-                          <img src={product.image} alt={product.title} className='cardImage'/>
-                      </figure>
-                      <div className='info-product'>
-                          <h3>{product.title}</h3>
-                      </div>
-                  </div>
-                </Link>
-                ))}
-            </div>
+        <div className='container-items'>
+          {productosAleatorios.map(product => (
+            <Link className='link' to={`/details/${product.id}`} key={product.id}>
+              <div className='item'>
+                <figure>
+                  <img src={product.image} alt={product.title} className='cardImage'/>
+                </figure>
+                <div className='info-product'>
+                  <h3>{product.title}</h3>
+                </div>
+              </div>
+            </Link>
+          ))}
         </div>
+      </div>
     </Recomendaciones>
   );
 };
 
 export default Cards;
+
+
 
 const Recomendaciones = styled.div`
     margin: 2rem;

@@ -90,6 +90,9 @@ const DetailContainer = styled.div`
     .title{
       margin-left: 2rem;
       color: black;
+      @media(max-width: 500px){
+            font-size: 20px;
+        }
     }
 
     .iconArrow{
@@ -114,12 +117,23 @@ const DetailContainer = styled.div`
       padding: 2rem 0 2rem 0;
       height: 100%;
       width: 100%;
+      @media(max-width: 1100px){
+            flex-direction: column;
+        }
     }
 
     .img1{
       width: 500px;
       height: 500px;
       object-fit: cover;
+      @media(max-width: 600px){
+        width: 300px;
+        height: 300px;
+        }
+      @media(max-width: 480px){
+        width: 250px;
+        height: 250px;
+        }
     }
 
     .divImages{
@@ -134,6 +148,14 @@ const DetailContainer = styled.div`
       height: 245px;
       margin-right: 5px;
       margin-left: 5px;
+      @media(max-width: 600px){
+        width: 200px;
+        height: 200px;
+        }
+      @media(max-width: 480px){
+        width: 150px;
+        height: 150px;
+        }
     }
 
     .divBodyText{
@@ -150,4 +172,4 @@ const DetailContainer = styled.div`
     .price{
       color: #ffffff;
     }
-`
+`;

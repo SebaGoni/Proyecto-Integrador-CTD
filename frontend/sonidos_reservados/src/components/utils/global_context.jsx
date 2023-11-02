@@ -3,6 +3,7 @@ import axios from "axios";
 
 const initialState = {
   productos: [],
+  productosAleatorios: [],
   getProductosById: () => {},
 };
 
@@ -12,6 +13,8 @@ const reducer = (state, action) => {
   switch (action.type) {
     case "setProductos":
       return { ...state, productos: action.payload };
+    case "setProductosAleatorios":
+      return { ...state, productosAleatorios: action.payload };  
     default:
       throw new Error(`Acción no reconocida: ${action.type}`);
   }
@@ -37,6 +40,13 @@ export const GlobalProvider = ({ children }) => {
     dispatch({ type: "setProductos", payload: productosData });
   };
 
+  const getProductosAleatorios = async () => {
+    const productosData = await fetchData(
+      "http://ec2-54-198-119-206.compute-1.amazonaws.com:8080/productos/aleatorios?cantidad=10"
+    );
+    dispatch({ type: "setProductosAleatorios", payload: productosData });
+  };
+
   const getProductosById = async (id) => {
     const productoData = await fetchData(
       `http://ec2-54-198-119-206.compute-1.amazonaws.com:8080/productos/${id}`
@@ -49,7 +59,7 @@ export const GlobalProvider = ({ children }) => {
   }, []);
 
   return (
-    <GlobalContext.Provider value={{ ...state, getProductosById }}>
+    <GlobalContext.Provider value={{ ...state, getProductosById, getProductosAleatorios }}>
       {children}
     </GlobalContext.Provider>
   );
