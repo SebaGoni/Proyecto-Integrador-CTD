@@ -1,29 +1,73 @@
 import React from 'react'
 import { useState } from 'react';
 import styled from 'styled-components'
+import { useNavigate } from 'react-router-dom'
 
 
 const InicioSesion = () => {
 
-    const [Name, setName] = useState("");
-    const [Password, setPassword] = useState("");
+    const navigate = useNavigate()
+
+    const [formData, setFormData] = useState({
+        username: '',
+        password: '',
+      });
+      const [errorMessage, setErrorMessage] = useState('');
+    
+      const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setFormData({ ...formData, [name]: value });
+      };
+    
+      const submitForm = async (e) => {
+        e.preventDefault();
+
+    try {
+      const response = await fetch('http://ec2-54-198-119-206.compute-1.amazonaws.com:8080/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        // Inicio de sesión exitoso, obtén el token de la respuesta.
+        const data = await response.json();
+        const token = data.token;
+
+        // Guarda el token en el localStorage.
+        localStorage.setItem('token', token);
+
+        // Redirecciona o muestra un mensaje de éxito.
+        alert('Inicio de sesión exitoso');
+      } else {
+        // Error en las credenciales, muestra un mensaje de error.
+        alert('Credenciales incorrectas. Por favor, inténtalo de nuevo.');
+      }
+    } catch (error) {
+      // Error al realizar la solicitud, muestra un mensaje de error.
+      alert('Error al iniciar sesión: ' + error.message);
+    }
+      };    
 
     return (
         <FormContainer>
-            <div className='login-container'>
-                <h2>Inicia Sesion</h2>
+            <form className='login-container'>
+                <h2>Inicia Sesión</h2>
                 <div className='input-container'>
                     <div className='input-row'>
-                    <label htmlFor="nombre">Ingresa tu usuario</label>
+                        <label htmlFor="username">Nombre de usuario:</label>
+                        <input type="text" id="username" name="username" value={formData.username} onChange={handleInputChange} required />
                     </div>
-                    <input type="text" id="nombre" placeholder="Usuario" />
                     <div className='input-row'>
-                    <label htmlFor="contrasena">Ingresa tu Contraseña</label>
+                        <label htmlFor="password">Contraseña:</label>
+                        <input type="password" id="password" name="password" value={formData.password} onChange={handleInputChange} required />
                     </div>
-                    <input type="password" id="contrasena" placeholder="Contraseña" />
                 </div>
-                <button className="BotonDeIngreso">Ingresar</button>
-            </div>
+                <button onClick={submitForm} className="BotonDeIngreso">Ingresar</button>
+            </form>
+                <p id="errorMessage" style={{ display: errorMessage ? 'block' : 'none', color: 'red' }}>{errorMessage}</p>
             </FormContainer>
     )
     }
@@ -45,7 +89,7 @@ const FormContainer = styled.div`
     padding: 2rem;
     font-family: 'Poppins', sans-serif;
     text-align: center; 
-    }
+    
     h2{ 
         border-bottom: solid #E7E7E7;
     }
@@ -70,6 +114,6 @@ const FormContainer = styled.div`
         font-size: 1rem;
         font-weight: 600;
         padding: 5px 30px;
-        
+        cursor: pointer;
     }
     `

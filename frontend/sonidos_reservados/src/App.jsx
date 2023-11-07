@@ -7,6 +7,8 @@ import Footer from './components/Footer';
 import Ingreso from './routes/Ingreso';
 import Nosotros from './routes/Nosotros';
 import ListaDeProductos from './routes/ListaDeProductos';
+import Registro from './components/Registro';
+import InicioSesion from './components/InicioSesion';
 
 function App() {
   return (
@@ -14,6 +16,8 @@ function App() {
       <Navbar/>
         <Routes>
           <Route path="/" element={<Home/>}></Route>
+          <Route path='/register' element={<Registro />} />
+				  <Route path='/login' element={<InicioSesion />} />
           <Route path="/details/:id" element={<Details/>}></Route>
           <Route path="/Admin" element={<Admin/>}></Route>
           <Route path="/Admin/ListaDeProductos" element={<ListaDeProductos/>}></Route>

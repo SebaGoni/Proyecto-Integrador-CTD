@@ -21,8 +21,8 @@ const Navbar = () => {
                 </a>
             </div>
             <div className= {`links ${clicked ? "active": "" }`}>
-                <a onClick={handleClick} href='/Ingreso'>CREAR CUENTA</a>
-                <a onClick={handleClick} href='/Ingreso'>INICIAR SESION</a>
+                <a onClick={handleClick} href='/register'>CREAR CUENTA</a>
+                <a onClick={handleClick} href='/login'>INICIAR SESION</a>
             </div>
             <div className='burger'>
                 <BurgerButton clicked={clicked} handleClick={handleClick}/>
