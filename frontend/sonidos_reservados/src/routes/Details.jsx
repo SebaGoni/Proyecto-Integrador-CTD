@@ -58,6 +58,8 @@ const Details = () => {
           </div>
         </div>
         <div className='divBodyText'>
+          <h2>{product.caracteristicas[0].nombre}</h2>
+          <img className='img2' src={product.caracteristicas[0].image} alt="" />
           <h2>Conoce un poco de este instrumento de <span>{product.categoria.nombre}</span></h2>
           <p className='description'>{product.description}</p>
           <h2 className='price'>${product.price}.00</h2>
