@@ -9,7 +9,7 @@ const Admin = () => {
       <h2> Bienvenido Admin</h2>
       <p>Escoge una opcion</p>
     <div className='MenuDeAdmin'>
-      <Link to='/Admin/nuevoProducto'
+      <Link to='/Admin/Nuevo'
               className='BotonAdmin'
               role="button"> Nuevo Producto
       </Link>
@@ -48,5 +48,10 @@ const MenuAdmin = styled.div`
     padding: 1rem;
     background-color: black;
     color: white;
+  }
+  @media (max-width: 768px) {
+    .MenuAdmin {
+      display: none;
+    }
   }
 `

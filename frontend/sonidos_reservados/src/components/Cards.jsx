@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { data } from '../data';
+import { Link } from 'react-router-dom';
 
 const shuffleArray = (array) => {
   const shuffledArray = [...array];
@@ -26,14 +27,14 @@ const Cards = () => {
         <h2>RECOMENDACIONES</h2>
             <div className='container-items'>
                 {shuffledData.map(product => (
-                <div className='item' key={product.id}>
-                    <figure>
-                        <img src={product.image} alt={product.title} height="400px"/>
-                    </figure>
-                    <div className='info-product'>
-                        <h3>{product.title}</h3>
-                    </div>
-                </div>
+                <Link to={`/details/:${product.id}`} className='item' key={product.id}>
+                  <figure>
+                    <img src={product.image} alt={product.title} height="400px" />
+                  </figure>
+                  <div className='info-product'>
+                    <h3>{product.title}</h3>
+                  </div>
+                </Link>
                 ))}
             </div>
         </div>
