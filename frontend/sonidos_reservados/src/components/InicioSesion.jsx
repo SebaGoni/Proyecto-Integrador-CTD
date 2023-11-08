@@ -1,55 +1,25 @@
 import React from 'react'
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import styled from 'styled-components'
 import { useNavigate } from 'react-router-dom'
-
+import { GlobalContext } from './utils/global_context';
 
 const InicioSesion = () => {
 
-    const navigate = useNavigate()
+    const { login } = useContext(GlobalContext);
 
-    const [formData, setFormData] = useState({
-        username: '',
-        password: '',
-      });
-      const [errorMessage, setErrorMessage] = useState('');
-    
-      const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        setFormData({ ...formData, [name]: value });
-      };
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+    const [errorMessage, setErrorMessage] = useState('');
     
       const submitForm = async (e) => {
         e.preventDefault();
-
-    try {
-      const response = await fetch('http://ec2-54-198-119-206.compute-1.amazonaws.com:8080/auth/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
-
-      if (response.ok) {
-        // Inicio de sesión exitoso, obtén el token de la respuesta.
-        const data = await response.json();
-        const token = data.token;
-
-        // Guarda el token en el localStorage.
-        localStorage.setItem('token', token);
-
-        // Redirecciona o muestra un mensaje de éxito.
-        alert('Inicio de sesión exitoso');
-      } else {
-        // Error en las credenciales, muestra un mensaje de error.
-        alert('Credenciales incorrectas. Por favor, inténtalo de nuevo.');
-      }
-    } catch (error) {
-      // Error al realizar la solicitud, muestra un mensaje de error.
-      alert('Error al iniciar sesión: ' + error.message);
-    }
-      };    
+        try {
+          login({ username, password });
+        } catch (error) {
+          alert(error.response.data.message);
+        }
+      };  
 
     return (
         <FormContainer>
@@ -57,12 +27,12 @@ const InicioSesion = () => {
                 <h2>Inicia Sesión</h2>
                 <div className='input-container'>
                     <div className='input-row'>
-                        <label htmlFor="username">Nombre de usuario:</label>
-                        <input type="text" id="username" name="username" value={formData.username} onChange={handleInputChange} required />
+                        <label htmlFor="username">Correo electrónico:</label>
+                        <input type="text" id="username" name="username" value={username} onChange={(e) => setUsername(e.target.value)} required />
                     </div>
                     <div className='input-row'>
                         <label htmlFor="password">Contraseña:</label>
-                        <input type="password" id="password" name="password" value={formData.password} onChange={handleInputChange} required />
+                        <input type="password" id="password" name="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
                     </div>
                 </div>
                 <button onClick={submitForm} className="BotonDeIngreso">Ingresar</button>

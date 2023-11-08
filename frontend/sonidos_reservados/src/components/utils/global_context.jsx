@@ -1,28 +1,49 @@
 import React, { createContext, useReducer, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
+
 
 const initialState = {
   productos: [],
   productosAleatorios: [],
+  userRol: localStorage.getItem("role") || null, // rol del usuario
+  token: localStorage.getItem("token") || null, // Token de autenticación
   getProductosById: () => {},
 };
 
 export const GlobalContext = createContext(initialState);
 
+
 const reducer = (state, action) => {
   switch (action.type) {
     case "setProductos":
       return { ...state, productos: action.payload };
-    case "setProductosAleatorios":
-      return { ...state, productosAleatorios: action.payload };  
-    default:
-      throw new Error(`Acción no reconocida: ${action.type}`);
-  }
-};
-
+      case "setProductosAleatorios":
+        return { ...state, productosAleatorios: action.payload };  
+        case "login":
+          localStorage.setItem("role", action.payload.role);
+          localStorage.setItem("token", action.payload.token);
+          return {
+            ...state,
+            userRol: action.payload.role,
+            token: action.payload.token,
+          };
+          case "logout":
+            localStorage.removeItem("token");
+            return {
+              ...state,
+              userRol: null,
+              token: null,
+            };
+            default:
+              throw new Error(`Acción no reconocida: ${action.type}`);
+            }
+          };
+          
+         
 export const GlobalProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
-
+  
   const fetchData = async (url) => {
     try {
       const response = await axios.get(url);
@@ -30,6 +51,19 @@ export const GlobalProvider = ({ children }) => {
     } catch (error) {
       console.error("Error al obtener los datos", error);
       return [];
+    }
+  };
+  
+  const login = async (userData) => {
+    try {
+      const response = await axios.post(
+        "http://ec2-54-198-119-206.compute-1.amazonaws.com:8080/auth/login",
+        userData
+        );
+      dispatch({ type: "login", payload: response.data });
+      alert('Inicio de sesión exitoso')
+    } catch (error) {
+      alert(error.response.data.message);
     }
   };
 
@@ -59,7 +93,7 @@ export const GlobalProvider = ({ children }) => {
   }, []);
 
   return (
-    <GlobalContext.Provider value={{ ...state, getProductosById, getProductosAleatorios }}>
+    <GlobalContext.Provider value={{ ...state, getProductosById, getProductosAleatorios, login }}>
       {children}
     </GlobalContext.Provider>
   );
