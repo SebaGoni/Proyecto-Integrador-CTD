@@ -7,7 +7,6 @@ const Registro = () => {
     const navigate = useNavigate()
 
     const [formData, setFormData] = useState({
-        username: '',
         password: '',
         firstname: '',
         lastname: '',
@@ -49,15 +48,7 @@ const Registro = () => {
       <form>
       <h2>Registro de Usuario</h2>
         <div className='input-container'>
-            <div className='input-row'>
-                <label htmlFor="username">Nombre de usuario:</label>
-                <input type="text" id="username" name="username" value={formData.username} onChange={handleInputChange} required />
-            </div>
 
-            <div className='input-row'>
-                <label htmlFor="password">Contraseña:</label>
-                <input type="password" id="password" name="password" value={formData.password} onChange={handleInputChange} required />
-            </div>
 
             <div className='input-row'>
                 <label htmlFor="firstname">Nombre:</label>
@@ -72,6 +63,11 @@ const Registro = () => {
             <div className='input-row'>
                 <label htmlFor="email">Correo Electrónico:</label>
                 <input type="email" id="email" name="email" value={formData.email} onChange={handleInputChange} required />
+            </div>
+            
+            <div className='input-row'>
+                <label htmlFor="password">Contraseña:</label>
+                <input type="password" id="password" name="password" value={formData.password} onChange={handleInputChange} required />
             </div>
         </div>
         <button className="BotonDeIngreso" type="button" onClick={submitForm}>Registrar</button>

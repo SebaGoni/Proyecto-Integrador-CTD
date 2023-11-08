@@ -47,4 +47,5 @@ const DivCategorias = styled.div`
         font-size: 2rem;
         font-family: 'Concert One', sans-serif;
         cursor: pointer;
+    }
     `

@@ -1,11 +1,12 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import styled from "styled-components";
 import BurgerButton from './BurgerButton';
-
+import { GlobalContext } from './utils/global_context';
 
 const Navbar = () => {
+
+    const { userRol } = useContext(GlobalContext);
     const [clicked, setClicked] = useState(false);
-    console.log(clicked);
     const handleClick = () => {
         setClicked(!clicked)
     }
@@ -31,6 +32,9 @@ const Navbar = () => {
                 <ul>
                     <li><a onClick={handleClick} href='/'>RESERVA AHORA</a></li>
                     <li><a onClick={handleClick} href='/Nosotros'>SOBRE NOSOTROS</a></li>
+                    {userRol === 'ADMIN' &&(
+                        <li><a onClick={handleClick} href='/admin'>PANEL DE ADMINISTRACIÓN</a></li>
+                    )}
                 </ul>
             </BgDiv>
         </NavContainer>

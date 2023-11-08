@@ -58,8 +58,15 @@ const Details = () => {
           </div>
         </div>
         <div className='divBodyText'>
-          <h2>{product.caracteristicas[0].nombre}</h2>
-          <img className='img2' src={product.caracteristicas[0].image} alt="" />
+          <h2>Características del producto</h2>
+          <div className='divCaract'>
+            {product?.caracteristicas.map(producto =>(
+              <div className='articleCaract' key={producto.id}>
+                <h3 className='nameCaract'>{producto.nombre}</h3>
+                <img className='imgCaract' src={producto.image} alt="" />
+              </div>
+            ))}
+          </div>
           <h2>Conoce un poco de este instrumento de <span>{product.categoria.nombre}</span></h2>
           <p className='description'>{product.description}</p>
           <h2 className='price'>${product.price}.00</h2>
@@ -75,7 +82,7 @@ const DetailContainer = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-top: 20vh;
+    margin-top: 23vh;
     margin-left: 2rem;
     margin-right: 2rem;
     gap: 2rem;
@@ -158,6 +165,31 @@ const DetailContainer = styled.div`
         width: 150px;
         height: 150px;
         }
+    }
+
+    .divCaract{
+      background-color: #D9D9D9;
+      border-radius: 60px;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .articleCaract{
+      margin: 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .imgCaract{
+      width: 80px;
+    }
+
+    .nameCaract{
+      color: black;
     }
 
     .divBodyText{

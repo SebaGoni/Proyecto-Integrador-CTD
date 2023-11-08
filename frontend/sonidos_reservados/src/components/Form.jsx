@@ -1,27 +1,32 @@
 import React from 'react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import styled from "styled-components";
 
 function Form() {
     const [busqueda, setBusqueda] = useState("");
     const icono = '/src/assets/searchSymbol.png';
 
+    const handleInputChange = (event) => {
+        setBusqueda(event.target.value);
+    };
+
     return (
         <DivBusqueda>
             <div className='containerInput'>
                 <input 
-                type="text" 
-                id=""
-                className="form-control inputBuscar"
-                value={busqueda}
-                placeholder='Busca aqui'
+                    type="text" 
+                    id="busqueda"
+                    className="form-control inputBuscar"
+                    value={busqueda}
+                    placeholder='Busca aqui'
+                    onChange={handleInputChange} // Agregar el manejador de cambios
                 />
                 <button className="btn btn-success">
                     <img src={icono} alt="buscar" width="35"></img>
                 </button>
             </div>
         </DivBusqueda>
-  )
+    )
 }
 
 export default Form
