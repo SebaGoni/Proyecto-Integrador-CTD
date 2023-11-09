@@ -10,6 +10,7 @@ import Nosotros from './routes/Nosotros';
 import ListaDeProductos from './routes/ListaDeProductos';
 import Registro from './components/Registro';
 import { GlobalContext } from './components/utils/global_context';
+import Productos from './routes/Productos';
 
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
           <Route path="/" element={<Home/>}></Route>
           <Route path='/register' element={<Registro />} />
           <Route path="/login" element={<Ingreso/>}></Route>
+          <Route path="/products" element={<Productos/>}></Route>
           <Route path="/details/:id" element={<Details/>}></Route>
           {userRol === "ADMIN" &&(
             <>
