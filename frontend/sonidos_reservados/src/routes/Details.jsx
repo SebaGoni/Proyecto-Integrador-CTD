@@ -58,18 +58,10 @@ const Details = () => {
           </div>
         </div>
         <div className='divBodyText'>
-          <h2>Características del producto</h2>
-          <div className='divCaract'>
-            {product?.caracteristicas.map(producto =>(
-              <div className='articleCaract' key={producto.id}>
-                <h3 className='nameCaract'>{producto.nombre}</h3>
-                <img className='imgCaract' src={producto.image} alt="" />
-              </div>
-            ))}
-          </div>
-          <h2>Conoce un poco de este instrumento de <span>{product.categoria.nombre}</span></h2>
+          <h2>CARACTERÍSTICAS DEL PRODUCTO</h2>
+          <h3>Conoce un poco de este instrumento de <span>{product.categoria.nombre}</span></h3>
           <p className='description'>{product.description}</p>
-          <h2 className='price'>${product.price}.00</h2>
+          <h2 className='price'>Hora: ${product.price}.00</h2>
         </div>
       </DetailContainer>
   )
@@ -86,16 +78,15 @@ const DetailContainer = styled.div`
     margin-left: 2rem;
     margin-right: 2rem;
     gap: 2rem;
-
+    font-family: 'Poppins', sans-serif;
     .divTitle{
-      background-color: #D9D9D9;
+      background-color: white;
       border-radius: 60px;
       width: 100%;
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
-
     .title{
       margin-left: 2rem;
       color: black;
@@ -103,16 +94,15 @@ const DetailContainer = styled.div`
             font-size: 20px;
         }
     }
-
     .iconArrow{
       margin-right: 2rem;
       font-size: 2rem;
       color: black;
       cursor: pointer;
     }
-
+    ////////////////////////////////////////////////////////////////////////
     .divBody{
-      background-color: #D9D9D9;
+      background-color: white;
       border-radius: 60px;
       width: 100%;
       display: flex;
@@ -166,44 +156,31 @@ const DetailContainer = styled.div`
         height: 150px;
         }
     }
-
-    .divCaract{
+///////////////////////////////////////////////////////////////////////////////////////////////
+    .divBodyText{
       background-color: #D9D9D9;
       border-radius: 60px;
-      width: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .articleCaract{
-      margin: 2rem;
+      margin: 1rem;
+      width: 96%;
+      color: #7E57C2;
       display: flex;
       flex-direction: column;
-      align-items: center;
-      justify-content: center;
+      padding: 2rem;
+      font-size: 1.2rem;
     }
-
-    .imgCaract{
-      width: 80px;
-    }
-
-    .nameCaract{
-      color: black;
-    }
-
-    .divBodyText{
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      padding: 0rem 2rem 0rem 2rem;
+    h3{
+      color:black;
+      font-style: italic;
     }
 
     .description{
-      color: #ffffff9a;
+      color: black;
+      font-size: 1.2rem;
     }
 
     .price{
-      color: #ffffff;
+      color:  #3F51B5;
+      text-align: right;
+      margin-right: 4rem;
     }
 `;

@@ -18,7 +18,7 @@ const Navbar = () => {
             <div className='logo'>
                 <a href='/'>
                     <img src={iconsr} alt="logo" width="60" height="60"></img>
-                    <img src={nombre} alt="sonidos-reservador" height="50"></img>
+                    <img src={nombre} alt="sonidos-reservador" height="45"></img>
                 </a>
             </div>
             <div className= {`links ${clicked ? "active": "" }`}>
@@ -58,12 +58,15 @@ const NavContainer = styled.nav`
     justify-content: space-between;
     color: white;
     .logo{
-        margin-left: 1rem;
         cursor: pointer;
+        @media(min-width: 1000px){
+            margin-left: 1rem;
+        }
+        @media(max-width: 1000px){
+            margin-left: .1rem;
+        }
     }
     a{
-        font-family: 'Poppins', sans-serif;
-        order-left: .1px solid #2F4F4F;
         text-decoration: none;
         padding: 0 0 0 1.2rem;
     }
@@ -95,7 +98,7 @@ const NavContainer = styled.nav`
             a{
                 font-size: 1.2rem;
                 color: white;
-                margin: 0 2rem;
+                margin: 0 1.5rem;
                 display: inline;
             }
     
@@ -106,7 +109,7 @@ const NavContainer = styled.nav`
         display: block;
         position: absolute;
         margin-left: auto;
-        margint-right: auto;
+        margin-right: auto;
         top: 120%;
         left: 0;
         right: 0;
@@ -120,9 +123,19 @@ const NavContainer = styled.nav`
             display:block;
         }
     }
+    ul li {
+    display: block;
+  }
+
+  @media (max-width: 900px) {
+    ul li {
+      display: none; 
+    }
+  }
 `;
 
 const BgDiv = styled.div`
+
     position: absolute;
     background-color: white;
     top: 95px;
@@ -133,12 +146,13 @@ const BgDiv = styled.div`
     transition: all .6s ease;
     &.active{
         border-radius: 0 0 40% 0;
-        top: 13vh;
+        top: 10vh;
         left: 0;
         width: 100%;
         height: 250%;
         z-index: -10;    
     }
+    @media(min-width: 900px){
     ul{
         color: black;
         font-family: 'Poppins', sans-serif;
@@ -150,9 +164,12 @@ const BgDiv = styled.div`
     li{
         margin-left: 1.5rem;
     }
-   
-
-`
+    @media (max-width: 900px) {
+    ul {
+      display: none;
+    }
+  }
+}`
 
 
 
