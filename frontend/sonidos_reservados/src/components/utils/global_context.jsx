@@ -1,5 +1,4 @@
 import React, { createContext, useReducer, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 
@@ -93,7 +92,7 @@ export const GlobalProvider = ({ children }) => {
   }, []);
 
   return (
-    <GlobalContext.Provider value={{ ...state, getProductosById, getProductosAleatorios, login }}>
+    <GlobalContext.Provider value={{ ...state, getProductosById, getProductosAleatorios, getProductos, login }}>
       {children}
     </GlobalContext.Provider>
   );

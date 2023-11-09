@@ -33,6 +33,9 @@ const Cards = () => {
             </Link>
           ))}
         </div>
+        <Link className='linkProducts' to={'/products'}>
+            <h2 className='titleProducts'>Ver todos los productos</h2>
+        </Link>
       </div>
     </Recomendaciones>
   );
@@ -46,6 +49,7 @@ const Recomendaciones = styled.div`
     margin: 2rem;
     padding: 1rem;
     background-color: white;
+    border-radius:  20px;
     display: block;
     h2{
         margin: 2rem;
@@ -86,6 +90,23 @@ const Recomendaciones = styled.div`
       height: 400px;
       width: 400px;
       object-fit: cover;
+    }
+
+    .linkProducts{
+      text-decoration: none;
+    }
+
+    .titleProducts{
+      text-align: center;
+      border-radius: 20px;
+      color: white;
+      background-color: black;
+      transition: background-color 300ms ease-in-out;
+    }
+
+    .titleProducts:hover{
+      background-color: #000000ec;
+      
     }
     
 `
