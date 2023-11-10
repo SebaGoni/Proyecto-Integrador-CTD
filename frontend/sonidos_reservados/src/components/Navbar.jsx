@@ -5,7 +5,7 @@ import { GlobalContext } from './utils/global_context';
 
 const Navbar = () => {
 
-    const { userRol } = useContext(GlobalContext);
+    const { userRol, token, logout } = useContext(GlobalContext);
     const [clicked, setClicked] = useState(false);
     const handleClick = () => {
         setClicked(!clicked)
@@ -21,10 +21,17 @@ const Navbar = () => {
                     <img src={nombre} alt="sonidos-reservador" height="45"></img>
                 </a>
             </div>
-            <div className= {`links ${clicked ? "active": "" }`}>
-                <a onClick={handleClick} href='/register'>CREAR CUENTA</a>
-                <a onClick={handleClick} href='/login'>INICIAR SESION</a>
-            </div>
+            {!token && (
+                <div className= {`links ${clicked ? "active": "" }`}>
+                    <a onClick={handleClick} href='/register'>CREAR CUENTA</a>
+                    <a onClick={handleClick} href='/login'>INICIAR SESION</a>
+                </div>
+            )}
+            {token && (
+                <div className= {`links ${clicked ? "active": "" }`}>
+                    <a onClick={logout} href='/'>CERRAR SESIÓN</a>
+                </div>
+            )}
             <div className='burger'>
                 <BurgerButton clicked={clicked} handleClick={handleClick}/>
             </div>
@@ -170,6 +177,5 @@ const BgDiv = styled.div`
     }
   }
 }`
-
 
 

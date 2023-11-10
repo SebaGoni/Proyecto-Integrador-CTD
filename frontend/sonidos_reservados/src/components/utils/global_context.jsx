@@ -29,6 +29,7 @@ const reducer = (state, action) => {
           };
           case "logout":
             localStorage.removeItem("token");
+            localStorage.removeItem("role");
             return {
               ...state,
               userRol: null,
@@ -66,6 +67,15 @@ export const GlobalProvider = ({ children }) => {
     }
   };
 
+  const logout = () => {
+    try {
+      dispatch({ type: "logout"});
+      alert('Se ha cerrado su sesión')
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+
   const getProductos = async () => {
     const productosData = await fetchData(
       "http://ec2-54-198-119-206.compute-1.amazonaws.com:8080/productos"
@@ -92,7 +102,7 @@ export const GlobalProvider = ({ children }) => {
   }, []);
 
   return (
-    <GlobalContext.Provider value={{ ...state, getProductosById, getProductosAleatorios, getProductos, login }}>
+    <GlobalContext.Provider value={{ ...state, getProductosById, getProductosAleatorios, getProductos, login, logout }}>
       {children}
     </GlobalContext.Provider>
   );
