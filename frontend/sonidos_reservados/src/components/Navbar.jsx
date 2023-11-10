@@ -29,7 +29,7 @@ const Navbar = () => {
             )}
             {token && (
                 <div className= {`links ${clicked ? "active": "" }`}>
-                    <a onClick={logout} href='/'>CERRAR SESIÓN</a>
+                    <a onClick={logout} href='#'>CERRAR SESIÓN</a>
                 </div>
             )}
             <div className='burger'>

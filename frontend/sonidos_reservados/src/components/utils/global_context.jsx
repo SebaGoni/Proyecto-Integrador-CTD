@@ -1,5 +1,7 @@
 import React, { createContext, useReducer, useEffect } from "react";
 import axios from "axios";
+import Swal from 'sweetalert2';
+import { useNavigate } from "react-router-dom";
 
 
 const initialState = {
@@ -42,8 +44,8 @@ const reducer = (state, action) => {
           
          
 export const GlobalProvider = ({ children }) => {
+  const navigate = useNavigate();
   const [state, dispatch] = useReducer(reducer, initialState);
-  
   const fetchData = async (url) => {
     try {
       const response = await axios.get(url);
@@ -61,18 +63,35 @@ export const GlobalProvider = ({ children }) => {
         userData
         );
       dispatch({ type: "login", payload: response.data });
-      alert('Inicio de sesión exitoso')
+      if (response.status === 200) {
+        Swal.fire({
+          title: '¡Inicio de sesión exitoso!',
+          icon: 'success',
+        })
+        navigate('/')
+      }
     } catch (error) {
-      alert(error.response.data.message);
+      Swal.fire({
+        title: '¡Error al iniciar sesión!',
+        text: error.response.data.message,
+        icon: 'error',
+      })
     }
   };
 
   const logout = () => {
     try {
       dispatch({ type: "logout"});
-      alert('Se ha cerrado su sesión')
+      Swal.fire({
+        title: '¡Se ha cerrado su sesión!',
+        icon: 'success',
+      })
     } catch (error) {
-      alert(error.message);
+      Swal.fire({
+        title: '¡Error al cerrar sesión!',
+        text: error.response.data.message,
+        icon: 'error',
+      });
     }
   };
 

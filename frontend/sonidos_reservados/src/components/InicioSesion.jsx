@@ -1,24 +1,17 @@
 import React from 'react'
 import { useState, useContext } from 'react';
 import styled from 'styled-components'
-import { useNavigate } from 'react-router-dom'
 import { GlobalContext } from './utils/global_context';
 
 const InicioSesion = () => {
 
     const { login } = useContext(GlobalContext);
-
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const [errorMessage, setErrorMessage] = useState('');
     
       const submitForm = async (e) => {
         e.preventDefault();
-        try {
-          login({ username, password });
-        } catch (error) {
-          alert(error.response.data.message);
-        }
+        login({ username, password });
       };  
 
     return (
@@ -37,7 +30,6 @@ const InicioSesion = () => {
                 </div>
                 <button onClick={submitForm} className="BotonDeIngreso">Ingresar</button>
             </form>
-                <p id="errorMessage" style={{ display: errorMessage ? 'block' : 'none', color: 'red' }}>{errorMessage}</p>
             </FormContainer>
     )
     }

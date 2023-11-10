@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 import styled from 'styled-components'
 import { useNavigate } from 'react-router-dom'
+import Swal from 'sweetalert2';
 
 const Registro = () => {
 
@@ -13,7 +14,6 @@ const Registro = () => {
         email: '',
         role: 'USER',
       });
-      const [successMessage, setSuccessMessage] = useState('');
     
       const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -33,10 +33,18 @@ const Registro = () => {
           });
     
           if (response.status === 200) {
-            setSuccessMessage('Registro exitoso.');
-            navigate('/')
+            Swal.fire({
+              title: 'Registro exitoso',
+              text: '¡Bienvenido, inicia sesión!',
+              icon: 'success',
+            })
+            navigate('/login')
           } else {
-            // Manejar otros códigos de estado aquí
+            Swal.fire({
+              title: '¡Error al registrarse!',
+              text: 'Intenta nuevamente',
+              icon: 'error',
+            })
           }
         } catch (error) {
           console.error('Error al registrar:', error);
@@ -71,7 +79,6 @@ const Registro = () => {
             </div>
         </div>
         <button className="BotonDeIngreso" type="button" onClick={submitForm}>Registrar</button>
-      <p id="successMessage" style={{ display: successMessage ? 'block' : 'none', color: 'green' }}>{successMessage}</p>
       </form>
 
     </FormContainer>
