@@ -61,7 +61,7 @@ const Details = () => {
           <h2>CARACTERÍSTICAS DEL PRODUCTO</h2>
           <h3>Conoce un poco de este instrumento de <span>{product.categoria.nombre}</span></h3>
           <p className='description'>{product.description}</p>
-          <h2 className='price'>Hora: ${product.price}.00</h2>
+          <h2 className='price'>Precio por hora: ${product.price}.00</h2>
         </div>
       </DetailContainer>
   )

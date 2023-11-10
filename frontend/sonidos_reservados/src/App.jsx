@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Route, Routes, BrowserRouter } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import { useContext } from 'react';
 import Home from '/src/routes/Home';
 import Navbar from './components/Navbar';
@@ -19,7 +19,7 @@ function App() {
   console.log(userRol);
 
   return (
-    <BrowserRouter>
+    <>
       <Navbar/>
         <Routes>
           <Route path="/" element={<Home/>}></Route>
@@ -36,7 +36,7 @@ function App() {
           <Route path="/about" element={<Nosotros/>}></Route>
         </Routes>
       <Footer/>
-    </BrowserRouter>
+    </>
   )
 }
 
