@@ -5,13 +5,20 @@ import { GlobalContext } from './utils/global_context';
 
 const Navbar = () => {
 
-    const { userRol, token, logout } = useContext(GlobalContext);
+    const { userRol, token, email, lastname, firstname, username, logout } = useContext(GlobalContext);
+    console.log(firstname);
     const [clicked, setClicked] = useState(false);
+    const [clickedInitials, setClickedInitials] = useState(false);
     const handleClick = () => {
         setClicked(!clicked)
     }
+    const handleClickInitials = () => {
+        setClickedInitials(!clickedInitials)
+    }
     const iconsr= '/src/assets/soloLogoWhite.png';
     const nombre= '/src/assets/sonidosReservadosTextWhite.png';
+
+    const initials = `${firstname?.toUpperCase().charAt(0) || ''}${lastname?.toUpperCase().charAt(0) || ''}`;
   return (
     <>
         <NavContainer>
@@ -27,11 +34,19 @@ const Navbar = () => {
                     <a onClick={handleClick} href='/login'>INICIAR SESION</a>
                 </div>
             )}
-            {token && (
+            {token && userRol === 'USER' &&(
                 <div className= {`links ${clicked ? "active": "" }`}>
-                    <a onClick={logout} href='#'>CERRAR SESIÓN</a>
+                    <h2>{initials}</h2>
+                    <h2 onClick={logout}>CERRAR SESIÓN</h2>
+                </div>
+            ) || token && userRol === 'ADMIN' && (
+                <div className= {`links ${clicked ? "active": "" }`}>
+                    <h2>{initials}</h2>
+                    <h3 onClick={logout}>CERRAR SESIÓN</h3>
+                    <a href="/admin">ADMINISTRACIÓN</a>
                 </div>
             )}
+            
             <div className='burger'>
                 <BurgerButton clicked={clicked} handleClick={handleClick}/>
             </div>
@@ -39,9 +54,6 @@ const Navbar = () => {
                 <ul>
                     <li><a onClick={handleClick} href='/'>RESERVA AHORA</a></li>
                     <li><a onClick={handleClick} href='/Nosotros'>SOBRE NOSOTROS</a></li>
-                    {userRol === 'ADMIN' &&(
-                        <li><a onClick={handleClick} href='/admin'>PANEL DE ADMINISTRACIÓN</a></li>
-                    )}
                 </ul>
             </BgDiv>
         </NavContainer>
@@ -51,7 +63,8 @@ const Navbar = () => {
 }
 
 export default Navbar
-    
+
+
 const NavContainer = styled.nav`
     position: fixed;
     top: 0;
@@ -108,7 +121,7 @@ const NavContainer = styled.nav`
                 margin: 0 1.5rem;
                 display: inline;
             }
-    
+
         }
     }
     .links.active{
