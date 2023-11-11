@@ -7,6 +7,10 @@ import { useNavigate } from "react-router-dom";
 const initialState = {
   productos: [],
   productosAleatorios: [],
+  email: localStorage.getItem('email') || null,
+  lastname: localStorage.getItem('lastname') || null,
+  firstname: localStorage.getItem('firstname') || null,
+  username: localStorage.getItem('username') || null,
   userRol: localStorage.getItem("role") || null, // rol del usuario
   token: localStorage.getItem("token") || null, // Token de autenticación
   getProductosById: () => {},
@@ -22,18 +26,34 @@ const reducer = (state, action) => {
       case "setProductosAleatorios":
         return { ...state, productosAleatorios: action.payload };  
         case "login":
+          localStorage.setItem("firstname", action.payload.firstname);
+          localStorage.setItem("lastname", action.payload.lastname);
+          localStorage.setItem("email", action.payload.email);
+          localStorage.setItem("username", action.payload.username);
           localStorage.setItem("role", action.payload.role);
           localStorage.setItem("token", action.payload.token);
           return {
             ...state,
+            firstname: action.payload.firstname,
+            lastname: action.payload.lastname,
+            email: action.payload.email,
+            username: action.payload.username,
             userRol: action.payload.role,
             token: action.payload.token,
           };
           case "logout":
+            localStorage.removeItem("firstname");
+            localStorage.removeItem("lastname");
+            localStorage.removeItem("email");
+            localStorage.removeItem("username");
             localStorage.removeItem("token");
             localStorage.removeItem("role");
             return {
               ...state,
+              firstname: null,
+              lastname: null,
+              email: null,
+              username: null,
               userRol: null,
               token: null,
             };
