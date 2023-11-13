@@ -15,14 +15,13 @@ const Footer = () => {
 
 export default Footer
 
-const BlackFooter= styled.div`
+const BlackFooter = styled.div`
     background-color: black;
     color: white;
     height: 350px;
-    margin-left: -10px;
-    margin-right: -10px;
     bottom: 1px;
     font-family: 'Poppins', sans-serif;
+    width: 100%;
     .LogoFooter{
         margin-top: 1rem;
         padding: 1rem;

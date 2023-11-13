@@ -4,7 +4,9 @@
   background:#3F51B5;
   background-image: linear-gradient(#7E57C2 50%, #3F51B5);
   background-attachment: fixed;
-  max-width: 100vw;
+  padding: 0;
+  margin: 0;
+  width: 100%;
   height: 100vh;
 }
 

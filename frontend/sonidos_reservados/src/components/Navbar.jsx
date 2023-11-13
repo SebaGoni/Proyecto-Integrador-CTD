@@ -7,11 +7,7 @@ const Navbar = () => {
 
     const { userRol, token, email, lastname, firstname, username, logout } = useContext(GlobalContext);
     console.log(firstname);
-    const [clicked, setClicked] = useState(false);
     const [clickedInitials, setClickedInitials] = useState(false);
-    const handleClick = () => {
-        setClicked(!clicked)
-    }
     const handleClickInitials = () => {
         setClickedInitials(!clickedInitials)
     }
@@ -21,7 +17,7 @@ const Navbar = () => {
     const initials = `${firstname?.toUpperCase().charAt(0) || ''}${lastname?.toUpperCase().charAt(0) || ''}`;
   return (
     <>
-        <NavContainer>
+        {/* <NavContainer>
             <div className='logo'>
                 <a href='/'>
                     <img src={iconsr} alt="logo" width="60" height="60"></img>
@@ -56,8 +52,43 @@ const Navbar = () => {
                     <li><a onClick={handleClick} href='/Nosotros'>SOBRE NOSOTROS</a></li>
                 </ul>
             </BgDiv>
+        </NavContainer> */}
+        <NavContainer>
+            <div className='logo'>
+                <a href='/'>
+                    <img src={iconsr} alt="logo" width="60" height="60"></img>
+                    <img src={nombre} alt="sonidos-reservador" height="45"></img>
+                </a>
+            </div>
+            {!token && (
+                <div className='divAccount'>
+                    <a className='titleLogin' href='/register'>CREAR CUENTA</a>
+                    <a className='titleLogin' href='/login'>INICIAR SESION</a>
+                </div>
+            )}
+            {token && userRol === 'USER' &&(
+                <div>
+                   <div className='divInitials'>
+                        <h2 classname='initials' onClick={handleClickInitials}>{initials}</h2>
+                    </div>
+                    {clickedInitials && (
+                        <h2 className='logout' onClick={logout}>CERRAR SESIÓN</h2>
+                    )}
+                </div>
+            ) || token && userRol === 'ADMIN' && (
+                <div>
+                    <div className='divInitials'>
+                        <h2 classname='initials' onClick={handleClickInitials}>{initials}</h2>
+                    </div>
+                    {clickedInitials && (
+                        <>
+                            <h2 className='logout' onClick={logout}>CERRAR SESIÓN</h2>
+                            <a className='linkAdmin' href="/admin">ADMINISTRACIÓN</a>
+                        </>
+                    )}  
+                </div>
+            )}
         </NavContainer>
-    
     </>
   )
 }
@@ -70,125 +101,63 @@ const NavContainer = styled.nav`
     top: 0;
     left: 0;
     width: 100%;
-    padding: 1rem;
-    padding-right: 2rem;
+    padding: 1rem 0 1rem 0;
     background-color: black;
     display: flex;
     align-items: center;
     justify-content: space-between;
     color: white;
     .logo{
-        cursor: pointer;
-        @media(min-width: 1000px){
-            margin-left: 1rem;
-        }
-        @media(max-width: 1000px){
-            margin-left: .1rem;
-        }
+        margin-left: 10px;
     }
-    a{
+    .divAccount{
+        margin-right: 10px;
+    }
+    .titleLogin{
+        color: white;
+        font-size: 20px;
+        font-weight: 500;
         text-decoration: none;
-        padding: 0 0 0 1.2rem;
+        padding: 8px;
     }
-    .burger{
-        @media(min-width: 900px){
-            display: none;
-        }
-    }
-    .links{
-        position: absolute;
-        top: -700px;
-        left: -2000px;
-        right: 0;
-        margin-left: auto;
-        margin-right: auto;
-        text-align: center;
-        transition: all .6s ease;
-        a{
-            font-family: 'Poppins', sans-serif;
-            font-weight: 600;
-            color: #3F51B5;
-            font-size: 1.2rem;
-            display:block;
-        }
-
-        @media(min-width: 900px){
-            position: initial;
-            margin: 0;
-            a{
-                font-size: 1.2rem;
-                color: white;
-                margin: 0 1.5rem;
-                display: inline;
-            }
-
-        }
-    }
-    .links.active{
-        width: 100%;
-        display: block;
-        position: absolute;
-        margin-left: auto;
-        margin-right: auto;
-        top: 120%;
-        left: 0;
-        right: 0;
-        text-align: center;
-        a{
-            font-family: 'Poppins', sans-serif;
-            color: #222;
-            font-weight: bold;
-            font-size: 2rem;
-            margin-top: 1.5rem;
-            display:block;
-        }
-    }
-    ul li {
-    display: block;
-  }
-
-  @media (max-width: 900px) {
-    ul li {
-      display: none; 
-    }
-  }
-`;
-
-const BgDiv = styled.div`
-
-    position: absolute;
-    background-color: white;
-    top: 95px;
-    left: 0px;
-    width: 100%;
-    height: 60px;
-    z-index: -1;
-    transition: all .6s ease;
-    &.active{
-        border-radius: 0 0 40% 0;
-        top: 10vh;
-        left: 0;
-        width: 100%;
-        height: 250%;
-        z-index: -10;    
-    }
-    @media(min-width: 900px){
-    ul{
-        color: black;
-        font-family: 'Poppins', sans-serif;
-        font-weight: 600;
-        list-style-type: none;
+    .divInitials{
         display: flex;
-        font-size: 1.2rem;
+        justify-content: center;
+        align-items: center;
+        background-color: white;
+        width: 50px;
+        border-radius: 100%;
+        color: black;
+        padding: .1px 10px;
+        margin-right: 10px;
     }
-    li{
-        margin-left: 1.5rem;
+    .initials{
+        color: black;
     }
-    @media (max-width: 900px) {
-    ul {
-      display: none;
+    .logout{
+        cursor: pointer;
+        background-color: white;
+        padding: 5px 8px;
+        border-radius: 20px;
+        color: black;
+        position: absolute;
+        top: 80px;
+        right: 10px;
+        font-size: 20px;
+        font-weight: 500;
     }
-  }
-}`
+    .linkAdmin{
+        background-color: white;
+        padding: 5px 8px;
+        border-radius: 20px;
+        color: black;
+        position: absolute;
+        right: 10px;
+        top: 140px;
+        font-size: 20px;
+        font-weight: 500;
+        text-decoration: none;
+    }
+    `
 
 
