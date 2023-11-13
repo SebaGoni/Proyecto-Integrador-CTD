@@ -8,10 +8,10 @@ import Footer from './components/Footer';
 import Ingreso from './routes/Ingreso';
 import Nosotros from './routes/Nosotros';
 import ListaDeProductos from './routes/ListaDeProductos';
+import NuevoProducto from './routes/NuevoProducto';
 import Registro from './components/Registro';
 import { GlobalContext } from './components/utils/global_context';
 import Productos from './routes/Productos';
-
 
 function App() {
 
@@ -27,13 +27,15 @@ function App() {
           <Route path="/login" element={<Ingreso/>}></Route>
           <Route path="/products" element={<Productos/>}></Route>
           <Route path="/details/:id" element={<Details/>}></Route>
+          <Route path="/Ingreso" element={<Ingreso/>}></Route>
+          <Route path="/Nosotros" element={<Nosotros/>}></Route>
           {userRol === "ADMIN" &&(
             <>
               <Route path="/admin" element={<Admin/>}></Route>
               <Route path="/admin/productList" element={<ListaDeProductos/>}></Route>
+              <Route path="/Admin/Nuevo" element={<NuevoProducto/>}></Route>
             </>
-          )}
-          <Route path="/about" element={<Nosotros/>}></Route>
+          )}        
         </Routes>
       <Footer/>
     </>

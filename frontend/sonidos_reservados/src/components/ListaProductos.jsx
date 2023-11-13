@@ -1,24 +1,37 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
 import styled from 'styled-components'
-//import {useEffect, useState} from 'react';
-//import axiosClient from '.../config/axiosClient'
+import {useEffect, useState} from 'react';
+import axios from 'axios';
 import { data } from '../data';
 import Producto from './Producto';
+import Swal from 'sweetalert2';
 
 const ListaProductos = () => {
-
-  //const [productos, setProductos] = useState([]);
-  //usando la data mientras
+  const [productos, setProductos] = useState([]);
+    const getProductos = async () => {
+    try {
+      const response = await axios.get('http://ec2-54-198-119-206.compute-1.amazonaws.com:8080/productos');
+      setProductos(response.data);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      // You can add error handling logic here, such as showing an error message.
+    }
+  };
+ 
+  useEffect(() => {
+    getProductos();
+  }, []);
+  
   const renderProductos = () => (
     <tbody>
-      {data.map((producto, index) => (
+      {productos.map((producto, index) => (
         <Producto
           key={index}
           index={index}
           id={producto.id}
           nombre={producto.title}
-          categoria={producto.categoria}
+          categoria={producto.categoria.nombre}
           precio={producto.price}
           onDelete={handleDeleteProduct}
         />)
@@ -26,22 +39,40 @@ const ListaProductos = () => {
     </tbody>
   );
   const handleDeleteProduct = (id) => {
-
+    Swal.fire({
+      title: 'Estas seguro?',
+      text: "Este producto no se podra recuperar",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, Eliminar',
+    }).then((result)=>{
+      if (result.value){
+        deleteProducto(id);
+      }
+    })
   };
-  // cuando la api funcione, codigo de llamada a los datos
-
-  /*const getProductos = () => {
-    axiosClient.get('/products')
+  const deleteProducto = (id) => {
+    axios.delete(`/products/${id}`)
+    data.delete(`/producto/${id}`)
     .then(res => {
-      console.log(res.data)
-      setProductos(res.data);
+      if (res.status !== 200 ) {
+        Swal.fire(
+          'Eliminar Producto',
+          'Error al eliminar producto',
+          'error'
+        );
+      }else{
+        Swal.fire(
+          'Eliminar producto',
+          res.data.message,
+          'success'
+        );
+        getProductos();
+      }
     });
   };
-  useEffect(()=> {
-    getProductos();
-  }, []);*/
-
-
   return (
     <ProductContainer>
       <h2>Lista de Productos</h2>
@@ -57,7 +88,7 @@ const ListaProductos = () => {
         </thead>
         {renderProductos()}
       </table>
-      <Link to='/Admin/nuevoProducto'
+      <Link to='/Admin/Nuevo'
               className='BotonAdmin'
               role="button"> Nuevo Producto
       </Link>

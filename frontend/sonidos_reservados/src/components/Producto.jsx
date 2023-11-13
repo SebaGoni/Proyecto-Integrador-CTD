@@ -47,6 +47,7 @@ const StyledTd = styled.td`
     font-weight: 600;
     margin-left: 1rem;
     color: white;
+    cursor: pointer;
   }
 
 `

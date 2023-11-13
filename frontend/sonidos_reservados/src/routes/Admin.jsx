@@ -49,4 +49,9 @@ const MenuAdmin = styled.div`
     background-color: black;
     color: white;
   }
+  @media (max-width: 768px) {
+    .MenuAdmin {
+      display: none;
+    }
+  }
 `

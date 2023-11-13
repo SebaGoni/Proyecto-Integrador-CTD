@@ -1,8 +1,20 @@
 import React, { useEffect, useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+
+import { data } from '../data';
+import { Link } from 'react-router-dom';
 import { GlobalContext } from '../components/utils/global_context';
 import { AiOutlineArrowLeft, AiOutlineArrowRight } from 'react-icons/ai';
+
+const shuffleArray = (array) => {
+  const shuffledArray = [...array];
+  for (let i = shuffledArray.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
+  }
+  return shuffledArray;
+};
 
 const Cards = () => {
   const { getProductosAleatorios, productosAleatorios } = useContext(GlobalContext);
