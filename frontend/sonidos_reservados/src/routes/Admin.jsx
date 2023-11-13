@@ -9,11 +9,11 @@ const Admin = () => {
       <h2> Bienvenido Admin</h2>
       <p>Escoge una opcion</p>
     <div className='MenuDeAdmin'>
-      <Link to='/Admin/Nuevo'
+      <Link to='/admin/newProduct'
               className='BotonAdmin'
               role="button"> Nuevo Producto
       </Link>
-      <Link to='/Admin/ListaDeProductos'
+      <Link to='/admin/productList'
         className='BotonAdmin'
         role="button">Lista de Productos
       </Link>            

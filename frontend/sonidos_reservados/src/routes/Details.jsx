@@ -58,9 +58,10 @@ const Details = () => {
           </div>
         </div>
         <div className='divBodyText'>
-          <h2>Conoce un poco de este instrumento de <span>{product.categoria}</span></h2>
+          <h2>CARACTERÍSTICAS DEL PRODUCTO</h2>
+          <h3>Conoce un poco de este instrumento de <span>{product.categoria.nombre}</span></h3>
           <p className='description'>{product.description}</p>
-          <h2 className='price'>${product.price}.00</h2>
+          <h2 className='price'>Precio por hora: ${product.price}.00</h2>
         </div>
       </DetailContainer>
   )
@@ -73,34 +74,35 @@ const DetailContainer = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-top: 20vh;
+    margin-top: 23vh;
     margin-left: 2rem;
     margin-right: 2rem;
     gap: 2rem;
-
+    font-family: 'Poppins', sans-serif;
     .divTitle{
-      background-color: #D9D9D9;
+      background-color: white;
       border-radius: 60px;
       width: 100%;
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
-
     .title{
       margin-left: 2rem;
       color: black;
+      @media(max-width: 500px){
+            font-size: 20px;
+        }
     }
-
     .iconArrow{
       margin-right: 2rem;
       font-size: 2rem;
       color: black;
       cursor: pointer;
     }
-
+    ////////////////////////////////////////////////////////////////////////
     .divBody{
-      background-color: #D9D9D9;
+      background-color: white;
       border-radius: 60px;
       width: 100%;
       display: flex;
@@ -114,12 +116,23 @@ const DetailContainer = styled.div`
       padding: 2rem 0 2rem 0;
       height: 100%;
       width: 100%;
+      @media(max-width: 1100px){
+            flex-direction: column;
+        }
     }
 
     .img1{
       width: 500px;
       height: 500px;
       object-fit: cover;
+      @media(max-width: 600px){
+        width: 300px;
+        height: 300px;
+        }
+      @media(max-width: 480px){
+        width: 250px;
+        height: 250px;
+        }
     }
 
     .divImages{
@@ -134,20 +147,40 @@ const DetailContainer = styled.div`
       height: 245px;
       margin-right: 5px;
       margin-left: 5px;
+      @media(max-width: 600px){
+        width: 200px;
+        height: 200px;
+        }
+      @media(max-width: 480px){
+        width: 150px;
+        height: 150px;
+        }
     }
-
+///////////////////////////////////////////////////////////////////////////////////////////////
     .divBodyText{
-      width: 100%;
+      background-color: #D9D9D9;
+      border-radius: 60px;
+      margin: 1rem;
+      width: 96%;
+      color: #7E57C2;
       display: flex;
       flex-direction: column;
-      padding: 0rem 2rem 0rem 2rem;
+      padding: 2rem;
+      font-size: 1.2rem;
+    }
+    h3{
+      color:black;
+      font-style: italic;
     }
 
     .description{
-      color: #ffffff9a;
+      color: black;
+      font-size: 1.2rem;
     }
 
     .price{
-      color: #ffffff;
+      color:  #3F51B5;
+      text-align: right;
+      margin-right: 4rem;
     }
-`
+`;

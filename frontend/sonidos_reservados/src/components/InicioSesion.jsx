@@ -1,29 +1,35 @@
 import React from 'react'
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import styled from 'styled-components'
-
+import { GlobalContext } from './utils/global_context';
 
 const InicioSesion = () => {
 
-    const [Name, setName] = useState("");
-    const [Password, setPassword] = useState("");
+    const { login } = useContext(GlobalContext);
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+    
+      const submitForm = async (e) => {
+        e.preventDefault();
+        login({ username, password });
+      };  
 
     return (
         <FormContainer>
-            <div className='login-container'>
-                <h2>Inicia Sesion</h2>
+            <form className='login-container'>
+                <h2>Inicia Sesión</h2>
                 <div className='input-container'>
                     <div className='input-row'>
-                    <label htmlFor="nombre">Ingresa tu usuario</label>
+                        <label htmlFor="username">Correo electrónico:</label>
+                        <input type="text" id="username" name="username" value={username} onChange={(e) => setUsername(e.target.value)} required />
                     </div>
-                    <input type="text" id="nombre" placeholder="Usuario" />
                     <div className='input-row'>
-                    <label htmlFor="contrasena">Ingresa tu Contraseña</label>
+                        <label htmlFor="password">Contraseña:</label>
+                        <input type="password" id="password" name="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
                     </div>
-                    <input type="password" id="contrasena" placeholder="Contraseña" />
                 </div>
-                <button className="BotonDeIngreso">Ingresar</button>
-            </div>
+                <button onClick={submitForm} className="BotonDeIngreso">Ingresar</button>
+            </form>
             </FormContainer>
     )
     }
@@ -45,7 +51,7 @@ const FormContainer = styled.div`
     padding: 2rem;
     font-family: 'Poppins', sans-serif;
     text-align: center; 
-    }
+    
     h2{ 
         border-bottom: solid #E7E7E7;
     }
@@ -70,6 +76,6 @@ const FormContainer = styled.div`
         font-size: 1rem;
         font-weight: 600;
         padding: 5px 30px;
-        
+        cursor: pointer;
     }
     `

@@ -22,6 +22,7 @@ const BlackFooter= styled.div`
     margin-left: -10px;
     margin-right: -10px;
     bottom: 1px;
+    font-family: 'Poppins', sans-serif;
     .LogoFooter{
         margin-top: 1rem;
         padding: 1rem;
@@ -29,5 +30,12 @@ const BlackFooter= styled.div`
     p{
         margin-left:1rem;
     }
+    @media(min-width: 1000px){
+          font-size:1.2rem;
+        }
+        @media(max-width: 1000px){
+          font-size:0.8rem;
+          text-align: center;
+        }
 
 `

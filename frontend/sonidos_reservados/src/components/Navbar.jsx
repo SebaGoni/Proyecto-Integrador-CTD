@@ -1,29 +1,52 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import styled from "styled-components";
 import BurgerButton from './BurgerButton';
-
+import { GlobalContext } from './utils/global_context';
 
 const Navbar = () => {
+
+    const { userRol, token, email, lastname, firstname, username, logout } = useContext(GlobalContext);
+    console.log(firstname);
     const [clicked, setClicked] = useState(false);
-    console.log(clicked);
+    const [clickedInitials, setClickedInitials] = useState(false);
     const handleClick = () => {
         setClicked(!clicked)
     }
+    const handleClickInitials = () => {
+        setClickedInitials(!clickedInitials)
+    }
     const iconsr= '/src/assets/soloLogoWhite.png';
     const nombre= '/src/assets/sonidosReservadosTextWhite.png';
+
+    const initials = `${firstname?.toUpperCase().charAt(0) || ''}${lastname?.toUpperCase().charAt(0) || ''}`;
   return (
     <>
         <NavContainer>
             <div className='logo'>
                 <a href='/'>
                     <img src={iconsr} alt="logo" width="60" height="60"></img>
-                    <img src={nombre} alt="sonidos-reservador" height="50"></img>
+                    <img src={nombre} alt="sonidos-reservador" height="45"></img>
                 </a>
             </div>
-            <div className= {`links ${clicked ? "active": "" }`}>
-                <a onClick={handleClick} href='/Ingreso'>CREAR CUENTA</a>
-                <a onClick={handleClick} href='/Ingreso'>INICIAR SESION</a>
-            </div>
+            {!token && (
+                <div className= {`links ${clicked ? "active": "" }`}>
+                    <a onClick={handleClick} href='/register'>CREAR CUENTA</a>
+                    <a onClick={handleClick} href='/login'>INICIAR SESION</a>
+                </div>
+            )}
+            {token && userRol === 'USER' &&(
+                <div className= {`links ${clicked ? "active": "" }`}>
+                    <h2>{initials}</h2>
+                    <h2 onClick={logout}>CERRAR SESIÓN</h2>
+                </div>
+            ) || token && userRol === 'ADMIN' && (
+                <div className= {`links ${clicked ? "active": "" }`}>
+                    <h2>{initials}</h2>
+                    <h3 onClick={logout}>CERRAR SESIÓN</h3>
+                    <a href="/admin">ADMINISTRACIÓN</a>
+                </div>
+            )}
+            
             <div className='burger'>
                 <BurgerButton clicked={clicked} handleClick={handleClick}/>
             </div>
@@ -40,7 +63,8 @@ const Navbar = () => {
 }
 
 export default Navbar
-    
+
+
 const NavContainer = styled.nav`
     position: fixed;
     top: 0;
@@ -54,12 +78,15 @@ const NavContainer = styled.nav`
     justify-content: space-between;
     color: white;
     .logo{
-        margin-left: 1rem;
         cursor: pointer;
+        @media(min-width: 1000px){
+            margin-left: 1rem;
+        }
+        @media(max-width: 1000px){
+            margin-left: .1rem;
+        }
     }
     a{
-        font-family: 'Poppins', sans-serif;
-        order-left: .1px solid #2F4F4F;
         text-decoration: none;
         padding: 0 0 0 1.2rem;
     }
@@ -91,10 +118,10 @@ const NavContainer = styled.nav`
             a{
                 font-size: 1.2rem;
                 color: white;
-                margin: 0 2rem;
+                margin: 0 1.5rem;
                 display: inline;
             }
-    
+
         }
     }
     .links.active{
@@ -102,7 +129,7 @@ const NavContainer = styled.nav`
         display: block;
         position: absolute;
         margin-left: auto;
-        margint-right: auto;
+        margin-right: auto;
         top: 120%;
         left: 0;
         right: 0;
@@ -116,9 +143,19 @@ const NavContainer = styled.nav`
             display:block;
         }
     }
+    ul li {
+    display: block;
+  }
+
+  @media (max-width: 900px) {
+    ul li {
+      display: none; 
+    }
+  }
 `;
 
 const BgDiv = styled.div`
+
     position: absolute;
     background-color: white;
     top: 95px;
@@ -129,12 +166,13 @@ const BgDiv = styled.div`
     transition: all .6s ease;
     &.active{
         border-radius: 0 0 40% 0;
-        top: 13vh;
+        top: 10vh;
         left: 0;
         width: 100%;
         height: 250%;
         z-index: -10;    
     }
+    @media(min-width: 900px){
     ul{
         color: black;
         font-family: 'Poppins', sans-serif;
@@ -146,9 +184,11 @@ const BgDiv = styled.div`
     li{
         margin-left: 1.5rem;
     }
-   
-
-`
-
+    @media (max-width: 900px) {
+    ul {
+      display: none;
+    }
+  }
+}`
 
 
