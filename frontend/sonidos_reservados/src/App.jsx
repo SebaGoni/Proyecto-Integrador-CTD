@@ -27,13 +27,12 @@ function App() {
           <Route path="/login" element={<Ingreso/>}></Route>
           <Route path="/products" element={<Productos/>}></Route>
           <Route path="/details/:id" element={<Details/>}></Route>
-          <Route path="/Ingreso" element={<Ingreso/>}></Route>
-          <Route path="/Nosotros" element={<Nosotros/>}></Route>
+          <Route path="/about" element={<Nosotros/>}></Route>
           {userRol === "ADMIN" &&(
             <>
               <Route path="/admin" element={<Admin/>}></Route>
               <Route path="/admin/productList" element={<ListaDeProductos/>}></Route>
-              <Route path="/Admin/Nuevo" element={<NuevoProducto/>}></Route>
+              <Route path="/admin/newProduct" element={<NuevoProducto/>}></Route>
             </>
           )}        
         </Routes>

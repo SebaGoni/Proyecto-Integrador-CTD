@@ -17,42 +17,6 @@ const Navbar = () => {
     const initials = `${firstname?.toUpperCase().charAt(0) || ''}${lastname?.toUpperCase().charAt(0) || ''}`;
   return (
     <>
-        {/* <NavContainer>
-            <div className='logo'>
-                <a href='/'>
-                    <img src={iconsr} alt="logo" width="60" height="60"></img>
-                    <img src={nombre} alt="sonidos-reservador" height="45"></img>
-                </a>
-            </div>
-            {!token && (
-                <div className= {`links ${clicked ? "active": "" }`}>
-                    <a onClick={handleClick} href='/register'>CREAR CUENTA</a>
-                    <a onClick={handleClick} href='/login'>INICIAR SESION</a>
-                </div>
-            )}
-            {token && userRol === 'USER' &&(
-                <div className= {`links ${clicked ? "active": "" }`}>
-                    <h2>{initials}</h2>
-                    <h2 onClick={logout}>CERRAR SESIÓN</h2>
-                </div>
-            ) || token && userRol === 'ADMIN' && (
-                <div className= {`links ${clicked ? "active": "" }`}>
-                    <h2>{initials}</h2>
-                    <h3 onClick={logout}>CERRAR SESIÓN</h3>
-                    <a href="/admin">ADMINISTRACIÓN</a>
-                </div>
-            )}
-            
-            <div className='burger'>
-                <BurgerButton clicked={clicked} handleClick={handleClick}/>
-            </div>
-            <BgDiv className={`initial ${clicked ? ' active' : ''}`}>
-                <ul>
-                    <li><a onClick={handleClick} href='/'>RESERVA AHORA</a></li>
-                    <li><a onClick={handleClick} href='/Nosotros'>SOBRE NOSOTROS</a></li>
-                </ul>
-            </BgDiv>
-        </NavContainer> */}
         <NavContainer>
             <div className='logo'>
                 <a href='/'>
@@ -89,6 +53,12 @@ const Navbar = () => {
                 </div>
             )}
         </NavContainer>
+        <BgDiv>
+            <ul>
+                <li><a href='/'>RESERVA AHORA</a></li>
+                <li><a href='/about'>SOBRE NOSOTROS</a></li>
+            </ul>
+        </BgDiv>
     </>
   )
 }
@@ -107,6 +77,7 @@ const NavContainer = styled.nav`
     align-items: center;
     justify-content: space-between;
     color: white;
+    z-index: 10;
     .logo{
         margin-left: 10px;
     }
@@ -124,22 +95,22 @@ const NavContainer = styled.nav`
         display: flex;
         justify-content: center;
         align-items: center;
-        background-color: white;
+        background:#3F51B5;
+        background-image: linear-gradient(#7E57C2 50%, #3F51B5);
         width: 50px;
         border-radius: 100%;
-        color: black;
+        color: white;
         padding: .1px 10px;
         margin-right: 10px;
-    }
-    .initials{
-        color: black;
+        cursor: pointer;
     }
     .logout{
         cursor: pointer;
-        background-color: white;
+        background:#3F51B5;
+        background-image: linear-gradient(#7E57C2 50%, #3F51B5);
         padding: 5px 8px;
         border-radius: 20px;
-        color: black;
+        color: white;
         position: absolute;
         top: 80px;
         right: 10px;
@@ -147,10 +118,11 @@ const NavContainer = styled.nav`
         font-weight: 500;
     }
     .linkAdmin{
-        background-color: white;
+        background:#3F51B5;
+        background-image: linear-gradient(#7E57C2 50%, #3F51B5);
         padding: 5px 8px;
         border-radius: 20px;
-        color: black;
+        color: white;
         position: absolute;
         right: 10px;
         top: 140px;
@@ -158,6 +130,26 @@ const NavContainer = styled.nav`
         font-weight: 500;
         text-decoration: none;
     }
-    `
+`
+const BgDiv = styled.nav`
+    position: absolute;
+    width: 100%;
+    top: 95px;
+    background-color: white;
+    ul{
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+    li{
+        list-style: none;
+    }
+    a{
+        text-decoration: none;
+        font-size: 20px;
+        font-weight: 500;
+        color: black;
+    }
+`
 
 
