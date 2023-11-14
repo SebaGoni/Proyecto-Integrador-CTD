@@ -11,8 +11,8 @@ const initialState = {
   lastname: localStorage.getItem('lastname') || null,
   firstname: localStorage.getItem('firstname') || null,
   username: localStorage.getItem('username') || null,
-  userRol: localStorage.getItem("role") || null, // rol del usuario
-  token: localStorage.getItem("token") || null, // Token de autenticación
+  userRol: localStorage.getItem("role") || null, 
+  token: localStorage.getItem("token") || null,
   getProductosById: () => {},
 };
 
