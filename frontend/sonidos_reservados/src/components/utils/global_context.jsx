@@ -33,6 +33,11 @@ const reducer = (state, action) => {
             (usuario) => usuario.id !== action.payload
           );
           return { ...state, usuarios: usuariosActualizados };
+        case "eliminarProducto":
+          const productosActualizados = state.productos.filter(
+            (producto) => producto.id !== action.payload
+          );
+          return { ...state, productos: productosActualizados };
         case "login":
           localStorage.setItem("firstname", action.payload.firstname);
           localStorage.setItem("lastname", action.payload.lastname);
@@ -200,12 +205,54 @@ export const GlobalProvider = ({ children }) => {
     return productoData;
   };
 
+  const deleteProducto = async (id) => {
+    try {
+      const confirmacion = await Swal.fire({
+        title: '¿Estás seguro?',
+        text: 'Esta acción es irreversible.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        cancelButtonText: 'Cancelar',
+        confirmButtonText: 'Sí, eliminar',
+      });
+  
+      if (confirmacion.isConfirmed) {
+        await axios.delete(
+          `http://ec2-54-198-119-206.compute-1.amazonaws.com:8080/productos/${id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
+        );
+  
+        dispatch({ type: "eliminarProducto", payload: id });
+  
+        Swal.fire({
+          title: 'Producto eliminado exitosamente!',
+          icon: 'success',
+        });
+      } else {
+        console.log('Eliminación cancelada');
+      }
+    } catch (error) {
+      console.error("Error al eliminar producto", error);
+      Swal.fire({
+        title: '¡Error al eliminar producto!',
+        text: error.response?.data?.message || 'Ocurrió un error inesperado',
+        icon: 'error',
+      });
+    }
+  };
+
   useEffect(() => {
     getProductos();
   }, []);
 
   return (
-    <GlobalContext.Provider value={{ ...state, getProductosById, getProductosAleatorios, getProductos, login, logout, getUsuarios, deleteUsuario }}>
+    <GlobalContext.Provider value={{ ...state, getProductosById, getProductosAleatorios, getProductos, deleteProducto, login, logout, getUsuarios, deleteUsuario }}>
       {children}
     </GlobalContext.Provider>
   );

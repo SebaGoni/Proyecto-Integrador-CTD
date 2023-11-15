@@ -73,7 +73,7 @@ const UserContainer = styled.div`
   background-color: white;
   border-radius: 20px;
   color: black;
-  margin: 30vh 1rem 1rem 1rem;
+  margin: 30vh 2rem 1rem 2rem;
   padding: 2rem;
   .iconArrow{
       margin-right: 2rem;
