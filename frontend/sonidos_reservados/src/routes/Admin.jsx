@@ -16,7 +16,11 @@ const Admin = () => {
       <Link to='/admin/productList'
         className='BotonAdmin'
         role="button">Lista de Productos
-      </Link>            
+      </Link>   
+      <Link to='/admin/userList'
+        className='BotonAdmin'
+        role="button">Usuarios
+      </Link>           
       </div>
     </MenuAdmin>
   )

@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 const initialState = {
   productos: [],
   productosAleatorios: [],
+  usuarios: [],
   email: localStorage.getItem('email') || null,
   lastname: localStorage.getItem('lastname') || null,
   firstname: localStorage.getItem('firstname') || null,
@@ -21,10 +22,17 @@ export const GlobalContext = createContext(initialState);
 
 const reducer = (state, action) => {
   switch (action.type) {
-    case "setProductos":
-      return { ...state, productos: action.payload };
-      case "setProductosAleatorios":
-        return { ...state, productosAleatorios: action.payload };  
+        case "setProductos":
+          return { ...state, productos: action.payload };
+        case "setProductosAleatorios":
+          return { ...state, productosAleatorios: action.payload }; 
+        case "usuarios":
+          return {...state, usuarios: action.payload}
+        case "eliminarUsuario":
+          const usuariosActualizados = state.usuarios.filter(
+            (usuario) => usuario.id !== action.payload
+          );
+          return { ...state, usuarios: usuariosActualizados };
         case "login":
           localStorage.setItem("firstname", action.payload.firstname);
           localStorage.setItem("lastname", action.payload.lastname);
@@ -115,6 +123,62 @@ export const GlobalProvider = ({ children }) => {
     }
   };
 
+  const getUsuarios = async () => {
+    try {
+      const response = await axios.get("http://ec2-54-198-119-206.compute-1.amazonaws.com:8080/usuarios", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+  
+      dispatch({ type: 'usuarios', payload: response.data });
+    } catch (error) {
+      console.error("Error al obtener usuarios", error);
+    }
+  };
+
+  const deleteUsuario = async (id) => {
+    try {
+      const confirmacion = await Swal.fire({
+        title: '¿Estás seguro?',
+        text: 'Esta acción es irreversible.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        cancelButtonText: 'Cancelar',
+        confirmButtonText: 'Sí, eliminar',
+      });
+  
+      if (confirmacion.isConfirmed) {
+        await axios.delete(
+          `http://ec2-54-198-119-206.compute-1.amazonaws.com:8080/usuarios/${id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
+        );
+  
+        dispatch({ type: "eliminarUsuario", payload: id });
+  
+        Swal.fire({
+          title: '¡Usuario eliminado exitosamente!',
+          icon: 'success',
+        });
+      } else {
+        console.log('Eliminación cancelada');
+      }
+    } catch (error) {
+      console.error("Error al eliminar usuario", error);
+      Swal.fire({
+        title: '¡Error al eliminar usuario!',
+        text: error.response?.data?.message || 'Ocurrió un error inesperado',
+        icon: 'error',
+      });
+    }
+  };
+
   const getProductos = async () => {
     const productosData = await fetchData(
       "http://ec2-54-198-119-206.compute-1.amazonaws.com:8080/productos"
@@ -141,7 +205,7 @@ export const GlobalProvider = ({ children }) => {
   }, []);
 
   return (
-    <GlobalContext.Provider value={{ ...state, getProductosById, getProductosAleatorios, getProductos, login, logout }}>
+    <GlobalContext.Provider value={{ ...state, getProductosById, getProductosAleatorios, getProductos, login, logout, getUsuarios, deleteUsuario }}>
       {children}
     </GlobalContext.Provider>
   );

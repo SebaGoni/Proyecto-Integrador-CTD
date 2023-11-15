@@ -12,6 +12,7 @@ import NuevoProducto from './routes/NuevoProducto';
 import Registro from './components/Registro';
 import { GlobalContext } from './components/utils/global_context';
 import Productos from './routes/Productos';
+import Usuarios from './routes/Usuarios';
 
 function App() {
 
@@ -32,6 +33,7 @@ function App() {
             <>
               <Route path="/admin" element={<Admin/>}></Route>
               <Route path="/admin/productList" element={<ListaDeProductos/>}></Route>
+              <Route path="/admin/userList" element={<Usuarios/>}></Route>
               <Route path="/admin/newProduct" element={<NuevoProducto/>}></Route>
             </>
           )}        
