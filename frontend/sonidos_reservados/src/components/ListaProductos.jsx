@@ -88,7 +88,7 @@ const ListaProductos = () => {
         </thead>
         {renderProductos()}
       </table>
-      <Link to='/Admin/Nuevo'
+      <Link to='/admin/newProduct'
               className='BotonAdmin'
               role="button"> Nuevo Producto
       </Link>

@@ -27,7 +27,7 @@ const Producto = ({index, id, nombre, categoria, precio, imagen, onDelete}) => (
 export default Producto;
 
 const StyledTd = styled.td`
-  diplay: flex;
+  display: flex;
   justify-content: space-between;
   .BotonEditar{
     background-color: #32CD32;
