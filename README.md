@@ -4,52 +4,55 @@ Proyecto integrador - Certified Tech Developer - Digital House - Equipo 5
 
 PLANNING
   Sprint 1:
-    Desarrollar la estructura básica del
-    sitio y agregar funcionalidades de
-    registro, visualización y eliminación
-    de productos.
+            Desarrollar la estructura básica del
+            sitio y agregar funcionalidades de
+            registro, visualización y eliminación
+            de productos.
 
-  #1: Colocar encabezado (Prioridad Alta)
-      Como usuario, quiero un encabezado que muestre el logo de la aplicación y una barra para facilitar la
-      navegación en el sitio.
+    #1: Colocar encabezado (Prioridad Alta)
+    #2: Definir el cuerpo del sitio (Prioridad Alta)
+    #3: Registrar producto (Prioridad Alta)
+    #4: Visualizar productos en el home (Prioridad Alta)
+    #5: Visualizar detalle de producto (Prioridad Alta)
+    #6: Visualizar galería de imágenes (Prioridad Alta)
+    #7: Colocar pie de página (Prioridad Baja)
+    #8: Paginar productos (Prioridad Baja)
+    #9: Panel de administración (Prioridad Media)
+    #10: Listar productos (Prioridad Media)
+    #11: Eliminar producto (Prioridad Baja)
 
-  #2: Definir el cuerpo del sitio (Prioridad Alta)
-      Como administrador, quiero que el color de fondo del sitio web esté en armonía con la identidad de marca de
-      la empresa para mejorar la estética y la coherencia visual de la aplicación.
+  Sprint 2:
+            Desarrollar la estructura básica del
+            login y registro de usuario, así
+            cómo implementar el detalle de
+            producto.
 
-  #3: Registrar producto (Prioridad Alta)
-      Como administrador, quiero poder agregar nuevos productos para mantener actualizado el catálogo de
-      productos disponibles.
+    #12: Categorizar productos (Prioridad Alta)
+    #13: Registrar usuario (Prioridad Alta)
+    #14: Identificar usuario (Prioridad Alta)
+    #15: Cerrar sesión (Prioridad Alta)
+    #16: Identificar administrador (Prioridad Alta)
+    #17: Administrar característica de producto (Prioridad Media)
+    #18: Visualizar características al producto (Prioridad Alta)
+    #19: Notificación: Confirmación de registro de usuario (Prioridad Media)
+    #20: Crear sección de categorías (Prioridad Media)
+    #21: Agregar categoria (Prioridad Baja)
 
-  #4: Visualizar productos en el home (Prioridad Alta)
-      Como usuario, quiero ver una lista de productos aleatorios en el home cuando ingreso por primera vez para
-      obtener referencias de productos que encontraré.
+    Sprint 3:
 
-  #5: Visualizar detalle de producto (Prioridad Alta)
-      Como usuario, quiero poder ingresar en el detalle del producto para conocer datos básicos de éste.
 
-  #6: Visualizar galería de imágenes (Prioridad Alta)
-      Como usuario quiero poder visualizar una galería de Imágenes del producto para tener una idea clara de
-      cómo se ve y facilitar mi decisión de reserva.
+    #22: Realizar búsqueda (Prioridad Alta)
+    #23: Visualizar disponibilidad (Prioridad Alta)
+    #24: Marcar como favorito (Prioridad Media)
+    #25: Listar productos favoritos (Prioridad Media)
+    #26: Ver bloque de políticas del producto (Prioridad Media)
+    #27: Redes: Compartir productos (Prioridad Baja)
+    #28: Puntuar producto (Prioridad Baja)
+    #29: Eliminar categoría (Prioridad Baja)
 
-  #7: Colocar pie de página (Prioridad Baja)
-      Como usuario, quiero un footer en la aplicación para poder mostrar información relevante de la empresa.
+    Sprint 4:
 
-  #8: Paginar productos (Prioridad Baja)
-      Como usuario, quiero ver resultados limitados en el home para ver el contenido de forma ordenada.
-
-  #9: Panel de administración (Prioridad Media)
-      Como administrador quiero poder ingresar a las funciones de administración de mi negocio de forma simple
-      para gestionarlo. 
-
-  #10: Listar productos (Prioridad Media)
-      Como administrador, quiero poder visualizar una lista de productos disponibles para poder gestionarlos con
-      facilidad.
-
-  #11: Eliminar producto (Prioridad Baja)
-      Como administrador, quiero poder eliminar un producto para mantener una lista actualizada y precisa de los
-      productos disponibles.
-
+    #30: 
       
 # E5-PI-instrumentosMusicales
-# E5-PI-instrumentosMusicales
+
