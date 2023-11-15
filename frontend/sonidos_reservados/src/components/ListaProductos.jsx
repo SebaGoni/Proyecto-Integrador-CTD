@@ -1,92 +1,70 @@
 import React from 'react'
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import styled from 'styled-components'
-import {useEffect, useState} from 'react';
-import axios from 'axios';
-import { data } from '../data';
-import Producto from './Producto';
-import Swal from 'sweetalert2';
+import { GlobalContext } from './utils/global_context';
+import { useState, useContext, useEffect } from 'react';
+import { AiOutlineArrowLeft } from 'react-icons/ai'
+
 
 const ListaProductos = () => {
-  const [productos, setProductos] = useState([]);
-    const getProductos = async () => {
-    try {
-      const response = await axios.get('http://ec2-54-198-119-206.compute-1.amazonaws.com:8080/productos');
-      setProductos(response.data);
-    } catch (error) {
-      console.error('Error fetching data:', error);
-      // You can add error handling logic here, such as showing an error message.
-    }
-  };
- 
-  useEffect(() => {
-    getProductos();
-  }, []);
   
-  const renderProductos = () => (
-    <tbody>
-      {productos.map((producto, index) => (
-        <Producto
-          key={index}
-          index={index}
-          id={producto.id}
-          nombre={producto.title}
-          categoria={producto.categoria.nombre}
-          precio={producto.price}
-          onDelete={handleDeleteProduct}
-        />)
-      )}
-    </tbody>
-  );
-  const handleDeleteProduct = (id) => {
-    Swal.fire({
-      title: 'Estas seguro?',
-      text: "Este producto no se podra recuperar",
-      type: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Si, Eliminar',
-    }).then((result)=>{
-      if (result.value){
-        deleteProducto(id);
-      }
-    })
-  };
-  const deleteProducto = (id) => {
-    axios.delete(`/products/${id}`)
-    data.delete(`/producto/${id}`)
-    .then(res => {
-      if (res.status !== 200 ) {
-        Swal.fire(
-          'Eliminar Producto',
-          'Error al eliminar producto',
-          'error'
-        );
-      }else{
-        Swal.fire(
-          'Eliminar producto',
-          res.data.message,
-          'success'
-        );
+  const { productos, getProductos, deleteProducto } = useContext(GlobalContext);
+  const [loaded, setLoaded] = useState(false);
+
+  useEffect(() => {
+      if (!loaded) {
         getProductos();
+        setLoaded(true);
       }
-    });
-  };
+    }, [getProductos, productos]);
+
   return (
     <ProductContainer>
-      <h2>Lista de Productos</h2>
+      <Link to='/admin'>
+        <AiOutlineArrowLeft className='iconArrow'/>
+      </Link>
+      <h2>Productos</h2>
       <table className='TablaDeProductos'>
         <thead>
           <tr>
             <th scope='col'>Id</th>
             <th scope='col'>Nombre</th>
             <th scope='col'>Categoria</th>
+            <th scope='col'>Descripción</th>
             <th scope='col'>Precio</th>
-            <th scope='col'>Accion</th>
           </tr>
         </thead>
-        {renderProductos()}
+        <tbody>
+            {productos.map((producto) => (
+                <>
+                    <tr className='thUsuarios'>
+                        <th>{producto.id}</th>
+                        <td>{producto.title}</td>
+                        <td>{producto.categoria.nombre}</td>
+                        <td> {producto.description.length > 20
+                  ? `${producto.description.slice(0, 20)}...`
+                  : producto.description}</td>
+                        <td>${producto.price}</td>
+                        <td>
+                            <Link to={`/admin/${producto.id}/editar`}
+                                className='BotonEditar'
+                                role='button'>
+                                Editar
+                            </Link>
+                        </td>
+                        <td>
+                            <button
+                                type="button"
+                                className='BotonEliminar'
+                                onClick={()=>{deleteProducto(producto.id)}}>
+                                Eliminar
+                            </button>
+                        </td>
+                    </tr>
+                </>
+                )
+            )}
+        </tbody>
       </table>
       <Link to='/admin/newProduct'
               className='BotonAdmin'
@@ -98,18 +76,25 @@ const ListaProductos = () => {
 
 export default ListaProductos;
 
-const ProductContainer = styled.div`
+const ProductContainer = styled.div`   
   background-color: white;
   border-radius: 20px;
   color: black;
-  margin: 1rem;
+  margin: 1rem 2rem 1rem 2rem;
   padding: 2rem;
+  .iconArrow{
+      margin-right: 2rem;
+      font-size: 2rem;
+      color: black;
+      cursor: pointer;
+    }
   h2{
     text-align: center;
   }
   table, th, tr {
+    text-align: center;
     border-bottom: solid .1px #e7e7e7;
-    padding: .5rem;
+    padding: 2rem;
     margin: auto;
   }
   .BotonAdmin{
@@ -127,5 +112,31 @@ const ProductContainer = styled.div`
     color: white;
   }
 
+.BotonEditar{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #32CD32;
+  padding: .5rem;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: white;
+  text-decoration: none;
+}
+.BotonEliminar{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #FF5733;
+  padding: .5rem;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-left: 1rem;
+  color: white;
+  cursor: pointer;
+}
 `
 
