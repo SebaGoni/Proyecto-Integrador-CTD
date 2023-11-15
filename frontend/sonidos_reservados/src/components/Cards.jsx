@@ -1,9 +1,6 @@
 import React, { useEffect, useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-
-import { data } from '../data';
-import { Link } from 'react-router-dom';
 import { GlobalContext } from '../components/utils/global_context';
 import { AiOutlineArrowLeft, AiOutlineArrowRight } from 'react-icons/ai';
 

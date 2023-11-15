@@ -69,7 +69,7 @@ const Navbar = () => {
             {token && userRol === 'USER' &&(
                 <div>
                    <div className='divInitials'>
-                        <h2 classname='initials' onClick={handleClickInitials}>{initials}</h2>
+                        <h2 className='initials' onClick={handleClickInitials}>{initials}</h2>
                     </div>
                     {clickedInitials && (
                         <h2 className='logout' onClick={logout}>CERRAR SESIÓN</h2>
@@ -78,7 +78,7 @@ const Navbar = () => {
             ) || token && userRol === 'ADMIN' && (
                 <div>
                     <div className='divInitials'>
-                        <h2 classname='initials' onClick={handleClickInitials}>{initials}</h2>
+                        <h2 className='initials' onClick={handleClickInitials}>{initials}</h2>
                     </div>
                     {clickedInitials && (
                         <>

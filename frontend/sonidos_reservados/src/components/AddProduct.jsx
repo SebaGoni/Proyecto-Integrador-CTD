@@ -133,7 +133,11 @@ const NuevoContainer = styled.div`
     background-color:white;
     color: black;
     margin: auto;
-    margin-top: 200px;
+    margin-top: 150px;
+    margin-bottom:50px; 
     text-align: center;
+    padding: 2rem;
+    
+
 
 `
