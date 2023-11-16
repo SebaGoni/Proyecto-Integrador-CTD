@@ -33,6 +33,14 @@ const reducer = (state, action) => {
             (usuario) => usuario.id !== action.payload
           );
           return { ...state, usuarios: usuariosActualizados };
+        case "updateUsuario":
+          const usuariosModificados = state.usuarios.map((usuario) => {
+            if (usuario.id === action.payload.id) {
+              return action.payload.updatedUsuario;
+            }
+            return usuario;
+          });
+          return { ...state, usuarios: usuariosModificados };
         case "eliminarProducto":
           const productosActualizados = state.productos.filter(
             (producto) => producto.id !== action.payload
@@ -142,6 +150,33 @@ export const GlobalProvider = ({ children }) => {
     }
   };
 
+  const updateUsuario = async (id, updatedData) => {
+    try {
+      const response = await axios.put(
+        `http://ec2-54-198-119-206.compute-1.amazonaws.com:8080/usuarios/${id}`,
+        updatedData,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      dispatch({ type: "updateUsuario", payload: { id, updatedUsuario: response.data } });
+  
+      Swal.fire({
+        title: '¡Usuario actualizado exitosamente!',
+        icon: 'success',
+      });
+    } catch (error) {
+      console.error("Error al actualizar usuario", error);
+      Swal.fire({
+        title: '¡Error al actualizar usuario!',
+        text: error.response?.data?.message || 'Ocurrió un error inesperado',
+        icon: 'error',
+      });
+    }
+  };
+
   const deleteUsuario = async (id) => {
     try {
       const confirmacion = await Swal.fire({
@@ -182,6 +217,18 @@ export const GlobalProvider = ({ children }) => {
         icon: 'error',
       });
     }
+  };
+
+  const getUsuarioById = async (id) => {
+    const usuarioData = await fetchData(
+      `http://ec2-54-198-119-206.compute-1.amazonaws.com:8080/usuarios/${id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
+    );
+    return usuarioData;
   };
 
   const getProductos = async () => {
@@ -252,7 +299,7 @@ export const GlobalProvider = ({ children }) => {
   }, []);
 
   return (
-    <GlobalContext.Provider value={{ ...state, getProductosById, getProductosAleatorios, getProductos, deleteProducto, login, logout, getUsuarios, deleteUsuario }}>
+    <GlobalContext.Provider value={{ ...state, getProductosById, getProductosAleatorios, getProductos, deleteProducto, login, logout, getUsuarios, deleteUsuario, updateUsuario, getUsuarioById }}>
       {children}
     </GlobalContext.Provider>
   );
