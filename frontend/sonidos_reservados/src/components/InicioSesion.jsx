@@ -20,11 +20,11 @@ const InicioSesion = () => {
                 <h2>Inicia Sesión</h2>
                 <div className='input-container'>
                     <div className='input-row'>
-                        <label htmlFor="username">Correo electrónico:</label>
+                        <label htmlFor="username">Correo electrónico</label>
                         <input type="text" id="username" name="username" value={username} onChange={(e) => setUsername(e.target.value)} required />
                     </div>
                     <div className='input-row'>
-                        <label htmlFor="password">Contraseña:</label>
+                        <label htmlFor="password">Contraseña</label>
                         <input type="password" id="password" name="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
                     </div>
                 </div>
@@ -56,7 +56,10 @@ const FormContainer = styled.div`
         border-bottom: solid #E7E7E7;
     }
     .input-container{
-        margin: 2rem;
+        display: flex;
+      flex-direction: column;
+      gap: 5px;
+      margin: 2rem;
     }
     .input-row{
         width: 300px;

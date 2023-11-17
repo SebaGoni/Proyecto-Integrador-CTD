@@ -36,8 +36,7 @@ const ListaProductos = () => {
         </thead>
         <tbody>
             {productos.map((producto) => (
-                <>
-                    <tr className='thUsuarios'>
+                    <tr key={producto.id} className='thUsuarios'>
                         <th>{producto.id}</th>
                         <td>{producto.title}</td>
                         <td>{producto.categoria.nombre}</td>
@@ -61,7 +60,6 @@ const ListaProductos = () => {
                             </button>
                         </td>
                     </tr>
-                </>
                 )
             )}
         </tbody>

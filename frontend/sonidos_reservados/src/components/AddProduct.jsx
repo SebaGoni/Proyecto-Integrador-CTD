@@ -1,127 +1,82 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import styled from 'styled-components';
-import {Link} from 'react-router-dom'
+import { GlobalContext } from './utils/global_context';
+import { Link } from 'react-router-dom';
+import { AiOutlineArrowLeft } from 'react-icons/ai'
 
 function AddProduct() {
-  const [title, setTitle] = useState('');
-  const [price, setPrice] = useState(0);
-  const [categoriaId, setCategoriaId] = useState('');
-  const [description, setDescription] = useState('');
-  const [image, setImage] = useState(null);
-  const [imagenes, setImagenes] = useState(null);
-  const URL = 'http://ec2-54-198-119-206.compute-1.amazonaws.com:8080/productos';
-  const [error, setError] = useState('');
+  const { postProducto, categorias, getCategorias } = useContext(GlobalContext);
+  const [loaded, setLoaded] = useState(false);
+  const [selectedCategoriaId, setSelectedCategoriaId] = useState('');
 
-  const handleTitleChange = (e) => {
-    setTitle(e.target.value);
-  };
-
-  const handlePriceChange = (e) => {
-    setPrice(e.target.value);
-  };
-
-  const handleCategoriaIdChange = (e) => {
-    setCategoriaId(e.target.value);
-  };
-
-  const handleDescriptionChange = (e) => {
-    setDescription(e.target.value);
-  };
-
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    setImage(file);
-  };
-
-  const handleImagenesChange = (e) => {
-    const file = e.target.files[0];
-    setImagenes(file);
-  };
-
-  const handleAddProduct = async () => {
-    // Realizar una consulta a la API para verificar si ya existe un producto con el mismo nombre
-    const isProductExists = await checkProductExistence(title);
-  
-    if (isProductExists) {
-      setError('Ya existe un producto con el mismo nombre. Introduce un nombre diferente.');
-      return; // Detener la función si el producto ya existe
+  useEffect(() => {
+    if (!loaded) {
+      getCategorias();
+      setLoaded(true);
     }
-  
-    const formData = new FormData();
-    formData.append('name', title);
-    formData.append('price', price);
-    formData.append('categoria', categoriaId);
-    formData.append('description', description);
-    formData.append('image', image);
-    formData.append('imagenes', imagenes);
-  
-    try {
-      const response = await fetch(URL, {
-        method: 'POST',
-        body: formData,
-      });
-  
-      if (response.ok) {
-        console.log('Producto agregado correctamente.');
-      } else {
-        const data = await response.json();
-        console.error('Error al agregar el producto:', data.error);
-        setError('Error al agregar el producto. Inténtalo de nuevo.');
-      }
-    } catch (error) {
-      console.error('Error en la solicitud:', error);
-      setError('Ocurrió un error al agregar el producto. Inténtalo de nuevo más tarde.');
-    }
-  };
-  
-  // Función para verificar si ya existe un producto con el mismo nombre
-  const checkProductExistence = async (title) => {
-    try {
-      const response = await fetch(`http://ec2-3-81-113-87.compute-1.amazonaws.com:8080/productos?name=${title}`, {
-        method: 'GET',
-      });
-  
-      if (response.ok) {
-        const data = await response.json();
-        return data.length > 0; // Devuelve true si ya existe un producto con el mismo nombre
-      } else {
-        console.error('Error al verificar la existencia del producto:', data.error);
-        return false;
-      }
-    } catch (error) {
-      console.error('Error en la solicitud:', error);
-      return false;
-    }
-  };       
+  }, [getCategorias, categorias]);
+
+  const crearProducto = () => {
+    const productForm = document.getElementById("productForm");
+    const formData = new FormData(productForm);
+    formData.append('categoriaId', selectedCategoriaId);
+    postProducto(formData);
+  }
+
+  const handleCategoriaChange = (event) => {
+    setSelectedCategoriaId(event.target.value);
+  }
 
   return (
     <NuevoContainer>
-      <h2>Agregar Producto</h2>
-      <Link to='/Admin'
-            className='BotonAdmin'
-            role="button"> Atras
-      </Link>
-      {error && <p>{error}</p>}
-      <form>
-        <label>Nombre del Producto:</label> <br />
-        <input type="text" value={title} onChange={handleTitleChange} />
+        <Link to='/admin'>
+          <AiOutlineArrowLeft className='iconArrow' />
+        </Link>
+      <form id="productForm">
+        <h1>Crear producto</h1>
 
-        <br /><label>Precio:</label> <br />
-        <input type="number" value={price} onChange={handlePriceChange} />
+        <GridContainer>
+         
+          <GridItem>
+            <label htmlFor="title">Nombre</label>
+            <input className='inputs' type="text" id="title" name="title" required />
+          </GridItem>
 
-        <br /><label>Categoria:</label> <br />
-        <input type="text" value={categoriaId} onChange={handleCategoriaIdChange} />
+          <GridItem>
+            <label htmlFor="description">Descripción</label>
+            <input className='inputs' id="description" name="description" required></input>
+          </GridItem>
 
-        <br /><label>Descripción del Producto:</label> <br />
-        <textarea value={description} onChange={handleDescriptionChange} />
+        
+          <GridItem>
+            <label htmlFor="categoriaId">Categoría</label>
+            <select className='inputs' id="categoriaId" name="categoriaId" value={selectedCategoriaId} onChange={handleCategoriaChange} required>
+              <option value="" disabled>Selecciona una categoría</option>
+              {categorias.map(categoria => (
+                <option key={categoria.id} value={categoria.id}>{categoria.nombre}</option>
+              ))}
+            </select>
+          </GridItem>
 
-        <br /><label>Imagen del Producto:</label> <br />
-        <input type="file" accept="image/*" onChange={handleImageChange} />
+          <GridItem>
+            <label htmlFor="price">Precio</label>
+            <input className='inputs' type="number" id="price" name="price" required />
+          </GridItem>
 
-        <br /><label>Galeria:</label> <br />
-        <input type="file" accept="imagenes/*" onChange={handleImagenesChange} />
+          
+          <GridItem>
+            <label htmlFor="image">Imagen de portada</label>
+            <input className='inputsImagenes' type="file" id="image" name="imagen" accept="image/*" required />
+          </GridItem>
 
-        <br /><button onClick={handleAddProduct}>Guardar Producto</button>
+          <GridItem>
+            <label htmlFor="imagenes">Imágenes de galería</label>
+            <input className='inputsImagenes' type="file" id="imagenes" name="imagenes" accept="image/*" multiple />
+          </GridItem>
+        </GridContainer>
+        <div className='divButton'>
+          <button type="button" onClick={crearProducto}>Crear</button>
+        </div>
       </form>
     </NuevoContainer>
   );
@@ -130,14 +85,84 @@ function AddProduct() {
 export default AddProduct;
 
 const NuevoContainer = styled.div`
-    background-color:white;
-    color: black;
-    margin: auto;
-    margin-top: 150px;
-    margin-bottom:50px; 
+  background-color: white;
+  border-radius: 20px;
+  color: black;
+  margin-top: 200px;
+  margin-bottom: 50px;
+  margin-right: 2rem;
+  margin-left: 2rem;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  h1 {
     text-align: center;
-    padding: 2rem;
-    
+  }
+  .divButton{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 50px;
+  }
+  button{
+    background-color: black;
+    color: white;
+    border-radius: 10px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 5px 30px;
+    cursor: pointer; 
+  }
+  .iconArrow{
+      position: absolute;
+      top: 14rem;
+      left: 4rem;
+      font-size: 2rem;
+      color: black;
+      cursor: pointer;
+    }
+`;
+
+const GridContainer = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  align-items: center; /* Centrar las columnas verticalmente */
+`;
+
+const GridItem = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: ${(props) => (props.colSpan ? '100%' : 'auto')};
+  grid-column: span ${(props) => (props.colSpan || 1)};
+  label{
+    font-weight: 600;
+    margin: auto;
+  }
+  .inputs{
+    border-radius: 10px;
+    border: solid .5px #7A7A7A;
+    height: 25px;
+    width: 250px;
+    margin: auto;
+    padding-left: 8px;
+  }
+  .inputsImagenes{
+    background-color: black;
+    color: white;
+    border-radius: 10px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 5px 30px;
+    cursor: pointer;
+    margin: auto;
+  }
+`;
 
 
-`
+
+
