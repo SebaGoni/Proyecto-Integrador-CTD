@@ -10,11 +10,9 @@ const Nosotros = () => {
             <ul>
                 <li>Camila Michelle Yeber (Scrum Master)</li>
                 <li>Alan Oliva (TL Backend)</li>
-                <li>Daniel Pomareda (TL Infraestructura)</li>
-                <li>Amy Montenegro (TL Frontend/ Ref UX-UI)</li>
+                <li>Daniel Pomareda (TL Testing)</li>
+                <li>Amy Montenegro (TL Ref UX-UI / Front)</li>
                 <li>Sebastian Goñi (TL Backend)</li>
-                <li>Gastón Cordoba Redondo (TL Frontend)</li>
-                <li>Facundo Maqueda (TL BBDD)</li>
                 <li>Facundo Recabarren (TL Frontend)</li>
             </ul> 
         </UsContainer>
