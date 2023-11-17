@@ -1,127 +1,162 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import {Link} from 'react-router-dom'
+import { useNavigate, Link} from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 function AddProduct() {
-  const [title, setTitle] = useState('');
-  const [price, setPrice] = useState(0);
-  const [categoriaId, setCategoriaId] = useState('');
-  const [description, setDescription] = useState('');
-  const [image, setImage] = useState(null);
-  const [imagenes, setImagenes] = useState(null);
+  
+  const navigate = useNavigate();
   const URL = 'http://ec2-54-198-119-206.compute-1.amazonaws.com:8080/productos';
-  const [error, setError] = useState('');
 
-  const handleTitleChange = (e) => {
-    setTitle(e.target.value);
+  const [productData, setProductData] = useState({
+    title: '',
+    price: '',
+    categoriaId: '',
+    description: '',
+    image: '',
+    imagenes: '',
+  });
+
+  const handleInputChange = (e) => {
+    const {name, value} = e.target;
+    setProductData({ ...productData, [name]: value});
   };
 
-  const handlePriceChange = (e) => {
-    setPrice(e.target.value);
-  };
-
-  const handleCategoriaIdChange = (e) => {
-    setCategoriaId(e.target.value);
-  };
-
-  const handleDescriptionChange = (e) => {
-    setDescription(e.target.value);
-  };
-
-  const handleImageChange = (e) => {
+  const handleImageChange = async (e) => {
     const file = e.target.files[0];
-    setImage(file);
-  };
-
-  const handleImagenesChange = (e) => {
-    const file = e.target.files[0];
-    setImagenes(file);
-  };
-
-  const handleAddProduct = async () => {
-    // Realizar una consulta a la API para verificar si ya existe un producto con el mismo nombre
-    const isProductExists = await checkProductExistence(title);
-  
-    if (isProductExists) {
-      setError('Ya existe un producto con el mismo nombre. Introduce un nombre diferente.');
-      return; // Detener la función si el producto ya existe
+    if (file) {
+      try {
+        const base64Image = await getBase64(file);
+        setProductData({ ...productData, image: base64Image });
+      } catch (error) {
+        console.error('Error converting image to base64:', error);
+      }
     }
-  
-    const formData = new FormData();
-    formData.append('name', title);
-    formData.append('price', price);
-    formData.append('categoria', categoriaId);
-    formData.append('description', description);
-    formData.append('image', image);
-    formData.append('imagenes', imagenes);
+  };
+
+  const handleImagenesChange = async (e) => {
+    const files = e.target.files;
+    if (files.length > 0) {
+      try {
+        const base64Images = await Promise.all(
+          Array.from(files).map(async (file) => await getBase64(file))
+        );
+        setProductData({ ...productData, imagenes: base64Images });
+      } catch (error) {
+        console.error('Error converting images to base64:', error);
+      }
+    }
+  };
+
+  const getBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result.split(',')[1]);
+      reader.onerror = (error) => reject(error);
+    });
+  };
+
+  const submitProduct = async () => {
+    const jsonObject = {
+      title: productData.title,
+      price: productData.price,
+      categoriaId: productData.categoriaId,
+      description: productData.description,
+      image: productData.image,
+      imagenes: productData.imagenes,
+    };
   
     try {
       const response = await fetch(URL, {
         method: 'POST',
-        body: formData,
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(jsonObject),
       });
-  
-      if (response.ok) {
+
+      console.log('Response status:', response.status);
+      console.log('Response body:', await response.text())
+
+      if (response.status === 200) {
         console.log('Producto agregado correctamente.');
+        Swal.fire({
+          title: 'Registro exitoso',
+              text: '¡Tu producto fue agregado a la lista!',
+              icon: 'success',
+        })
+        navigate('/Admin/productList')
       } else {
-        const data = await response.json();
-        console.error('Error al agregar el producto:', data.error);
-        setError('Error al agregar el producto. Inténtalo de nuevo.');
+        Swal.fire({
+          title: '¡Error al ingresar producto!',
+              text: 'Intenta nuevamente',
+              icon: 'error',
+        })
       }
     } catch (error) {
       console.error('Error en la solicitud:', error);
-      setError('Ocurrió un error al agregar el producto. Inténtalo de nuevo más tarde.');
     }
-  };
-  
-  // Función para verificar si ya existe un producto con el mismo nombre
-  const checkProductExistence = async (title) => {
-    try {
-      const response = await fetch(`http://ec2-3-81-113-87.compute-1.amazonaws.com:8080/productos?name=${title}`, {
-        method: 'GET',
-      });
-  
-      if (response.ok) {
-        const data = await response.json();
-        return data.length > 0; // Devuelve true si ya existe un producto con el mismo nombre
-      } else {
-        console.error('Error al verificar la existencia del producto:', data.error);
-        return false;
-      }
-    } catch (error) {
-      console.error('Error en la solicitud:', error);
-      return false;
-    }
-  };       
+  };  
 
   return (
     <NuevoContainer>
-      <h2>Agregar Producto</h2>
-      <Link to='/Admin'
-            className='BotonAdmin'
-            role="button"> Atras
-      </Link>
-      {error && <p>{error}</p>}
       <form>
-        <label>Nombre del Producto:</label> <br />
-        <input type="text" value={title} onChange={handleTitleChange} />
+        <h2>Agregar Producto</h2>
+        <Link to='/Admin'
+              className='BotonAtras'> 
+              Atras
+        </Link>
+        <ContainerForm>
+          <div className='input-row'>
+                  <label htmlFor="title">Nombre del Producto:</label>
+                  <input type="text" id="title" name="title" value={productData.title} onChange={handleInputChange} required />
+          </div>
 
-        <br /><label>Precio:</label> <br />
-        <input type="number" value={price} onChange={handlePriceChange} />
+          <div className='input-row'>
+                  <label htmlFor="price">Precio por Hora:</label>
+                  <input type="number" id="price" name="price" value={productData.price} onChange={handleInputChange} required />
+          </div>
 
-        <br /><label>Categoria:</label> <br />
-        <input type="text" value={categoriaId} onChange={handleCategoriaIdChange} />
+          <div className='input-row'>
+                  <label htmlFor="categoriaId">Indice de Categoria:</label>
+                  <input type="number" id="categoriaId" name="categoriaId" value={productData.categoriaId} onChange={handleInputChange} required />
+          </div> 
 
-        <br /><label>Descripción del Producto:</label> <br />
-        <textarea value={description} onChange={handleDescriptionChange} />
+          <div className='input-row'>
+                  <label htmlFor="description">Descripcion del Producto:</label>
+                  <textarea type="text" id="description" name="description" value={productData.description} onChange={handleInputChange} required />
+          </div> 
+        
+          <div className='input-row'>
+                  <label htmlFor="image">Imagen del Producto:</label>
+                  <input 
+                  type="file" 
+                  accept="image/*" 
+                  id="image" 
+                  name="image" 
+                  onChange={handleImageChange} 
+                  required />
+          </div> 
 
-        <br /><label>Imagen del Producto:</label> <br />
-        <input type="file" accept="image/*" onChange={handleImageChange} />
-
-        <br /><label>Galeria:</label> <br />
-        <input type="file" accept="imagenes/*" onChange={handleImagenesChange} />
-
-        <br /><button onClick={handleAddProduct}>Guardar Producto</button>
+          <div className='input-row'>
+                  <label htmlFor="image">Galeria del Producto:</label>
+                  <input 
+                  type="file" 
+                  accept="imagenes/*" 
+                  id="imagenes" 
+                  name="imagenes" 
+                  onChange={handleImagenesChange} 
+                  required 
+                  multiple/>
+          </div>          
+        </ContainerForm> 
+        <button className="BotonGuardarProduct" 
+          type="button"
+          onClick={submitProduct}>
+            Guardar Producto
+          </button>
       </form>
     </NuevoContainer>
   );
@@ -132,12 +167,63 @@ export default AddProduct;
 const NuevoContainer = styled.div`
     background-color:white;
     color: black;
-    margin: auto;
-    margin-top: 150px;
+    margin-top: 200px;
     margin-bottom:50px; 
-    text-align: center;
+    text-align: left;
     padding: 2rem;
+    display: Block;
+    justify-content: center;
+    h2{
+      display: block;
+      width: 1200px;
+    }
+    .BotonAtras{
+      background-color: #7E57C2;
+      margin-left: 50rem;
+      padding:.3rem 2rem;
+      color: white;
+      border-radius: 30px;
+    }
+    button{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 200px;
+        margin: auto;
+        margin-top: 50px;
+        margin-bottom: 50px;
+        border: solid .1px gray;
+        border-radius: 10px;
+        padding: 1rem;
+        background-color: black;
+        color: white;
+        font-size: 1rem;
+        font-weight: 600;
+      }
+`
+const ContainerForm = styled.div`
+    .input-row{
+      margin: auto;
+      width: 900px;
+      margin:1rem;
+      padding: .5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      text-align: left;
+
+      input{
+        margin: 1rem;
+        padding: .3rem;
+        width: 70%;
+      }
+      textarea{
+        margin: 1rem;
+        padding: .3rem;
+        width: 70%;
+        height: 100px;
+      }
+      
+    }
     
-
-
 `
