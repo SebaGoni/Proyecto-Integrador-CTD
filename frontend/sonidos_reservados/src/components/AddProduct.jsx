@@ -1,229 +1,159 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import styled from 'styled-components';
-import { useNavigate, Link} from 'react-router-dom';
-import Swal from 'sweetalert2';
+import { GlobalContext } from './utils/global_context';
+import { Link } from 'react-router-dom';
+import { AiOutlineArrowLeft } from 'react-icons/ai'
 
 function AddProduct() {
-  
-  const navigate = useNavigate();
-  const URL = 'http://ec2-54-198-119-206.compute-1.amazonaws.com:8080/productos';
+  const { postProducto, categorias, getCategorias } = useContext(GlobalContext);
+  const [loaded, setLoaded] = useState(false);
+  const [selectedCategoriaId, setSelectedCategoriaId] = useState('');
 
-  const [productData, setProductData] = useState({
-    title: '',
-    price: '',
-    categoriaId: '',
-    description: '',
-    image: '',
-    imagenes: '',
-  });
-
-  const handleInputChange = (e) => {
-    const {name, value} = e.target;
-    setProductData({ ...productData, [name]: value});
-  };
-
-  const handleImageChange = async (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      try {
-        const base64Image = await getBase64(file);
-        setProductData({ ...productData, image: base64Image });
-      } catch (error) {
-        console.error('Error converting image to base64:', error);
-      }
+  useEffect(() => {
+    if (!loaded) {
+      getCategorias();
+      setLoaded(true);
     }
-  };
+  }, [getCategorias, categorias]);
 
-  const handleImagenesChange = async (e) => {
-    const files = e.target.files;
-    if (files.length > 0) {
-      try {
-        const base64Images = await Promise.all(
-          Array.from(files).map(async (file) => await getBase64(file))
-        );
-        setProductData({ ...productData, imagenes: base64Images });
-      } catch (error) {
-        console.error('Error converting images to base64:', error);
-      }
-    }
-  };
+  const crearProducto = () => {
+    const productForm = document.getElementById("productForm");
+    const formData = new FormData(productForm);
+    formData.append('categoriaId', selectedCategoriaId);
+    postProducto(formData);
+  }
 
-  const getBase64 = (file) => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => resolve(reader.result.split(',')[1]);
-      reader.onerror = (error) => reject(error);
-    });
-  };
-
-  const submitProduct = async () => {
-    const jsonObject = {
-      title: productData.title,
-      price: productData.price,
-      categoriaId: productData.categoriaId,
-      description: productData.description,
-      image: productData.image,
-      imagenes: productData.imagenes,
-    };
-  
-    try {
-      const response = await fetch(URL, {
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(jsonObject),
-      });
-
-      console.log('Response status:', response.status);
-      console.log('Response body:', await response.text())
-
-      if (response.status === 200) {
-        console.log('Producto agregado correctamente.');
-        Swal.fire({
-          title: 'Registro exitoso',
-              text: '¡Tu producto fue agregado a la lista!',
-              icon: 'success',
-        })
-        navigate('/Admin/productList')
-      } else {
-        Swal.fire({
-          title: '¡Error al ingresar producto!',
-              text: 'Intenta nuevamente',
-              icon: 'error',
-        })
-      }
-    } catch (error) {
-      console.error('Error en la solicitud:', error);
-    }
-  };  
+  const handleCategoriaChange = (event) => {
+    setSelectedCategoriaId(event.target.value);
+  }
 
   return (
     <NuevoContainer>
-      <form>
-        <h2>Agregar Producto</h2>
-        <Link to='/Admin'
-              className='BotonAtras'> 
-              Atras
+        <Link to='/admin'>
+          <AiOutlineArrowLeft className='iconArrow' />
         </Link>
-        <ContainerForm>
-          <div className='input-row'>
-                  <label htmlFor="title">Nombre del Producto:</label>
-                  <input type="text" id="title" name="title" value={productData.title} onChange={handleInputChange} required />
-          </div>
+      <form id="productForm">
+        <h1>Crear producto</h1>
 
-          <div className='input-row'>
-                  <label htmlFor="price">Precio por Hora:</label>
-                  <input type="number" id="price" name="price" value={productData.price} onChange={handleInputChange} required />
-          </div>
+        <GridContainer>
+         
+          <GridItem>
+            <label htmlFor="title">Nombre</label>
+            <input className='inputs' type="text" id="title" name="title" required />
+          </GridItem>
 
-          <div className='input-row'>
-                  <label htmlFor="categoriaId">Indice de Categoria:</label>
-                  <input type="number" id="categoriaId" name="categoriaId" value={productData.categoriaId} onChange={handleInputChange} required />
-          </div> 
+          <GridItem>
+            <label htmlFor="description">Descripción</label>
+            <input className='inputs' id="description" name="description" required></input>
+          </GridItem>
 
-          <div className='input-row'>
-                  <label htmlFor="description">Descripcion del Producto:</label>
-                  <textarea type="text" id="description" name="description" value={productData.description} onChange={handleInputChange} required />
-          </div> 
         
-          <div className='input-row'>
-                  <label htmlFor="image">Imagen del Producto:</label>
-                  <input 
-                  type="file" 
-                  accept="image/*" 
-                  id="image" 
-                  name="image" 
-                  onChange={handleImageChange} 
-                  required />
-          </div> 
+          <GridItem>
+            <label htmlFor="categoriaId">Categoría</label>
+            <select className='inputs' id="categoriaId" name="categoriaId" value={selectedCategoriaId} onChange={handleCategoriaChange} required>
+              <option value="" disabled>Selecciona una categoría</option>
+              {categorias.map(categoria => (
+                <option key={categoria.id} value={categoria.id}>{categoria.nombre}</option>
+              ))}
+            </select>
+          </GridItem>
 
-          <div className='input-row'>
-                  <label htmlFor="image">Galeria del Producto:</label>
-                  <input 
-                  type="file" 
-                  accept="imagenes/*" 
-                  id="imagenes" 
-                  name="imagenes" 
-                  onChange={handleImagenesChange} 
-                  required 
-                  multiple/>
-          </div>          
-        </ContainerForm> 
-        <button className="BotonGuardarProduct" 
-          type="button"
-          onClick={submitProduct}>
-            Guardar Producto
-          </button>
-      </form>
-    </NuevoContainer>
-  );
-}
+          <GridItem>
+            <label htmlFor="price">Precio</label>
+            <input className='inputs' type="number" id="price" name="price" required />
+          </GridItem>
 
-export default AddProduct;
+          
+          <GridItem>
+            <label htmlFor="image">Imagen de portada</label>
+            <input className='inputsImagenes' type="file" id="image" name="imagen" accept="image/*" required />
+          </GridItem>
+
+          <GridItem>
+            <label htmlFor="imagenes">Imágenes de galería</label>
+            <input className='inputsImagenes' type="file" id="imagenes" name="imagenes" accept="image/*" multiple />
+          </GridItem>
+        </GridContainer>
+        <div className='divButton'>
+          <button type="button" onClick={crearProducto}>Crear</button>
+        </div>
+
 
 const NuevoContainer = styled.div`
-    background-color:white;
-    color: black;
-    margin-top: 200px;
-    margin-bottom:50px; 
-    text-align: left;
-    padding: 2rem;
-    display: Block;
+  background-color: white;
+  border-radius: 20px;
+  color: black;
+  margin-top: 200px;
+  margin-bottom: 50px;
+  margin-right: 2rem;
+  margin-left: 2rem;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  h1 {
+    text-align: center;
+  }
+  .divButton{
+    display: flex;
     justify-content: center;
-    h2{
-      display: block;
-      width: 1200px;
+    align-items: center;
+    margin: 50px;
+  }
+  button{
+    background-color: black;
+    color: white;
+    border-radius: 10px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 5px 30px;
+    cursor: pointer; 
+  }
+  .iconArrow{
+      position: absolute;
+      top: 14rem;
+      left: 4rem;
+      font-size: 2rem;
+      color: black;
+      cursor: pointer;
     }
-    .BotonAtras{
-      background-color: #7E57C2;
-      margin-left: 50rem;
-      padding:.3rem 2rem;
-      color: white;
-      border-radius: 30px;
-    }
-    button{
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 200px;
-        margin: auto;
-        margin-top: 50px;
-        margin-bottom: 50px;
-        border: solid .1px gray;
-        border-radius: 10px;
-        padding: 1rem;
-        background-color: black;
-        color: white;
-        font-size: 1rem;
-        font-weight: 600;
-      }
-`
-const ContainerForm = styled.div`
-    .input-row{
-      margin: auto;
-      width: 900px;
-      margin:1rem;
-      padding: .5rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      text-align: left;
+`;
 
-      input{
-        margin: 1rem;
-        padding: .3rem;
-        width: 70%;
-      }
-      textarea{
-        margin: 1rem;
-        padding: .3rem;
-        width: 70%;
-        height: 100px;
-      }
-      
-    }
-    
-`
+const GridContainer = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  align-items: center; /* Centrar las columnas verticalmente */
+`;
+
+const GridItem = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: ${(props) => (props.colSpan ? '100%' : 'auto')};
+  grid-column: span ${(props) => (props.colSpan || 1)};
+  label{
+    font-weight: 600;
+    margin: auto;
+  }
+  .inputs{
+    border-radius: 10px;
+    border: solid .5px #7A7A7A;
+    height: 25px;
+    width: 250px;
+    margin: auto;
+    padding-left: 8px;
+  }
+  .inputsImagenes{
+    background-color: black;
+    color: white;
+    border-radius: 10px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 5px 30px;
+    cursor: pointer;
+    margin: auto;
+  }
+`;

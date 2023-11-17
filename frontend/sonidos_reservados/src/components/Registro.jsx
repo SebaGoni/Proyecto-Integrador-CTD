@@ -59,22 +59,22 @@ const Registro = () => {
 
 
             <div className='input-row'>
-                <label htmlFor="firstname">Nombre:</label>
+                <label htmlFor="firstname">Nombre</label>
                 <input type="text" id="firstname" name="firstname" value={formData.firstname} onChange={handleInputChange} required />
             </div>
 
             <div className='input-row'>
-                <label htmlFor="lastname">Apellido:</label>
+                <label htmlFor="lastname">Apellido</label>
                 <input type="text" id="lastname" name="lastname" value={formData.lastname} onChange={handleInputChange} required />
             </div>
 
             <div className='input-row'>
-                <label htmlFor="email">Correo Electrónico:</label>
+                <label htmlFor="email">Correo Electrónico</label>
                 <input type="email" id="email" name="email" value={formData.email} onChange={handleInputChange} required />
             </div>
             
             <div className='input-row'>
-                <label htmlFor="password">Contraseña:</label>
+                <label htmlFor="password">Contraseña</label>
                 <input type="password" id="password" name="password" value={formData.password} onChange={handleInputChange} required />
             </div>
         </div>
@@ -102,13 +102,15 @@ const FormContainer = styled.div`
     padding: 2rem;
     font-family: 'Poppins', sans-serif;
     text-align: center; 
-
     h2{ 
         padding-bottom: 5px;
         border-bottom: solid #E7E7E7;
     }
     .input-container{
-        margin: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      margin: 2rem;
     }
     .input-row{
         width: 300px;
