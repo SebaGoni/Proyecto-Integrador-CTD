@@ -13,6 +13,7 @@ import Registro from './components/Registro';
 import { GlobalContext } from './components/utils/global_context';
 import Productos from './routes/Productos';
 import Usuarios from './routes/Usuarios';
+import InfoUsuario from './routes/InfoUsuario';
 
 function App() {
 
@@ -29,6 +30,7 @@ function App() {
           <Route path="/products" element={<Productos/>}></Route>
           <Route path="/details/:id" element={<Details/>}></Route>
           <Route path="/about" element={<Nosotros/>}></Route>
+          <Route path="/account" element={<InfoUsuario/>}></Route>
           {userRol === "ADMIN" &&(
             <>
               <Route path="/admin" element={<Admin/>}></Route>

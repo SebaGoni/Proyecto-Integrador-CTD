@@ -100,7 +100,7 @@ const DetailContainer = styled.div`
       color: black;
       cursor: pointer;
     }
-    ////////////////////////////////////////////////////////////////////////
+
     .divBody{
       background-color: white;
       border-radius: 60px;
@@ -156,7 +156,7 @@ const DetailContainer = styled.div`
         height: 150px;
         }
     }
-///////////////////////////////////////////////////////////////////////////////////////////////
+
     .divBodyText{
       background-color: #D9D9D9;
       border-radius: 60px;

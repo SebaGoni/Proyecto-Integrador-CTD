@@ -2,6 +2,7 @@ import React, {useState, useContext} from 'react';
 import styled from "styled-components";
 import BurgerButton from './BurgerButton';
 import { GlobalContext } from './utils/global_context';
+import { Link } from 'react-router-dom';
 
 const Navbar = () => {
 
@@ -38,6 +39,9 @@ const Navbar = () => {
                     {clickedInitials && (
                         <h2 className='logout' onClick={logout}>CERRAR SESIÓN</h2>
                     )}
+                    <Link to='/account'>
+                        <h2 className='perfil'>Perfil</h2>
+                    </Link>
                 </div>
             ) || token && userRol === 'ADMIN' && (
                 <div>
@@ -48,6 +52,9 @@ const Navbar = () => {
                         <>
                             <h2 className='logout' onClick={logout}>CERRAR SESIÓN</h2>
                             <a className='linkAdmin' href="/admin">ADMINISTRACIÓN</a>
+                            <Link to='/account'>
+                                <h2 className='perfil'>PERFIL</h2>
+                            </Link>
                         </>
                     )}  
                 </div>
@@ -112,10 +119,29 @@ const NavContainer = styled.nav`
         border-radius: 20px;
         color: white;
         position: absolute;
+        top: 170px;
+        right: 10px;
+        font-size: 20px;
+        font-weight: 500;
+        box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.75);
+        -webkit-box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.75);
+        -moz-box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.75);
+    }
+    .perfil{
+        cursor: pointer;
+        background:#3F51B5;
+        background-image: linear-gradient(#7E57C2 50%, #3F51B5);
+        padding: 5px 8px;
+        border-radius: 20px;
+        color: white;
+        position: absolute;
         top: 80px;
         right: 10px;
         font-size: 20px;
         font-weight: 500;
+        box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.75);
+        -webkit-box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.75);
+        -moz-box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.75);
     }
     .linkAdmin{
         background:#3F51B5;
@@ -129,6 +155,9 @@ const NavContainer = styled.nav`
         font-size: 20px;
         font-weight: 500;
         text-decoration: none;
+        box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.75);
+        -webkit-box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.75);
+        -moz-box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.75);
     }
 `
 const BgDiv = styled.nav`
