@@ -284,7 +284,6 @@ export const GlobalProvider = ({ children }) => {
     }
   };
   
-
   const deleteProducto = async (id) => {
     try {
       const confirmacion = await Swal.fire({
