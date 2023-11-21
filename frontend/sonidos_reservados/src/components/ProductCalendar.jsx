@@ -5,8 +5,14 @@ import "react-datepicker/dist/react-datepicker.css";
 import 'react-datepicker/dist/react-datepicker-cssmodules.css';
 import moment from 'moment';
 import Swal from 'sweetalert2';
+import Modal from 'react-modal';
+import styled from "styled-components";
+
+Modal.setAppElement('#root');
 
 const ProductCalendar = () => {
+
+  const [modalIsOpen, setModalIsOpen] = useState(false);
   const [productos, setProductos] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [fechasReservadas, setFechasReservadas] = useState([]);
@@ -15,6 +21,14 @@ const ProductCalendar = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const { userRol } = useContext(GlobalContext);
   const { getReservaData } = useContext(GlobalContext);
+  
+  const closeModal = () => {
+    setModalIsOpen(false);
+  };
+
+  const openModal = () => {
+    setModalIsOpen(true);
+  };
 
   useEffect(() => {
     obtenerProductos();
@@ -93,7 +107,7 @@ const ProductCalendar = () => {
       if (userRol === 'USER') {
         // Realizar la reserva si el rol es USER
         localStorage.setItem('reservaData', JSON.stringify({ idProducto: selectedProduct.id, fechaInicio: startDate, fechaFin: endDate }));
-        window.location.href = "/NuevaReserva";
+        window.location.href = "/newReservation";
       } else {
         // Mostrar mensaje con SweetAlert si el rol no es USER
         Swal.fire({
@@ -112,49 +126,65 @@ const ProductCalendar = () => {
   };
 
   return (
-    <div>
-      <h1>Reserva tu instrumento</h1>
-      <div style={{ position: "relative", width: "201px" }}>
-  <input
-    style={{
-      width: "100%",
-      padding: "5px 25px 5px 7px",
-      boxSizing: "border-box"
-    }}
-    type="text"
-    placeholder="Buscar Producto"
-    value={searchTerm}
-    onChange={(e) => setSearchTerm(e.target.value)}
-  />
-  {searchTerm && (
-    <button
-      style={{
-        position: "absolute",
-        top: "50%",
-        right: "5px",
-        transform: "translateY(-50%)",
-        background: "transparent",
-        border: "none",
-        cursor: "pointer",
-        padding: "2px"
-      }}
-      onClick={() => setSearchTerm("")}
-    >
-      X
-    </button>
-  )}
-</div>
-
-<ul style={{ listStyleType: 'none', padding: 0 }}>
-  {productos.map((producto) => (
-    <li key={producto.id} onClick={() => handleProductSelection(producto)}>
-      <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
-        <img src={producto.image} alt={producto.title} style={{ width: '50px', height: '50px', marginRight: '20px', cursor: 'pointer' }} />
-        <div style={{ cursor: 'pointer' }}>{producto.title}</div>
-      </div>
-    </li>
-  ))}
-</ul>
+    <ReservaContainer>
+      <button className="btnReserva" onClick={openModal}>Reserva tu instrumento</button>
+      <Modal  style={{
+            content: {
+              top: '50%',
+              left: '50%',
+              right: 'auto',
+              bottom: 'auto',
+              borderRadius: '20px',
+              marginRight: '-50%',
+              marginTop: '30px',
+              transform: 'translate(-50%, -50%)',
+              color: 'black',
+              textAlign: 'center',
+              width: '1000px',
+              height: '300px',
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-between",
+              alignItems: "center"
+            },
+          }}
+          isOpen={modalIsOpen}
+          onRequestClose={closeModal}>
+      <input
+        style={{
+          width: "100%",
+          padding: "5px 25px 5px 7px",
+          boxSizing: "border-box"
+        }}
+        type="text"
+        placeholder="Buscar Producto"
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+      />
+    <ul style={{ listStyleType: 'none', padding: 0 }}>
+      {productos.map((producto) => (
+        <li key={producto.id} onClick={() => handleProductSelection(producto)}>
+          <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
+            <img src={producto.image} alt={producto.title} style={{ width: '50px', height: '50px', marginRight: '20px', cursor: 'pointer' }} />
+            <div style={{ cursor: 'pointer' }}>{producto.title}</div>
+          </div>
+        </li>
+      ))}
+    </ul>
+    <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+  
+    <button onClick={closeModal} style={{
+            marginRight: "10px",
+            padding: "8px 18px",
+            background: "#b20e0e",
+            color: "white",
+            border: "none",
+            borderRadius: "5px",
+            cursor: "pointer",
+            transition: "background 0.3s ease",
+            fontFamily: 'Poppins',
+            fontWeight: 600,
+          }}>Cerrar</button>
       <DatePicker
         showIcon
         icon={
@@ -196,15 +226,41 @@ const ProductCalendar = () => {
       <button onClick={handleReserveClick}style={{
             marginLeft: "10px",
             padding: "8px 18px",
-            background: "#828282",
+            background: "#3F51B5",
             color: "white",
             border: "none",
             borderRadius: "5px",
             cursor: "pointer",
             transition: "background 0.3s ease",
+            fontFamily: 'Poppins',
+            fontWeight: 600,
           }}>Reservar</button>
     </div>
+      </Modal>
+    </ReservaContainer>
   );
 }
 
 export default ProductCalendar;
+
+const ReservaContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .btnReserva{
+    margin-top: 30px;
+    cursor: pointer;
+    text-align: center;
+    border-radius: 20px;
+    color: white;
+    background-color: #3F51B5;
+    padding: 20px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+    border: none;
+    box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.75);
+        -webkit-box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.75);
+        -moz-box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.75);
+  }
+`

@@ -1,14 +1,14 @@
 import React from 'react'
-import Navbar from '../components/Navbar'
 import Form from '../components/Form'
 import Categorias from '../components/Categorias'
 import Cards from '../components/Cards'
-import Footer from '../components/Footer'
+import ProductCalendar from '../components/ProductCalendar'
 
 const Home = () => {
   return (
     <main>
       <Form/>
+      <ProductCalendar/>
       <Categorias/>
       <Cards/>    
     </main>
