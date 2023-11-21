@@ -60,7 +60,7 @@ function AddReserva() {
           text: '¡Tu reserva ha sido confirmada!',
           icon: 'success',
         }).then(() => {
-          window.location.href = "/Reservas";
+          window.location.href = "/reservations";
         });
       } else {
         localStorage.removeItem('reservaData');

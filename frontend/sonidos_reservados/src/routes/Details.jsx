@@ -61,8 +61,8 @@ const Details = () => {
     }
     return (
       <div className='stars'>
-        {starIcons}
         <span className='rating-number'>{Math.round(averageRating)}/5</span>
+        {starIcons}
       </div>
     );
   };
@@ -123,14 +123,14 @@ const Details = () => {
         <p className='description'>{product.description}</p>
         <h2>CARACTERÍSTICAS DEL PRODUCTO</h2>
         <div className='caractDiv'>
-          {product.caracteristicas.map(caract =>(
-            <div className='caracteristicas'>
+          {product.caracteristicas.map((caract, index) =>(
+            <div className='caracteristicas' key={index}>
               <h3 className='caractTitle'>{caract.nombre.toUpperCase()}</h3>
               <img className='caractImg' src={caract.image} alt="" />
             </div>
           ))}
         </div>
-        <div>
+        <div style={{ marginTop: '20px' }}>
           <h2>VALORACIONES DEL PRODUCTO</h2>
           {renderStars(averageRating)}
           <button className='verComentarios' onClick={handleStarClick}>Ver comentarios</button>
@@ -281,7 +281,7 @@ const DetailContainer = styled.div`
 
     .rating-number {
       color: white;
-      margin-left: 10px;
+      margin-right: 10px;
       padding: 10px; 
       border-radius: 8px; 
       background-color: #3F51B5;

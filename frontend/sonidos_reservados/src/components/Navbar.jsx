@@ -1,6 +1,5 @@
 import React, {useState, useContext} from 'react';
 import styled from "styled-components";
-import BurgerButton from './BurgerButton';
 import { GlobalContext } from './utils/global_context';
 import { Link } from 'react-router-dom';
 
@@ -64,7 +63,7 @@ const Navbar = () => {
         </NavContainer>
         <BgDiv>
             <ul>
-                <li><a href='/'>RESERVA AHORA</a></li>
+                <li><a href='/reservations'>MIS RESERVAS</a></li>
                 <li><a href='/about'>SOBRE NOSOTROS</a></li>
             </ul>
         </BgDiv>
@@ -116,12 +115,11 @@ const NavContainer = styled.nav`
     .logout{
         cursor: pointer;
         background:#3F51B5;
-        background-image: linear-gradient(#3F51B5 50%, #3F51B5);
         padding: 5px 8px;
         border-radius: 20px;
         color: white;
         position: absolute;
-        top: 130px;
+        top: 125px;
         right: 10px;
         font-size: 20px;
         font-weight: 500;
@@ -132,7 +130,6 @@ const NavContainer = styled.nav`
     .perfil{
         cursor: pointer;
         background:#3F51B5;
-        background-image: linear-gradient(#3F51B5 50%, #3F51B5);
         padding: 5px 8px;
         border-radius: 20px;
         color: white;
@@ -147,13 +144,12 @@ const NavContainer = styled.nav`
     }
     .linkAdmin{
         background:#3F51B5;
-        background-image: linear-gradient(#3F51B5 50%, #3F51B5);
         padding: 5px 8px;
         border-radius: 20px;
         color: white;
         position: absolute;
         right: 10px;
-        top: 200px;
+        top: 185px;
         font-size: 20px;
         font-weight: 500;
         text-decoration: none;
