@@ -8,7 +8,7 @@ const initialState = {
   productos: [],
   productosAleatorios: [],
   usuarios: [],
-  categorias: [],
+  id: localStorage.getItem('id') || null,
   email: localStorage.getItem('email') || null,
   lastname: localStorage.getItem('lastname') || null,
   firstname: localStorage.getItem('firstname') || null,
@@ -16,6 +16,8 @@ const initialState = {
   userRol: localStorage.getItem("role") || null, 
   token: localStorage.getItem("token") || null,
   getProductosById: () => {},
+  getValoracionesByProductoId: () => {},
+  reservaData: null,
 };
 
 export const GlobalContext = createContext(initialState);
@@ -23,12 +25,14 @@ export const GlobalContext = createContext(initialState);
 
 const reducer = (state, action) => {
   switch (action.type) {
+        case "setReservaData":
+          return { ...state, reservaData: action.payload };
+        case "setValoraciones":
+          return {...state, valoraciones: action.payload};
         case "setProductos":
           return { ...state, productos: action.payload };
         case "setProductosAleatorios":
           return { ...state, productosAleatorios: action.payload }; 
-        case "setCategorias":
-          return { ...state, categorias: action.payload };
         case "usuarios":
           return {...state, usuarios: action.payload}
         case "eliminarUsuario":
@@ -44,14 +48,13 @@ const reducer = (state, action) => {
             return usuario;
           });
           return { ...state, usuarios: usuariosModificados };
-        case "postProducto":
-          return { ...state , productos: [...state.productos, action.payload] };
         case "eliminarProducto":
           const productosActualizados = state.productos.filter(
             (producto) => producto.id !== action.payload
           );
           return { ...state, productos: productosActualizados };
         case "login":
+          localStorage.setItem("id", action.payload.id);
           localStorage.setItem("firstname", action.payload.firstname);
           localStorage.setItem("lastname", action.payload.lastname);
           localStorage.setItem("email", action.payload.email);
@@ -60,6 +63,7 @@ const reducer = (state, action) => {
           localStorage.setItem("token", action.payload.token);
           return {
             ...state,
+            id: action.payload.id,
             firstname: action.payload.firstname,
             lastname: action.payload.lastname,
             email: action.payload.email,
@@ -68,6 +72,7 @@ const reducer = (state, action) => {
             token: action.payload.token,
           };
           case "logout":
+            localStorage.removeItem("id");
             localStorage.removeItem("firstname");
             localStorage.removeItem("lastname");
             localStorage.removeItem("email");
@@ -76,6 +81,7 @@ const reducer = (state, action) => {
             localStorage.removeItem("role");
             return {
               ...state,
+              id: null,
               firstname: null,
               lastname: null,
               email: null,
@@ -140,8 +146,6 @@ export const GlobalProvider = ({ children }) => {
       });
     }
   };
-
-  // USUARIOS -----------------------------------------------------------------------------------------------
 
   const getUsuarios = async () => {
     try {
@@ -238,13 +242,18 @@ export const GlobalProvider = ({ children }) => {
     return usuarioData;
   };
 
-  // PRODUCTOS -----------------------------------------------------------------------------------------------
-
   const getProductos = async () => {
     const productosData = await fetchData(
       "http://ec2-54-198-119-206.compute-1.amazonaws.com:8080/productos"
     );
     dispatch({ type: "setProductos", payload: productosData });
+  };
+
+  const getValoracionesByProductoId = async (id) => {
+    const valoracionesData = await fetchData(
+      `http://ec2-54-198-119-206.compute-1.amazonaws.com:8080/valoraciones/producto/${id}`
+    );
+    dispatch({ type: "setValoraciones", payload: valoracionesData });
   };
 
   const getProductosAleatorios = async () => {
@@ -261,29 +270,17 @@ export const GlobalProvider = ({ children }) => {
     return productoData;
   };
 
-  const postProducto = async (formData) => {
-    try {
-      const response = await axios.post('http://ec2-54-198-119-206.compute-1.amazonaws.com:8080/productos', formData, {
-        headers: {
-          'Authorization': `Bearer ${state.token}`,
-        },
-      });
-        dispatch({ type: "postProducto", payload: response.data });
-        Swal.fire({
-          title: 'Producto creado exitosamente',
-          text: '¡Tu producto fue agregado a la lista!',
-          icon: 'success',
-        });
-    } catch (error) {
-      console.error('Error al crear el producto:', error);
-      Swal.fire({
-        title: '¡Error al crear producto!',
-        text: 'Intenta nuevamente',
-        icon: 'error',
-      });
-    }
+  const getReservaData = (idProducto, fechaInicio, fechaFin) => {
+    const reservaData = {
+      idProducto: idProducto.id,
+      fechaInicio: fechaInicio,
+      fechaFin: fechaFin
+    };
+    console.log(reservaData);
+    dispatch({ type: "setReservaData", payload: reservaData });
   };
   
+
   const deleteProducto = async (id) => {
     try {
       const confirmacion = await Swal.fire({
@@ -326,21 +323,12 @@ export const GlobalProvider = ({ children }) => {
     }
   };
 
-  // CATEGORIAS -----------------------------------------------------------------------------------------------
-
-  const getCategorias = async () => {
-    const categoriasData = await fetchData(
-      "http://ec2-54-198-119-206.compute-1.amazonaws.com:8080/categorias"
-    );
-    dispatch({ type: "setCategorias", payload: categoriasData });
-  };
-
   useEffect(() => {
     getProductos();
   }, []);
 
   return (
-    <GlobalContext.Provider value={{ ...state, getProductosById, getProductosAleatorios, getProductos, deleteProducto, login, logout, getUsuarios, deleteUsuario, updateUsuario, getUsuarioById, postProducto, getCategorias }}>
+    <GlobalContext.Provider value={{ ...state, getProductosById, getProductosAleatorios, getProductos, deleteProducto, login, logout, getUsuarios, deleteUsuario, updateUsuario, getUsuarioById, getValoracionesByProductoId, getReservaData }}>
       {children}
     </GlobalContext.Provider>
   );

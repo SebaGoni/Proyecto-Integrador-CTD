@@ -2,20 +2,63 @@ import React, { useEffect, useContext, useState } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { GlobalContext } from '../components/utils/global_context';
-import { AiOutlineArrowLeft, AiOutlineArrowRight } from 'react-icons/ai';
+import { AiOutlineArrowLeft, AiOutlineArrowRight, AiFillStar, AiOutlineStar } from 'react-icons/ai';
 
 
 const Cards = () => {
   const { getProductosAleatorios, productosAleatorios } = useContext(GlobalContext);
   const [loaded, setLoaded] = useState(false);
+  const [ratings, setRatings] = useState({});
 
   useEffect(() => {
     if (!loaded) {
-      // Llama a la función getProductosAleatorios solo una vez al cargar el componente
       getProductosAleatorios();
       setLoaded(true);
     }
   }, [getProductosAleatorios, loaded]);
+
+  useEffect(() => {
+    productosAleatorios.forEach(product => {
+      obtenerValoraciones(product.id);
+    });
+  }, [productosAleatorios]);
+
+  const obtenerValoraciones = (productId) => {
+    fetch(`http://ec2-54-198-119-206.compute-1.amazonaws.com:8080/valoraciones/producto/${productId}`)
+      .then((response) => response.json())
+      .then((data) => {
+        if (data && data.length > 0) {
+          const ratingsCopy = { ...ratings };
+          const average = calcularPromedio(data);
+          ratingsCopy[productId] = average;
+          setRatings(ratingsCopy);
+        }
+      })
+      .catch((error) => {
+        console.error('Error al obtener las valoraciones', error);
+      });
+  };
+
+  const calcularPromedio = (ratings) => {
+    const sum = ratings.reduce((accumulator, currentValue) => accumulator + currentValue.rating, 0);
+    return sum / ratings.length;
+  };
+
+  const renderStars = (averageRating) => {
+    const starIcons = [];
+    for (let i = 1; i <= 5; i++) {
+      if (i <= Math.round(averageRating)) {
+        starIcons.push(<AiFillStar key={i} className='star' />);
+      } else {
+        starIcons.push(<AiOutlineStar key={i} className='star' />);
+      }
+    }
+    return (
+      <div className='stars'>
+        {starIcons}
+      </div>
+    );
+  };
 
   return (
     <Recomendaciones>
@@ -24,10 +67,10 @@ const Cards = () => {
           <h2>RECOMENDACIONES</h2>
           <div className='pages'>
             <Link to='/'>
-                <AiOutlineArrowLeft className='iconArrow'/>
+              <AiOutlineArrowLeft className='iconArrow' />
             </Link>
             <Link to='/'>
-                <AiOutlineArrowRight className='iconArrow'/>
+              <AiOutlineArrowRight className='iconArrow' />
             </Link>
           </div>
         </TitleContainer>
@@ -36,17 +79,18 @@ const Cards = () => {
             <Link className='link' to={`/details/${product.id}`} key={product.id}>
               <div className='item'>
                 <figure>
-                  <img src={product.image} alt={product.title} className='cardImage'/>
+                  <img src={product.image} alt={product.title} className='cardImage' />
                 </figure>
                 <div className='info-product'>
                   <h3>{product.title}</h3>
                 </div>
+                {ratings[product.id] && renderStars(ratings[product.id])}
               </div>
             </Link>
           ))}
         </div>
         <Link className='linkProducts' to={'/products'}>
-            <h2 className='titleProducts'>Ver todos los productos</h2>
+          <h2 className='titleProducts'>Ver todos los productos</h2>
         </Link>
       </div>
     </Recomendaciones>
@@ -95,6 +139,9 @@ const Recomendaciones = styled.div`
     display: block;
     .link{
       text-decoration: none;
+    }
+    .star {
+      color: #3F51B5;
     }
     .container-items{
         display: flex;
@@ -154,11 +201,11 @@ const Recomendaciones = styled.div`
       color: white;
       background-color: black;
       transition: background-color 300ms ease-in-out;
+      padding: 20px;
     }
 
     .titleProducts:hover{
       background-color: #000000ec;
-      
     }
     
 `
