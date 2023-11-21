@@ -37,11 +37,13 @@ const Navbar = () => {
                         <h2 className='initials' onClick={handleClickInitials}>{initials}</h2>
                     </div>
                     {clickedInitials && (
-                        <h2 className='logout' onClick={logout}>CERRAR SESIÓN</h2>
+                        <>
+                            <h2 className='logout' onClick={logout}>CERRAR SESIÓN</h2>
+                            <Link to='/account'>
+                                <h2 className='perfil'>PERFIL</h2>
+                            </Link>
+                        </>
                     )}
-                    <Link to='/account'>
-                        <h2 className='perfil'>Perfil</h2>
-                    </Link>
                 </div>
             ) || token && userRol === 'ADMIN' && (
                 <div>
@@ -114,12 +116,12 @@ const NavContainer = styled.nav`
     .logout{
         cursor: pointer;
         background:#3F51B5;
-        background-image: linear-gradient(#7E57C2 50%, #3F51B5);
+        background-image: linear-gradient(#3F51B5 50%, #3F51B5);
         padding: 5px 8px;
         border-radius: 20px;
         color: white;
         position: absolute;
-        top: 170px;
+        top: 130px;
         right: 10px;
         font-size: 20px;
         font-weight: 500;
@@ -130,7 +132,7 @@ const NavContainer = styled.nav`
     .perfil{
         cursor: pointer;
         background:#3F51B5;
-        background-image: linear-gradient(#7E57C2 50%, #3F51B5);
+        background-image: linear-gradient(#3F51B5 50%, #3F51B5);
         padding: 5px 8px;
         border-radius: 20px;
         color: white;
@@ -145,13 +147,13 @@ const NavContainer = styled.nav`
     }
     .linkAdmin{
         background:#3F51B5;
-        background-image: linear-gradient(#7E57C2 50%, #3F51B5);
+        background-image: linear-gradient(#3F51B5 50%, #3F51B5);
         padding: 5px 8px;
         border-radius: 20px;
         color: white;
         position: absolute;
         right: 10px;
-        top: 140px;
+        top: 200px;
         font-size: 20px;
         font-weight: 500;
         text-decoration: none;

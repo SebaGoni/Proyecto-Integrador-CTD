@@ -77,7 +77,11 @@ function AddProduct() {
         <div className='divButton'>
           <button type="button" onClick={crearProducto}>Crear</button>
         </div>
+      </form>
+    </NuevoContainer>
+)}
 
+export default AddProduct;
 
 const NuevoContainer = styled.div`
   background-color: white;
