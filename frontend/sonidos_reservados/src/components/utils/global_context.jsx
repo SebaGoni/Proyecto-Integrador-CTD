@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 const initialState = {
   productos: [],
   productosAleatorios: [],
+  productosFavoritos: JSON.parse(localStorage.getItem("productosFavoritos")) || [],
   usuarios: [],
   id: localStorage.getItem('id') || null,
   email: localStorage.getItem('email') || null,
@@ -48,6 +49,16 @@ const reducer = (state, action) => {
             return usuario;
           });
           return { ...state, usuarios: usuariosModificados };
+        case "agregarProductoFavorito":
+          const productoFavorito = action.payload;
+          const productosFavoritosActualizados = [...state.productosFavoritos, productoFavorito];
+          localStorage.setItem("productosFavoritos", JSON.stringify(productosFavoritosActualizados));
+          return { ...state, productosFavoritos: productosFavoritosActualizados };
+        case "eliminarProductoFavorito":
+          const idProductoEliminar = action.payload;
+          const productosFavoritosActualizados2 = state.productosFavoritos.filter(producto => producto.id !== idProductoEliminar);
+          localStorage.setItem("productosFavoritos", JSON.stringify(productosFavoritosActualizados2));
+          return { ...state, productosFavoritos: productosFavoritosActualizados2 };
         case "eliminarProducto":
           const productosActualizados = state.productos.filter(
             (producto) => producto.id !== action.payload
@@ -249,18 +260,18 @@ export const GlobalProvider = ({ children }) => {
     dispatch({ type: "setProductos", payload: productosData });
   };
 
-  const getValoracionesByProductoId = async (id) => {
-    const valoracionesData = await fetchData(
-      `http://ec2-54-198-119-206.compute-1.amazonaws.com:8080/valoraciones/producto/${id}`
-    );
-    dispatch({ type: "setValoraciones", payload: valoracionesData });
-  };
-
   const getProductosAleatorios = async () => {
     const productosData = await fetchData(
       "http://ec2-54-198-119-206.compute-1.amazonaws.com:8080/productos/aleatorios?cantidad=10"
     );
     dispatch({ type: "setProductosAleatorios", payload: productosData });
+  };
+
+  const getValoracionesByProductoId = async (id) => {
+    const valoracionesData = await fetchData(
+      `http://ec2-54-198-119-206.compute-1.amazonaws.com:8080/valoraciones/producto/${id}`
+    );
+    dispatch({ type: "setValoraciones", payload: valoracionesData });
   };
 
   const getProductosById = async (id) => {
@@ -279,7 +290,14 @@ export const GlobalProvider = ({ children }) => {
     console.log(reservaData);
     dispatch({ type: "setReservaData", payload: reservaData });
   };
+
+  const eliminarProductoFavorito = (idProducto) => {
+    dispatch({ type: "eliminarProductoFavorito", payload: idProducto });
+  };
   
+  const agregarProductoFavorito = (producto) => {
+    dispatch({ type: "agregarProductoFavorito", payload: producto });
+  };
 
   const deleteProducto = async (id) => {
     try {
@@ -328,7 +346,7 @@ export const GlobalProvider = ({ children }) => {
   }, []);
 
   return (
-    <GlobalContext.Provider value={{ ...state, getProductosById, getProductosAleatorios, getProductos, deleteProducto, login, logout, getUsuarios, deleteUsuario, updateUsuario, getUsuarioById, getValoracionesByProductoId, getReservaData }}>
+    <GlobalContext.Provider value={{ ...state, getProductosById, getProductos, getProductosAleatorios, deleteProducto, login, logout, getUsuarios, deleteUsuario, updateUsuario, getUsuarioById, getValoracionesByProductoId, getReservaData, agregarProductoFavorito, eliminarProductoFavorito }}>
       {children}
     </GlobalContext.Provider>
   );

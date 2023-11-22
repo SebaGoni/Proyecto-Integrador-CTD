@@ -3,10 +3,10 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { GlobalContext } from '../components/utils/global_context';
 import { AiOutlineArrowLeft, AiOutlineArrowRight, AiFillStar, AiOutlineStar } from 'react-icons/ai';
-
+import { FaRegHeart, FaHeart } from "react-icons/fa";
 
 const Cards = () => {
-  const { getProductosAleatorios, productosAleatorios } = useContext(GlobalContext);
+  const { getProductosAleatorios, productosAleatorios, agregarProductoFavorito, eliminarProductoFavorito, token, productosFavoritos } = useContext(GlobalContext);
   const [loaded, setLoaded] = useState(false);
   const [ratings, setRatings] = useState({});
 
@@ -60,6 +60,18 @@ const Cards = () => {
     );
   };
 
+  const estaEnFavoritos = (productId) => {
+    return productosFavoritos.some(producto => producto.id === productId);
+  };
+
+  const handleEliminarFavorito = (idProducto) => {
+    eliminarProductoFavorito(idProducto);
+  };
+
+  const handleAgregarFavorito = (producto) => {
+    agregarProductoFavorito(producto);
+  };
+
   return (
     <Recomendaciones>
       <div className='Productos'>
@@ -76,17 +88,26 @@ const Cards = () => {
         </TitleContainer>
         <div className='container-items'>
           {productosAleatorios.map(product => (
-            <Link className='link' to={`/details/${product.id}`} key={product.id}>
-              <div className='item'>
+            <div className='item'>
                 <figure>
                   <img src={product.image} alt={product.title} className='cardImage' />
                 </figure>
                 <div className='info-product'>
-                  <h3>{product.title}</h3>
+                  <Link className='link' to={`/details/${product.id}`} key={product.id}>
+                    <h3>{product.title}</h3>
+                  </Link> 
                 </div>
                 {ratings[product.id] && renderStars(ratings[product.id])}
+                {token && (
+                  <>
+                    {estaEnFavoritos(product.id) ? (
+                      <FaHeart className='heartIconFilled' onClick={() => handleEliminarFavorito(product.id)} />
+                    ) : (
+                      <FaRegHeart className='heartIconFilled' onClick={() => handleAgregarFavorito(product)} />
+                    )}
+                  </>
+                )}
               </div>
-            </Link>
           ))}
         </div>
         <Link className='linkProducts' to={'/products'}>
@@ -137,11 +158,20 @@ const Recomendaciones = styled.div`
     background-color: white;
     border-radius:  20px;
     display: block;
-    .link{
-      text-decoration: none;
+    .link {
+      color: #000000;
+      border-bottom: 1px solid transparent; 
     }
     .star {
       color: #3F51B5;
+    }
+    .heartIconFilled{
+      position: absolute;
+      top: 40px;
+      right: 40px;
+      color: #3F51B5;
+      font-size: 40px;
+      cursor: pointer;
     }
     .container-items{
         display: flex;
@@ -149,14 +179,15 @@ const Recomendaciones = styled.div`
         justify-content: center;
     }
     .item{
+        position: relative;
         border-radius: 20px;
         justify-content: center;
         align-items: center;
         box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.2);
         flex: 0 0 calc(50% - 50px);
-        cursor: pointer;
         text-align: center;
-        height: 600px;
+        height: 400px;
+        width: 300px;
         @media(min-width: 1000px){
           width: 40vw; 
           margin:1rem;
@@ -180,8 +211,8 @@ const Recomendaciones = styled.div`
     }
 
     .cardImage{
-      height: 400px;
-      width: 400px;
+      height: 200px;
+      width: 200px;
       object-fit: cover;
       @media(min-width: 1000px){
         
