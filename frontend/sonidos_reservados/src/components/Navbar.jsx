@@ -63,8 +63,13 @@ const Navbar = () => {
         </NavContainer>
         <BgDiv>
             <ul>
-                <li><a href='/reservations'>MIS RESERVAS</a></li>
                 <li><a href='/about'>SOBRE NOSOTROS</a></li>
+                {token && (
+                    <>
+                        <li><a href='/reservations'>MIS RESERVAS</a></li>
+                        <li><a href='/favorites'>MIS FAVORITOS</a></li>
+                    </>
+                )}
             </ul>
         </BgDiv>
     </>

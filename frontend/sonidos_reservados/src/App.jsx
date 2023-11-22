@@ -16,6 +16,7 @@ import Usuarios from './routes/Usuarios';
 import InfoUsuario from './routes/InfoUsuario';
 import Reservas from './routes/Reservas';
 import NuevaReserva from './routes/NuevaReserva';
+import Favoritos from './routes/Favoritos';
 
 function App() {
 
@@ -35,6 +36,7 @@ function App() {
           <Route path="/reservations" element={<Reservas/>}></Route>
           <Route path="/about" element={<Nosotros/>}></Route>
           <Route path="/account" element={<InfoUsuario/>}></Route>
+          <Route path="/favorites" element={<Favoritos/>}></Route>
           {userRol === "ADMIN" &&(
             <>
               <Route path="/admin" element={<Admin/>}></Route>
