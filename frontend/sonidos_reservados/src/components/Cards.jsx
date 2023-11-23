@@ -88,7 +88,7 @@ const Cards = () => {
         </TitleContainer>
         <div className='container-items'>
           {productosAleatorios.map(product => (
-            <div className='item'>
+            <div className='item' key={product.id}>
                 <figure>
                   <img src={product.image} alt={product.title} className='cardImage' />
                 </figure>
@@ -162,8 +162,12 @@ const Recomendaciones = styled.div`
       color: #000000;
       border-bottom: 1px solid transparent; 
     }
-    .star {
+    .stars {
+      position: absolute;
+      top: 45px;
+      left: 40px;
       color: #3F51B5;
+      font-size: 20px;
     }
     .heartIconFilled{
       position: absolute;

@@ -37,6 +37,10 @@ const reducer = (state, action) => {
           return { ...state, productos: action.payload };
         case "postProducto":
           return { ...state , productos: [...state.productos, action.payload] };
+        case "postCategoria":
+          return { ...state , categorias: [...state.categorias, action.payload] };
+        case "postCaracteristica":
+          return { ...state , caracteristicas: [...state.caracteristicas, action.payload] };
         case "setProductosAleatorios":
           return { ...state, productosAleatorios: action.payload }; 
         case "usuarios":
@@ -50,6 +54,16 @@ const reducer = (state, action) => {
             (usuario) => usuario.id !== action.payload
           );
           return { ...state, usuarios: usuariosActualizados };
+        case "eliminarCategoria":
+          const categoriasActualizadas = state.categorias.filter(
+            (categoria) => categoria.id !== action.payload
+          );
+          return { ...state, categorias: categoriasActualizadas };
+        case "eliminarCaracteristica":
+          const caracteristicasActualizadas = state.caracteristicas.filter(
+            (caracteristica) => caracteristica.id !== action.payload
+          );
+          return { ...state, caracteristicas: caracteristicasActualizadas };
         case "updateUsuario":
           const usuariosModificados = state.usuarios.map((usuario) => {
             if (usuario.id === action.payload.id) {
@@ -58,6 +72,22 @@ const reducer = (state, action) => {
             return usuario;
           });
           return { ...state, usuarios: usuariosModificados };
+        case "updateCategoria":
+          const categoriasActualizadas2 = state.categorias.map((categoria) => {
+            if (categoria.id === action.payload.id) {
+              return action.payload.updateCategoria;
+            }
+            return categoria;
+          });
+          return { ...state, categorias: categoriasActualizadas2 };
+        case "updateCaracteristica":
+          const caracteristicasActualizadas2 = state.caracteristicas.map((caracteristica) => {
+            if (caracteristica.id === action.payload.id) {
+              return action.payload.updateCaracteristica;
+            }
+            return caracteristica;
+          });
+          return { ...state, caracteristicas: caracteristicasActualizadas2 };
         case "agregarProductoFavorito":
           const productoFavorito = action.payload;
           const productosFavoritosActualizados = [...state.productosFavoritos, productoFavorito];
@@ -393,12 +423,196 @@ export const GlobalProvider = ({ children }) => {
     }
   };
 
+  const postCaracteristica = async (formData) => {
+    try {
+      const response = await axios.post('http://ec2-54-198-119-206.compute-1.amazonaws.com:8080/caracteristicas', formData, {
+        headers: {
+          'Authorization': `Bearer ${state.token}`,
+        },
+      });
+        dispatch({ type: "postCaracteristica", payload: response.data });
+        Swal.fire({
+          title: 'Caracteristica creada exitosamente',
+          text: '¡Tu Caracteristica fue agregada a la lista!',
+          icon: 'success',
+        });
+    } catch (error) {
+      console.error('Error al crear la caracteristica:', error);
+      Swal.fire({
+        title: '¡Error al crear caracteristica!',
+        text: 'Intenta nuevamente',
+        icon: 'error',
+      });
+    }
+  };
+
+  const deleteCaracteristica = async (id) => {
+    try {
+      const confirmacion = await Swal.fire({
+        title: '¿Estás seguro?',
+        text: 'Esta acción es irreversible.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        cancelButtonText: 'Cancelar',
+        confirmButtonText: 'Sí, eliminar',
+      });
+  
+      if (confirmacion.isConfirmed) {
+        await axios.delete(
+          `http://ec2-54-198-119-206.compute-1.amazonaws.com:8080/caracteristicas/${id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
+        );
+  
+        dispatch({ type: "eliminarCaracteristica", payload: id });
+  
+        Swal.fire({
+          title: 'Caracteristica eliminada exitosamente!',
+          icon: 'success',
+        });
+      } else {
+        console.log('Eliminación cancelada');
+      }
+    } catch (error) {
+      console.error("Error al eliminar caracteristica", error);
+      Swal.fire({
+        title: '¡Error al eliminar caracteristica!',
+        text: error.response?.data?.message || 'Ocurrió un error inesperado',
+        icon: 'error',
+      });
+    }
+  };
+
+  const updateCaracteristica = async (id, formData) => {
+    try {
+      const response = await axios.put(
+        `http://ec2-54-198-119-206.compute-1.amazonaws.com:8080/caracteristicas/${id}`,
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      dispatch({ type: "updateCaracteristica", payload: { id, updateCaracteristica: response.data } });
+  
+      Swal.fire({
+        title: 'Caracteristica actualizada exitosamente!',
+        icon: 'success',
+      });
+    } catch (error) {
+      console.error("Error al actualizar caracteristica", error);
+      Swal.fire({
+        title: '¡Error al actualizar caracteristica!',
+        text: error.response?.data?.message || 'Ocurrió un error inesperado',
+        icon: 'error',
+      });
+    }
+  };
+
+  const postCategoria = async (formData) => {
+    try {
+      const response = await axios.post('http://ec2-54-198-119-206.compute-1.amazonaws.com:8080/categorias', formData, {
+        headers: {
+          'Authorization': `Bearer ${state.token}`,
+        },
+      });
+        dispatch({ type: "postCategoria", payload: response.data });
+        Swal.fire({
+          title: 'Categoria creada exitosamente',
+          text: '¡Tu Categoria fue agregada a la lista!',
+          icon: 'success',
+        });
+    } catch (error) {
+      console.error('Error al crear la categoria:', error);
+      Swal.fire({
+        title: '¡Error al crear categoria!',
+        text: 'Intenta nuevamente',
+        icon: 'error',
+      });
+    }
+  };
+
+  const deleteCategoria = async (id) => {
+    try {
+      const confirmacion = await Swal.fire({
+        title: '¿Estás seguro?',
+        text: 'Esta acción es irreversible.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        cancelButtonText: 'Cancelar',
+        confirmButtonText: 'Sí, eliminar',
+      });
+  
+      if (confirmacion.isConfirmed) {
+        await axios.delete(
+          `http://ec2-54-198-119-206.compute-1.amazonaws.com:8080/categorias/${id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
+        );
+  
+        dispatch({ type: "eliminarCategoria", payload: id });
+  
+        Swal.fire({
+          title: 'Categoria eliminada exitosamente!',
+          icon: 'success',
+        });
+      } else {
+        console.log('Eliminación cancelada');
+      }
+    } catch (error) {
+      console.error("Error al eliminar categoria", error);
+      Swal.fire({
+        title: '¡Error al eliminar categoria!',
+        text: error.response?.data?.message || 'Ocurrió un error inesperado',
+        icon: 'error',
+      });
+    }
+  };
+
+  const updateCategoria = async (id, formData) => {
+    try {
+      const response = await axios.put(
+        `http://ec2-54-198-119-206.compute-1.amazonaws.com:8080/categorias/${id}`,
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      dispatch({ type: "updateCategoria", payload: { id, updateCategoria: response.data } });
+  
+      Swal.fire({
+        title: 'Categoria actualizada exitosamente!',
+        icon: 'success',
+      });
+    } catch (error) {
+      console.error("Error al actualizar categoria", error);
+      Swal.fire({
+        title: '¡Error al actualizar categoria!',
+        text: error.response?.data?.message || 'Ocurrió un error inesperado',
+        icon: 'error',
+      });
+    }
+  };
+
   useEffect(() => {
     getProductos();
   }, []);
 
   return (
-    <GlobalContext.Provider value={{ ...state, getProductosById, postProducto, getProductos, getProductosAleatorios, deleteProducto, login, logout, getUsuarios, deleteUsuario, updateUsuario, getUsuarioById, getValoracionesByProductoId, getReservaData, agregarProductoFavorito, eliminarProductoFavorito, getCategorias, getCaracteristicas }}>
+    <GlobalContext.Provider value={{ ...state, getProductosById, postProducto, getProductos, getProductosAleatorios, deleteProducto, login, logout, getUsuarios, deleteUsuario, updateUsuario, getUsuarioById, getValoracionesByProductoId, getReservaData, agregarProductoFavorito, eliminarProductoFavorito, getCategorias, getCaracteristicas, postCategoria, deleteCategoria, updateCategoria, postCaracteristica, deleteCaracteristica, updateCaracteristica }}>
       {children}
     </GlobalContext.Provider>
   );
