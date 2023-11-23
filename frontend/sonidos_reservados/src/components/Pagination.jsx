@@ -69,6 +69,7 @@ const PaginationStyle = styled.div`
           align-items: center;
           border-radius: 10px;
           cursor: pointer;
+          color: #3F51B5;
           background-color: white;
           border: none;
           width: 40px;
@@ -84,6 +85,6 @@ const PaginationStyle = styled.div`
           border: none;
           width: 40px;
           height: 40px;
-          background-color: black;
+          background-color: #3F51B5;
         }
     `
