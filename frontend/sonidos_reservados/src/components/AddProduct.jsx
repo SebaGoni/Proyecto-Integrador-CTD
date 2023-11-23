@@ -3,29 +3,52 @@ import styled from 'styled-components';
 import { GlobalContext } from './utils/global_context';
 import { Link } from 'react-router-dom';
 import { AiOutlineArrowLeft } from 'react-icons/ai'
+import { MdCancel } from "react-icons/md";
 
 function AddProduct() {
-  const { postProducto, categorias, getCategorias } = useContext(GlobalContext);
+  const { postProducto, categorias, getCategorias, caracteristicas, getCaracteristicas } = useContext(GlobalContext);
   const [loaded, setLoaded] = useState(false);
   const [selectedCategoriaId, setSelectedCategoriaId] = useState('');
+  const [selectedCaracteristicas, setSelectedCaracteristicas] = useState([]);
+  console.log(selectedCaracteristicas);
 
   useEffect(() => {
     if (!loaded) {
       getCategorias();
+      getCaracteristicas();
       setLoaded(true);
     }
-  }, [getCategorias, categorias]);
+  }, [getCategorias, categorias, caracteristicas, getCaracteristicas]);
 
   const crearProducto = () => {
-    const productForm = document.getElementById("productForm");
+    const productForm = document.getElementById('productForm');
     const formData = new FormData(productForm);
     formData.append('categoriaId', selectedCategoriaId);
+    selectedCaracteristicas.forEach((caracteristica) => {
+      formData.append('caracteristicas[]', caracteristica.id);
+    });
     postProducto(formData);
-  }
+  };
 
   const handleCategoriaChange = (event) => {
     setSelectedCategoriaId(event.target.value);
   }
+
+  const handleCaracteristicasChange = (event) => {
+    const selectedOptions = Array.from(
+      event.target.selectedOptions,
+      (option) => caracteristicas.find((c) => c.id === parseInt(option.value))
+    );
+    setSelectedCaracteristicas(selectedOptions);
+  };
+
+  const handleRemoveCaracteristica = (caracteristicaId) => {
+    const updatedSelectedCaracteristicas = selectedCaracteristicas.filter(
+      (caracteristica) => caracteristica.id !== caracteristicaId
+    );
+    setSelectedCaracteristicas(updatedSelectedCaracteristicas);
+  };
+  
 
   return (
     <NuevoContainer>
@@ -73,6 +96,37 @@ function AddProduct() {
             <label htmlFor="imagenes">Imágenes de galería</label>
             <input className='inputsImagenes' type="file" id="imagenes" name="imagenes" accept="image/*" multiple />
           </GridItem>
+
+          <GridItem>
+            <label htmlFor="caracteristicas">Características</label>
+            <select
+              id="caracteristicas"
+              name="caracteristicas"
+              multiple
+              value={selectedCaracteristicas.map((c) => c.id)}
+              onChange={handleCaracteristicasChange}
+            >
+              {caracteristicas.map((caracteristica) => (
+                <option key={caracteristica.id} value={caracteristica.id}>
+                  {caracteristica.nombre}
+                </option>
+              ))}
+            </select>
+          </GridItem>
+
+          <GridItem>
+            <label>Características seleccionadas</label>
+            <ul className='ulCaracteristicas'>
+              {selectedCaracteristicas.map((caracteristica) => (
+                <li onClick={() =>
+                  handleRemoveCaracteristica(caracteristica.id)
+                } className='liCaracteristicas' key={caracteristica.id}>
+                  {caracteristica.nombre}{' '}
+                    <MdCancel />
+                </li>
+              ))}
+            </ul>
+          </GridItem>
         </GridContainer>
         <div className='divButton'>
           <button type="button" onClick={crearProducto}>Crear</button>
@@ -113,6 +167,9 @@ const NuevoContainer = styled.div`
     font-weight: 600;
     padding: 5px 30px;
     cursor: pointer; 
+  }
+  .btn{
+    
   }
   .iconArrow{
       position: absolute;
@@ -159,5 +216,25 @@ const GridItem = styled.div`
     padding: 5px 30px;
     cursor: pointer;
     margin: auto;
+  }
+  .ulCaracteristicas{
+    list-style: none;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .liCaracteristicas{
+    background-color: #b20e0e;
+    padding: 8px;
+    border-radius: 10px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 3px;
+    color: white;
+    font-weight: 600;
+    font-family: 'Poppins';
   }
 `;

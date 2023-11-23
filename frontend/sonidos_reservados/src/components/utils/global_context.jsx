@@ -9,6 +9,8 @@ const initialState = {
   productosAleatorios: [],
   productosFavoritos: JSON.parse(localStorage.getItem("productosFavoritos")) || [],
   usuarios: [],
+  categorias: [],
+  caracteristicas: [],
   id: localStorage.getItem('id') || null,
   email: localStorage.getItem('email') || null,
   lastname: localStorage.getItem('lastname') || null,
@@ -19,6 +21,7 @@ const initialState = {
   getProductosById: () => {},
   getValoracionesByProductoId: () => {},
   reservaData: null,
+  valoraciones: {}
 };
 
 export const GlobalContext = createContext(initialState);
@@ -32,10 +35,16 @@ const reducer = (state, action) => {
           return {...state, valoraciones: action.payload};
         case "setProductos":
           return { ...state, productos: action.payload };
+        case "postProducto":
+          return { ...state , productos: [...state.productos, action.payload] };
         case "setProductosAleatorios":
           return { ...state, productosAleatorios: action.payload }; 
         case "usuarios":
           return {...state, usuarios: action.payload}
+        case "categorias":
+          return {...state, categorias: action.payload}
+        case "caracteristicas":
+          return {...state, caracteristicas: action.payload}
         case "eliminarUsuario":
           const usuariosActualizados = state.usuarios.filter(
             (usuario) => usuario.id !== action.payload
@@ -253,6 +262,29 @@ export const GlobalProvider = ({ children }) => {
     return usuarioData;
   };
 
+  const postProducto = async (formData) => {
+    try {
+      const response = await axios.post('http://ec2-54-198-119-206.compute-1.amazonaws.com:8080/productos', formData, {
+        headers: {
+          'Authorization': `Bearer ${state.token}`,
+        },
+      });
+        dispatch({ type: "postProducto", payload: response.data });
+        Swal.fire({
+          title: 'Producto creado exitosamente',
+          text: '¡Tu producto fue agregado a la lista!',
+          icon: 'success',
+        });
+    } catch (error) {
+      console.error('Error al crear el producto:', error);
+      Swal.fire({
+        title: '¡Error al crear producto!',
+        text: 'Intenta nuevamente',
+        icon: 'error',
+      });
+    }
+  };
+
   const getProductos = async () => {
     const productosData = await fetchData(
       "http://ec2-54-198-119-206.compute-1.amazonaws.com:8080/productos"
@@ -341,12 +373,32 @@ export const GlobalProvider = ({ children }) => {
     }
   };
 
+  const getCategorias = async () => {
+    try {
+      const response = await axios.get("http://ec2-54-198-119-206.compute-1.amazonaws.com:8080/categorias");
+  
+      dispatch({ type: 'categorias', payload: response.data });
+    } catch (error) {
+      console.error("Error al obtener categorias", error);
+    }
+  };
+
+  const getCaracteristicas = async () => {
+    try {
+      const response = await axios.get("http://ec2-54-198-119-206.compute-1.amazonaws.com:8080/caracteristicas");
+  
+      dispatch({ type: 'caracteristicas', payload: response.data });
+    } catch (error) {
+      console.error("Error al obtener caracteristicas", error);
+    }
+  };
+
   useEffect(() => {
     getProductos();
   }, []);
 
   return (
-    <GlobalContext.Provider value={{ ...state, getProductosById, getProductos, getProductosAleatorios, deleteProducto, login, logout, getUsuarios, deleteUsuario, updateUsuario, getUsuarioById, getValoracionesByProductoId, getReservaData, agregarProductoFavorito, eliminarProductoFavorito }}>
+    <GlobalContext.Provider value={{ ...state, getProductosById, postProducto, getProductos, getProductosAleatorios, deleteProducto, login, logout, getUsuarios, deleteUsuario, updateUsuario, getUsuarioById, getValoracionesByProductoId, getReservaData, agregarProductoFavorito, eliminarProductoFavorito, getCategorias, getCaracteristicas }}>
       {children}
     </GlobalContext.Provider>
   );

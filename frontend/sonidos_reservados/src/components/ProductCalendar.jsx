@@ -7,6 +7,7 @@ import moment from 'moment';
 import Swal from 'sweetalert2';
 import Modal from 'react-modal';
 import styled from "styled-components";
+import { MdCancel } from "react-icons/md";
 
 Modal.setAppElement('#root');
 
@@ -161,6 +162,32 @@ const ProductCalendar = () => {
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
       />
+      {searchTerm && (
+        <button
+          style={{
+            position: "absolute",
+            top: "50%",
+            right: "5px",
+            transform: "translateY(-50%)",
+            background: "transparent",
+            border: "none",
+            cursor: "pointer",
+            padding: "2px"
+          }}
+          onClick={() => setSearchTerm("")}
+        >
+          <MdCancel style={{ marginRight: "10px",
+            padding: "8px 18px",
+            background: "#b20e0e",
+            color: "white",
+            border: "none",
+            borderRadius: "5px",
+            cursor: "pointer",
+            transition: "background 0.3s ease",
+            fontFamily: 'Poppins',
+            fontWeight: 600, }}/>
+        </button>
+      )}
     <ul style={{ listStyleType: 'none', padding: 0 }}>
       {productos.map((producto) => (
         <li key={producto.id} onClick={() => handleProductSelection(producto)}>

@@ -30,6 +30,7 @@ const ListaProductos = () => {
             <th scope='col'>Id</th>
             <th scope='col'>Nombre</th>
             <th scope='col'>Categoria</th>
+            <th scope='col'>Caracteristicas</th>
             <th scope='col'>Descripción</th>
             <th scope='col'>Precio</th>
           </tr>
@@ -40,7 +41,8 @@ const ListaProductos = () => {
                         <th>{producto.id}</th>
                         <td>{producto.title}</td>
                         <td>{producto.categoria.nombre}</td>
-                        <td> {producto.description.length > 20
+                        <td>{producto.caracteristicas.map(caract => caract.nombre)}</td>
+                        <td>{producto.description.length > 20
                   ? `${producto.description.slice(0, 20)}...`
                   : producto.description}</td>
                         <td>${producto.price}</td>
