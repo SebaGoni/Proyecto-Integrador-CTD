@@ -88,7 +88,8 @@ const ProductContainer = styled.div`
       color: black;
       cursor: pointer;
     }
-  h2{
+    h2{
+    font-size: 40px;
     text-align: center;
   }
   table, th, tr {

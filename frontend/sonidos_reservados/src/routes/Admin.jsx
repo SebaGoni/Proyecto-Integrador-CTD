@@ -17,6 +17,14 @@ const Admin = () => {
         className='BotonAdmin'
         role="button">Lista de Productos
       </Link>   
+      <Link to='/admin/categoriesList'
+        className='BotonAdmin'
+        role="button">Lista de Categorias
+      </Link>   
+      <Link to='/admin/characteristicsList'
+        className='BotonAdmin'
+        role="button">Lista de Características
+      </Link>   
       <Link to='/admin/userList'
         className='BotonAdmin'
         role="button">Usuarios
@@ -38,20 +46,26 @@ const MenuAdmin = styled.div`
   margin-bottom: 100px;
   background-color: white;
   color: black;
-  width: 300px;
+  width: 500px;
   .BotonAdmin{
     display: flex;
     justify-content: center;
     align-items: center;
     width: 200px;
     margin: auto;
-    margin-top: 50px;
-    margin-bottom: 50px;
     border: solid .1px gray;
     border-radius: 10px;
     padding: 1rem;
     background-color: black;
     color: white;
+  }
+  .MenuDeAdmin{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-top: 40px;
+    gap: 30px;
   }
   @media (max-width: 768px) {
     .MenuAdmin {
