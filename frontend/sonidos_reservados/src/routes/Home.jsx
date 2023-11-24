@@ -7,8 +7,8 @@ import ProductCalendar from '../components/ProductCalendar'
 const Home = () => {
   return (
     <main>
-      <Form/>
       <ProductCalendar/>
+      <Form/>
       <Categorias/>
       <Cards/>    
     </main>

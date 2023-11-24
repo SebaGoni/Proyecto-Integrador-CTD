@@ -7,7 +7,7 @@ const Admin = () => {
   return (
     <MenuAdmin>
       <h2> Bienvenido Admin</h2>
-      <p>Escoge una opcion</p>
+      <p>Escoge una opción</p>
     <div className='MenuDeAdmin'>
       <Link to='/admin/newProduct'
               className='BotonAdmin'
@@ -58,6 +58,7 @@ const MenuAdmin = styled.div`
     padding: 1rem;
     background-color: black;
     color: white;
+    text-decoration: none;
   }
   .MenuDeAdmin{
     display: flex;

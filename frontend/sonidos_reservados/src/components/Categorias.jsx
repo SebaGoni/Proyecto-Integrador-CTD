@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Link } from 'react-router-dom'; // Import Link from react-router-dom
 
 function Categorias() {
-  
+
   const [selectedCategory, setSelectedCategory] = useState(null);
 
   return (
@@ -41,13 +41,17 @@ export default Categorias;
 
 const DivCategorias = styled.div`
   margin: 2rem;
-  padding: 1rem;
-  background-color:white;
+  padding: 2.5rem;
+  background-color:rgba(255, 255, 255, 0.8);
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
   border-radius: 20px;
   h2 {
     font-family: 'Poppins', sans-serif;
     color: black;
-    margin: 2rem;
+    margin: 1rem;
+    padding: 1rem;
+    letter-spacing: 4px;
+    font-weight: 500;
     border-bottom: solid;
     @media(min-width: 1000px){
           font-size:2rem;

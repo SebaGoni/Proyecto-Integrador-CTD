@@ -70,14 +70,15 @@ export default Form;
 
 const DivBusqueda = styled.div`
 position: relative;
-margin-top: 30vh;
+margin-top: 20px;
 margin-left: 2rem;
 margin-right: 2rem;
-background-color: #D9D9D9;
-border-radius: 60px;
+background-color: white;
+border-radius: 30px;
 display: flexbox;
 justify-content: space-between;
 align-items: center;
+box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
   @media(min-width: 900px){   
   input {
     flex: 1; 
@@ -85,7 +86,7 @@ align-items: center;
     border: none; 
     padding: 1.2rem; 
     margin: 0.5rem;
-    background-color: #D9D9D9;
+    background-color: white;
     font-family: 'Poppins', sans-serif;
     font-size: .8rem;
     transition: width 0.3s;
@@ -159,7 +160,7 @@ const SugerenciasContainer = styled.div`
 position: absolute;
 background-color: white;
 border-radius: 5px;
-max-height: 150px; /* Altura máxima */
+max-height: 250px; /* Altura máxima */
 overflow-y: auto; /* Agrega scroll si excede la altura */
 padding: 10px;
 width: 97%; /* Ancho igual al campo de búsqueda */

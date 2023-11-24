@@ -188,6 +188,9 @@ const TitleContainer = styled.div`
   h2{
     color: black;
     font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    letter-spacing: 2px;
+    padding:1rem;
     @media(min-width: 1000px){
       font-size:2rem;
     }
@@ -216,6 +219,7 @@ const Recomendaciones = styled.div`
     background-color: white;
     border-radius:  20px;
     display: block;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
     .link {
       color: #000000;
       border-bottom: 1px solid transparent; 
@@ -264,6 +268,8 @@ const Recomendaciones = styled.div`
         padding: 1rem;
         color:black;
         font-family: 'Poppins', sans-serif;
+        font-weight: 600;
+        letter-spacing: 1px;
         @media(min-width: 1000px){
           font-size:1.5rem;
         }

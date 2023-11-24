@@ -134,7 +134,7 @@ const ProductCalendar = () => {
           <img src={BannerReserva} alt="Banner" height="445"></img>
         </a>
       </div>
-      <button className="btnReserva" onClick={openModal}>Reserva tu instrumento</button>
+      <button className="btnReserva" onClick={openModal}>RESERVA TU INSTRUMENTO</button>
       <Modal  style={{
             content: {
               top: '50%',
@@ -278,32 +278,41 @@ export default ProductCalendar;
 
 const ReservaContainer = styled.div`
   display: flex;
-  justify-content: space-around;
   height:450px;
   align-items: center;
   background-color: black;
-  margin-top: 20px; 
+  margin-top: 20vh; 
   margin-left:-10px;
   width: 105%;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
   .banner{
-    position:relative;
+    justify-content: left;
+    margin-left: 5%;
   }
   .btnReserva{
     position: absolute;
-    margin: auto;
-    margin-top: 30px;
     cursor: pointer;
     text-align: center;
     border-radius: 20px;
     color: white;
-    background-color: #3F51B5;
+    background-color: rgba(0, 0, 0, 0.4) ;
+    border: solid 1px;
+    border-color: rgba(255, 255, 255, 0.7);
     padding: 20px;
     font-family: 'Poppins', sans-serif;
-    font-size: 1.5rem;
-    font-weight: 600;
-    border: none;
+    font-size: 1.2rem;
+    font-weight: 500;
+    letter-spacing: 3px;
     box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.75);
         -webkit-box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.75);
         -moz-box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.75);
+    @media (max-width: 900px) {
+      left: 50%;
+      transform: translateX(-50%);
+      margin: 0;
+    }
+    @media (min-width: 900px) {
+      margin-left: 60%;
+      margin-top: 30px;
   }
 `
