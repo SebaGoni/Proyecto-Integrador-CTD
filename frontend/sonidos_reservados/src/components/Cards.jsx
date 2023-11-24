@@ -9,6 +9,9 @@ const Cards = () => {
   const { getProductosAleatorios, productosAleatorios, agregarProductoFavorito, eliminarProductoFavorito, token, productosFavoritos } = useContext(GlobalContext);
   const [loaded, setLoaded] = useState(false);
   const [ratings, setRatings] = useState({});
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [showShareButtons, setShowShareButtons] = useState(false);
+  const [customMessage, setCustomMessage] = useState('');
 
   useEffect(() => {
     if (!loaded) {
@@ -72,6 +75,45 @@ const Cards = () => {
     agregarProductoFavorito(producto);
   };
 
+  const openShareButtons = (product) => {
+    setSelectedProduct(product);
+    setShowShareButtons(true);
+    setCustomMessage('');
+  };
+
+  const closeShareButtons = () => {
+    setSelectedProduct(null);
+    setShowShareButtons(false);
+    setCustomMessage('');
+  };
+
+  const shareOnInstagram = (productId) => {
+    const productUrl = encodeURIComponent(`http://localhost:8080/details/${productId}`);
+    const instagramUrl = `https://www.instagram.com/share?url=${productUrl}`;
+    window.open(instagramUrl, '_blank');
+  };
+
+  const shareOnFacebook = (productId, customMessage) => {
+    const encodedMessage = encodeURIComponent(customMessage || ''); // Encodificar el mensaje personalizado
+    const productUrl = encodeURIComponent(`https://sonidos-reservados.vercel.app`); // Agregar el ID del producto si es necesario
+    const facebookUrl = `https://www.facebook.com/sharer.php?u=${productUrl}&quote=${encodedMessage}`;
+    window.open(facebookUrl, '_blank');
+  };
+  
+  const shareOnWhatsApp = () => {
+    const productPageUrl = window.location.href
+    const additionalText = "Holaaaa"
+    const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(`${additionalText} ${productPageUrl}`)}`;
+    window.open(whatsappUrl, '_blank');
+  };
+
+  const shareOnTwitter = () => {
+    const productUrl = encodeURIComponent('URL_DEL_PRODUCTO');
+    const twitterUrl = `https://twitter.com/intent/tweet?url=${productUrl}`;
+    window.open(twitterUrl, '_blank');
+  };
+  
+
   return (
     <Recomendaciones>
       <div className='Productos'>
@@ -107,6 +149,22 @@ const Cards = () => {
                     )}
                   </>
                 )}
+                <ShareButtonContainer>
+              <img className='shareImg' src='/src/assets/share.png' onClick={() => openShareButtons(product)} />
+                </ShareButtonContainer>
+              {showShareButtons && selectedProduct === product && (
+              <div className='shareButtons'>
+                <img src={product.image} alt={product.title} className='productImage' />
+                <h4 className='productTitle'>{product.title}</h4>
+                <textarea value={customMessage} onChange={(e) => setCustomMessage(e.target.value)} placeholder="Escribe tu mensaje personalizado"
+                        rows={4} cols={50}
+                />
+                <img className='IconRedes' src='/src/assets/facebook.png' onClick={() => shareOnFacebook(product.id)} />
+                <img className='IconRedes' src='/src/assets/instagram.png' onClick={() => shareOnInstagram(product.id)} />
+                <img className='IconRedes' src='/src/assets/whatsapp.png' onClick={() => shareOnWhatsApp(product.id)} />
+                <img className='IconRedes' src='/src/assets/twitter.png' onClick={() => shareOnTwitter(product.id)} />
+                <button className='closeButton' onClick={closeShareButtons}>Cerrar</button>
+              </div>)}
               </div>
           ))}
         </div>
@@ -242,5 +300,56 @@ const Recomendaciones = styled.div`
     .titleProducts:hover{
       background-color: #000000ec;
     }
+    .shareButtons{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 500px; /* Ancho de la ventana */
+    height: 400px; /* Alto de la ventana */
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.9); /* Fondo blanco con transparencia */
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    } 
+    .closeButton{
+      padding: 10px 20px;
+      width: 200px;
+      border: none;
+      border-radius: 5px;
+      background-color: #3F51B5;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s ease-in-out;
+    }
+    .IconRedes{
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    }
+    .productImage{
+    width: 100px;
+    height: 100px;
+    }
+    `
     
+const ShareButtonContainer = styled.div`
+    position: absolute;
+    top: 35px;
+    right: 90px;
+    z-index: 1;
+    padding: 5px;
+    background-color: rgba(255, 255, 255, 0.7);
+    border-bottom-left-radius: 10px;
+
+    .shareImg {
+    width: 43px;
+    height: 43px;
+    cursor: pointer;
+  }
 `
