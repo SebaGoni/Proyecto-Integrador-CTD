@@ -1,22 +1,40 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from "styled-components";
+import { Link } from 'react-router-dom'; // Import Link from react-router-dom
 
 function Categorias() {
+  
+  const [selectedCategory, setSelectedCategory] = useState(null);
+
   return (
-    <DivCategorias>
-      <div className='categorias'>
-        <h2>CATEGORIAS</h2>
-        <ButtonsContainer>
-          <button>CUERDAS</button>
-          <button>VIENTO</button>
-          <button>PERCUSION</button>
-          <button>TECLADOS</button>
-          <button>MICROFONOS</button>
-          <button>SISTEMAS DE AUDIO</button>
-        </ButtonsContainer>
-      </div>
-    </DivCategorias>
-  )
+    <div>
+      <DivCategorias>
+        <div className='categorias'>
+          <h2>CATEGORIAS</h2>
+          <ButtonsContainer>
+            <Link to={`/products/${selectedCategory || ''}`}>
+              <button onClick={() => setSelectedCategory(5)}>VIENTO</button>
+            </Link>
+            <Link to={`/products/${selectedCategory || ''}`}>
+              <button onClick={() => setSelectedCategory(6)}>CUERDAS</button>
+            </Link>
+            <Link to={`/products/${selectedCategory || ''}`}>
+              <button onClick={() => setSelectedCategory(7)}>PERCUSION</button>
+            </Link>
+            <Link to={`/products/${selectedCategory || ''}`}>
+              <button onClick={() => setSelectedCategory(8)}>TECLADOS</button>
+            </Link>
+            <Link to={`/products/${selectedCategory || ''}`}>
+              <button onClick={() => setSelectedCategory(9)}>MICROFONOS</button>
+            </Link>
+            <Link to={`/products/${selectedCategory || ''}`}>
+              <button onClick={() => setSelectedCategory(10)}>SISTEMAS DE AUDIO</button>
+            </Link>
+          </ButtonsContainer>
+        </div>
+      </DivCategorias>
+    </div>
+  );
 }
 
 export default Categorias;
@@ -24,8 +42,8 @@ export default Categorias;
 const DivCategorias = styled.div`
   margin: 2rem;
   padding: 1rem;
-  background-color: #D9D9D9;
-  border-radius: 30px;
+  background-color:white;
+  border-radius: 20px;
   h2 {
     font-family: 'Poppins', sans-serif;
     color: black;
@@ -53,9 +71,10 @@ const ButtonsContainer = styled.div`
     background-color: black;
     border-radius: 50px;
     color: white;
-    font-size: 1.7rem;
+    font-size: 1.3rem;
     font-family: 'Poppins', sans-serif;
-    font-weight: 600;
+    font-weight: 400;
+    letter-spacing: 3px;
     cursor: pointer;
     }
   }
@@ -73,7 +92,8 @@ const ButtonsContainer = styled.div`
             color: white;
             font-size: 1.8rem;
             font-family: 'Poppins', sans-serif;
-            font-weight: 600;
+            font-weight: 400;
+            letter-spacing: 3px;
             cursor: pointer;
             }
   }

@@ -8,12 +8,11 @@ const Nosotros = () => {
             <h2>Equipo 5</h2>
             <p>Integrantes que participaron en el sprint y roles que asumieron:</p>
             <ul>
-                <li>Camila Michelle Yeber (Scrum Master)</li>
-                <li>Alan Oliva (TL Backend)</li>
-                <li>Daniel Pomareda (TL Testing)</li>
-                <li>Amy Montenegro (TL Ref UX-UI / Front)</li>
                 <li>Sebastian Goñi (TL Backend)</li>
                 <li>Facundo Recabarren (TL Frontend)</li>
+                <li>Daniel Pomareda (TL Testing)</li>
+                <li>Amy Montenegro (TL Ref UX-UI)</li>
+                <li>Alan Oliva (TL Backend)</li>
             </ul> 
         </UsContainer>
              

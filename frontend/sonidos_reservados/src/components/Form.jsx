@@ -7,7 +7,7 @@ function Form() {
   const [busqueda, setBusqueda] = useState('');
   const [sugerencias, setSugerencias] = useState([]);
 
-  const handleInputChange = async (event) => {
+   const handleInputChange = async (event) => {
     const textoIngresado = event.target.value;
     setBusqueda(textoIngresado);
 
@@ -49,17 +49,18 @@ function Form() {
           </ClearButton>
         )}
       </div>
+      {busqueda.length > 2 && ( // Only show SugerenciasContainer if there is some text in the input
         <SugerenciasContainer id="sugerencias">
-        {sugerencias.map((sugerencia, index) => (
-          <Sugerencia key={index}>
-            <ProductImage src={sugerencia.image} alt={sugerencia.title} />
-            <div>
-              <a href={`details/${sugerencia.id}`}>{sugerencia.title}</a>
-              {/* Otros detalles del producto si es necesario */}
-            </div>
-          </Sugerencia>
-        ))}
-      </SugerenciasContainer>
+          {sugerencias.map((sugerencia, index) => (
+            <Sugerencia key={index}>
+              <ProductImage src={sugerencia.image} alt={sugerencia.title} />
+              <div>
+                <a href={`details/${sugerencia.id}`}>{sugerencia.title}</a>
+              </div>
+            </Sugerencia>
+          ))}
+        </SugerenciasContainer>
+      )}
     </DivBusqueda>
   );
 }
@@ -86,7 +87,7 @@ align-items: center;
     margin: 0.5rem;
     background-color: #D9D9D9;
     font-family: 'Poppins', sans-serif;
-    font-size: 1rem;
+    font-size: .8rem;
     transition: width 0.3s;
     width: 80%;
   }
@@ -156,13 +157,13 @@ const StyledInput = styled.input`
 // Estilos para el contenedor de sugerencias
 const SugerenciasContainer = styled.div`
 position: absolute;
-background-color: none;
+background-color: white;
 border-radius: 5px;
 max-height: 150px; /* Altura máxima */
 overflow-y: auto; /* Agrega scroll si excede la altura */
 padding: 10px;
 width: 97%; /* Ancho igual al campo de búsqueda */
-top: calc(100% + 10px);
+top: calc(100%+10px);
 z-index: 10;
 `;
 

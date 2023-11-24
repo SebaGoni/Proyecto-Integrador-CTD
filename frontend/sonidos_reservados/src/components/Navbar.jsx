@@ -11,8 +11,7 @@ const Navbar = () => {
     const handleClickInitials = () => {
         setClickedInitials(!clickedInitials)
     }
-    const iconsr= '/src/assets/soloLogoWhite.png';
-    const nombre= '/src/assets/sonidosReservadosTextWhite.png';
+    const iconsr= '/src/assets/SonidosreservadosV2.png';
 
     const initials = `${firstname?.toUpperCase().charAt(0) || ''}${lastname?.toUpperCase().charAt(0) || ''}`;
   return (
@@ -20,14 +19,13 @@ const Navbar = () => {
         <NavContainer>
             <div className='logo'>
                 <a href='/'>
-                    <img src={iconsr} alt="logo" width="60" height="60"></img>
-                    <img src={nombre} alt="sonidos-reservador" height="45"></img>
+                    <img src={iconsr} alt="logo" height="80"></img>
                 </a>
             </div>
             {!token && (
                 <div className='divAccount'>
                     <a className='titleLogin' href='/register'>CREAR CUENTA</a>
-                    <a className='titleLogin' href='/login'>INICIAR SESION</a>
+                    <a className='titleLogin' href='/login'>INICIAR SESIÓN</a>
                 </div>
             )}
             {token && userRol === 'USER' &&(
@@ -63,11 +61,11 @@ const Navbar = () => {
         </NavContainer>
         <BgDiv>
             <ul>
-                <li><a href='/about'>SOBRE NOSOTROS</a></li>
+                <li><a href='/about'>SOBRE  NOSOTROS</a></li>
                 {token && (
                     <>
-                        <li><a href='/reservations'>MIS RESERVAS</a></li>
-                        <li><a href='/favorites'>MIS FAVORITOS</a></li>
+                        <li><a href='/reservations'>MIS  RESERVAS</a></li>
+                        <li><a href='/favorites'>MIS  FAVORITOS</a></li>
                     </>
                 )}
             </ul>
@@ -99,10 +97,12 @@ const NavContainer = styled.nav`
     }
     .titleLogin{
         color: white;
-        font-size: 20px;
-        font-weight: 500;
+        font-size: 18px;
+        font-weight: 800;
         text-decoration: none;
         padding: 8px;
+        margin: 0 1rem 1rem 1rem;
+        padding-top: .5rem;
     }
     .divInitials{
         display: flex;
@@ -166,7 +166,8 @@ const NavContainer = styled.nav`
 const BgDiv = styled.nav`
     position: absolute;
     width: 100%;
-    top: 95px;
+    top: 112px;
+    margin-left: -10px;
     background-color: white;
     ul{
         display: flex;
@@ -178,8 +179,10 @@ const BgDiv = styled.nav`
     }
     a{
         text-decoration: none;
-        font-size: 20px;
-        font-weight: 500;
+        padding-left: 1rem;
+        font-size: .9rem;
+        font-weight: 600;
+        letter-spacing: 1px;
         color: black;
     }
 `

@@ -11,6 +11,7 @@ import { MdCancel } from "react-icons/md";
 
 Modal.setAppElement('#root');
 
+const BannerReserva= '/src/assets/musicians-stage-lights.jpg';
 const ProductCalendar = () => {
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -128,6 +129,11 @@ const ProductCalendar = () => {
 
   return (
     <ReservaContainer>
+      <div className='banner'>
+        <a href='/'>
+          <img src={BannerReserva} alt="Banner" height="445"></img>
+        </a>
+      </div>
       <button className="btnReserva" onClick={openModal}>Reserva tu instrumento</button>
       <Modal  style={{
             content: {
@@ -272,9 +278,19 @@ export default ProductCalendar;
 
 const ReservaContainer = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
+  height:450px;
   align-items: center;
+  background-color: black;
+  margin-top: 20px; 
+  margin-left:-10px;
+  width: 105%;
+  .banner{
+    position:relative;
+  }
   .btnReserva{
+    position: absolute;
+    margin: auto;
     margin-top: 30px;
     cursor: pointer;
     text-align: center;
