@@ -102,7 +102,7 @@ box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
     border: none;
     margin: 0.5rem;
     padding: 0.5rem; 
-    background-color: #D9D9D9;
+    background-color: white;
     cursor: pointer;
   }
 }
@@ -113,7 +113,7 @@ box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
     border: none; 
     padding: 1.2rem; 
     margin: 0.5rem;
-    background-color: #D9D9D9;
+    background-color: white;
     font-family: 'Poppins', sans-serif;
     font-size: 1rem;
     transition: width 0.3s;

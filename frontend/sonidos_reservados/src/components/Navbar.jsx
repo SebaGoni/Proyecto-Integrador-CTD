@@ -165,25 +165,51 @@ const NavContainer = styled.nav`
 `
 const BgDiv = styled.nav`
     position: absolute;
-    width: 100%;
+    width: 102%;
     top: 112px;
     margin-left: -10px;
     background-color: white;
-    ul{
-        display: flex;
-        align-items: center;
-        gap: 15px;
+    @media (min-width: 786px){
+        ul{
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        li{
+            list-style: none;
+        }
+        a{
+            text-decoration: none;
+            padding-left: 1rem;
+            font-size: .9rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            color: black;
+        }
     }
-    li{
-        list-style: none;
+    @media (max-width: 786px) {
+        width:102%;
+        ul{
+            display: block;
+            align-items: center;
+            gap: 15px;
+        }
+        li{
+            list-style: none;
+            padding: 1.5rem;
+            margin:auto;
+            border-bottom: solid #d9d9d9 1px;
+            width: 80%;
+            margin-left:-5px;
+        }
+        a{
+            text-decoration: none;
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: black;
+        
     }
-    a{
-        text-decoration: none;
-        padding-left: 1rem;
-        font-size: .9rem;
-        font-weight: 600;
-        letter-spacing: 1px;
-        color: black;
     }
 `
 
