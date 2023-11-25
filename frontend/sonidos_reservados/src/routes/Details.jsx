@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { GlobalContext } from '../components/utils/global_context';
-import { AiOutlineArrowLeft, AiFillStar, AiOutlineStar } from 'react-icons/ai';
+import { AiOutlineArrowLeft, AiOutlineArrowRight, AiFillStar, AiOutlineStar } from 'react-icons/ai';
 import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
 import Modal from 'react-modal';
+
 
 Modal.setAppElement('#root');
 
@@ -15,7 +16,9 @@ const Details = () => {
 
   const [averageRating, setAverageRating] = useState(0);
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [modalIsOpen2, setModalIsOpen2] = useState(false);
   const [ratings, setRatings] = useState([]);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   useEffect(() => {
     if (id) {
@@ -84,6 +87,18 @@ const Details = () => {
     setModalIsOpen(false);
   };
 
+  const closeModal2 = () => {
+    setModalIsOpen2(false);
+  };
+
+  const openModal2 = () => {
+    setModalIsOpen2(true);
+  };
+
+  const handleImageChange = (increment) => {
+    setCurrentImageIndex((prevIndex) => (prevIndex + increment + product.imagenes.length) % product.imagenes.length);
+  };
+
   return (
     <>
     <DetailContainer>
@@ -113,6 +128,32 @@ const Details = () => {
                 </div>
               </>
             )}
+            <button onClick={openModal2} className='verComentarios'>Ver mas imagenes</button>
+            <Modal
+              style={{
+                content: {
+                  top: '60%',
+                  left: '50%',
+                  right: 'auto',
+                  bottom: 'auto',
+                  borderRadius: '20px',
+                  marginRight: '-50%',
+                  transform: 'translate(-50%, -50%)',
+                  color: 'black',
+                  textAlign: 'center',
+                  width: '500px'
+                },
+              }}
+              isOpen={modalIsOpen2}
+              onRequestClose={closeModal2}
+            >
+              <div className='modal-slider'>
+          <AiOutlineArrowLeft onClick={() => handleImageChange(-1)} style={{ fontSize: '30px', backgroundColor: '#3F51B5', padding: '5px', color: 'white', borderRadius: '10px', cursor: 'pointer' }}/>
+            <img src={product.imagenes[currentImageIndex]} alt='' style={{ width: '20rem',  height: '20rem', objectFit: 'cover', padding: '15px' }}/>
+          <AiOutlineArrowRight onClick={() => handleImageChange(1)} style={{ fontSize: '30px', backgroundColor: '#3F51B5', padding: '5px', color: 'white', borderRadius: '10px', cursor: 'pointer' }}/>
+        </div>
+        <button onClick={closeModal2} style={{ backgroundColor: '#3F51B5', color: 'white', border: 'none', borderRadius: '10px', fontFamily: 'Poppins', fontSize: '1rem', fontWeight: 600, padding: '10px 30px', cursor: 'pointer' }}>Cerrar</button>
+            </Modal>
           </div>
         </div>
       </div>
@@ -183,7 +224,7 @@ const DetailContainer = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-top: 23vh;
+    margin-top: 27vh;
     margin-left: 2rem;
     margin-right: 2rem;
     gap: 2rem;
@@ -302,7 +343,7 @@ const DetailContainer = styled.div`
 
     .img1{
       width: 500px;
-      height: 500px;
+      height: 400px;
       object-fit: cover;
       @media(max-width: 600px){
         width: 300px;
