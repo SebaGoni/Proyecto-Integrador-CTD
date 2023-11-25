@@ -145,8 +145,12 @@ const Recomendaciones = styled.div`
       color: #000000;
       border-bottom: 1px solid transparent; 
     }
-    .star {
+    .stars {
+      position: absolute;
+      top: 45px;
+      left: 40px;
       color: #3F51B5;
+      font-size: 20px;
     }
     .heartIconFilled{
       position: absolute;
