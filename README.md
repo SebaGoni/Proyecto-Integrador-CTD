@@ -1,5 +1,6 @@
 # E5-PI-Instrumentos-Musicales
 Proyecto integrador - Certified Tech Developer - Digital House - Equipo 5
+Octubre 2023
 --------------------------------------------------------------------------
 
 PLANNING
@@ -38,8 +39,9 @@ PLANNING
     #20: Crear sección de categorías (Prioridad Media)
     #21: Agregar categoria (Prioridad Baja)
 
-    Sprint 3:
-
+  Sprint 3: 
+            Desarrollar funcionalidades 
+            complementarias
 
     #22: Realizar búsqueda (Prioridad Alta)
     #23: Visualizar disponibilidad (Prioridad Alta)
@@ -50,9 +52,17 @@ PLANNING
     #28: Puntuar producto (Prioridad Baja)
     #29: Eliminar categoría (Prioridad Baja)
 
-    Sprint 4:
+  Sprint 4: 
+            Desarrollar la funcionalidad 
+            de reserva de Productos
 
-    #30: 
+    #30: Reservas: Seleccionar fecha (Prioridad Alta)
+    #31: Reservas: Visualizar detalles (Prioridad Alta)
+    #32: Realizar reserva (Prioridad Alta)
+    #33: Acceder a historial (Prioridad Media)
+    #34: Whatsapp: Iniciar chat (Prioridad Baja)
+    #35: Notificación: Confirmar reserva por correo (Prioridad Baja)
+
       
 # E5-PI-instrumentosMusicales
 
