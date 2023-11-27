@@ -118,13 +118,14 @@ const NavContainer = styled.nav`
         cursor: pointer;
     }
     .logout{
+        margin: 0;
         cursor: pointer;
         background:#3F51B5;
         padding: 5px 8px;
         border-radius: 20px;
         color: white;
         position: absolute;
-        top: 125px;
+        top: 145px;
         right: 10px;
         font-size: 20px;
         font-weight: 500;
@@ -133,13 +134,14 @@ const NavContainer = styled.nav`
         -moz-box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.75);
     }
     .perfil{
+        margin: 0;
         cursor: pointer;
         background:#3F51B5;
         padding: 5px 8px;
         border-radius: 20px;
         color: white;
         position: absolute;
-        top: 80px;
+        top: 100px;
         right: 10px;
         font-size: 20px;
         font-weight: 500;
@@ -154,7 +156,7 @@ const NavContainer = styled.nav`
         color: white;
         position: absolute;
         right: 10px;
-        top: 185px;
+        top: 190px;
         font-size: 20px;
         font-weight: 500;
         text-decoration: none;

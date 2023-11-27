@@ -3,7 +3,9 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { GlobalContext } from '../components/utils/global_context';
 import { AiOutlineArrowLeft, AiOutlineArrowRight, AiFillStar, AiOutlineStar } from 'react-icons/ai';
-import { FaRegHeart, FaHeart } from "react-icons/fa";
+import { FaRegHeart, FaHeart, FaFacebookSquare, FaInstagram, FaWhatsapp, FaShareAlt, FaTwitterSquare   } from "react-icons/fa";
+
+
 
 const Cards = () => {
   const { getProductosAleatorios, productosAleatorios, agregarProductoFavorito, eliminarProductoFavorito, token, productosFavoritos } = useContext(GlobalContext);
@@ -150,7 +152,7 @@ const Cards = () => {
                   </>
                 )}
                 <ShareButtonContainer>
-              <img className='shareImg' src='/src/assets/share.png' onClick={() => openShareButtons(product)} />
+                  <FaShareAlt className='iconShare' onClick={() => openShareButtons(product)} />
                 </ShareButtonContainer>
               {showShareButtons && selectedProduct === product && (
               <div className='shareButtons'>
@@ -159,10 +161,12 @@ const Cards = () => {
                 <textarea value={customMessage} onChange={(e) => setCustomMessage(e.target.value)} placeholder="Escribe tu mensaje personalizado"
                         rows={4} cols={50}
                 />
-                <img className='IconRedes' src='/src/assets/facebook.png' onClick={() => shareOnFacebook(product.id)} />
-                <img className='IconRedes' src='/src/assets/instagram.png' onClick={() => shareOnInstagram(product.id)} />
-                <img className='IconRedes' src='/src/assets/whatsapp.png' onClick={() => shareOnWhatsApp(product.id)} />
-                <img className='IconRedes' src='/src/assets/twitter.png' onClick={() => shareOnTwitter(product.id)} />
+                <div className='divIcons'>
+                  <FaFacebookSquare className='icons' onClick={() => shareOnFacebook(product.id)} />
+                  <FaInstagram className='icons'  onClick={() => shareOnInstagram(product.id)} />
+                  <FaWhatsapp className='icons'  onClick={() => shareOnWhatsApp(product.id)} />
+                  <FaTwitterSquare className='icons' onClick={() => shareOnTwitter(product.id)} />
+                </div>
                 <button className='closeButton' onClick={closeShareButtons}>Cerrar</button>
               </div>)}
               </div>
@@ -293,7 +297,19 @@ const Recomendaciones = styled.div`
     .linkProducts{
       text-decoration: none;
     }
-
+    .productTitle{
+      color: #ffffff;
+    }
+    .divIcons{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+    }
+    .icons{
+      font-size: 30px;
+      cursor: pointer;
+    }
     .titleProducts{
       text-align: center;
       border-radius: 20px;
@@ -314,21 +330,23 @@ const Recomendaciones = styled.div`
     width: 500px; /* Ancho de la ventana */
     height: 400px; /* Alto de la ventana */
     padding: 20px;
-    background-color: rgba(255, 255, 255, 0.9); /* Fondo blanco con transparencia */
+    background-color: #3f51b5; /* Fondo blanco con transparencia */
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.8);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
+    z-index: 1;
     } 
     .closeButton{
       padding: 10px 20px;
       width: 200px;
       border: none;
       border-radius: 5px;
-      background-color: #3F51B5;
-      color: white;
+      background-color: #ffffff;
+      color: #3f51b5;
+      font-weight: 600;
       font-size: 16px;
       cursor: pointer;
       transition: background-color 0.3s ease-in-out;
@@ -341,21 +359,17 @@ const Recomendaciones = styled.div`
     .productImage{
     width: 100px;
     height: 100px;
+    object-fit: cover;
     }
     `
     
 const ShareButtonContainer = styled.div`
     position: absolute;
-    top: 35px;
-    right: 90px;
-    z-index: 1;
-    padding: 5px;
-    background-color: rgba(255, 255, 255, 0.7);
-    border-bottom-left-radius: 10px;
-
-    .shareImg {
-    width: 43px;
-    height: 43px;
-    cursor: pointer;
+    top: 45px;
+    right: 95px;
+    .iconShare {
+      cursor: pointer;
+      color: #3F51B5;
+      font-size: 30px;
   }
 `

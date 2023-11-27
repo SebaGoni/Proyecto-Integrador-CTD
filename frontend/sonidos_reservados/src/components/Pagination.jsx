@@ -51,8 +51,7 @@ const Pagination = ({ itemsPerPage, totalItems, paginate, currentPage }) => {
 export default Pagination;
 
 const PaginationStyle = styled.div`
-        margin: 25vh 2rem 2rem 2rem ;
-       
+        margin: 5vh 2rem 2rem 2rem ;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -62,6 +61,7 @@ const PaginationStyle = styled.div`
           align-items: center;
           list-style: none;
           gap: 10px;
+          padding: 0;
         }
         .page-link{
           display: flex;

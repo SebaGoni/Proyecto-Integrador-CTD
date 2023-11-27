@@ -16,6 +16,7 @@ const Productos = () => {
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = productos.slice(indexOfFirstItem, indexOfLastItem);
   const [localRatings, setLocalRatings] = useState({});
+  const [selectedCategory, setSelectedCategory] = useState([]);
 
   const obtenerValoraciones = async (productId) => {
       const response = await fetch(
@@ -65,49 +66,146 @@ const Productos = () => {
     currentItems.forEach((product) => obtenerValoraciones(product.id));
   }, [currentItems]);
 
+  const handleCheckboxChange = (event) => {
+    const selectedValue = event.target.value;
+    if (event.target.checked) {
+      // If the checkbox is checked, add the category to the selected categories
+      setSelectedCategory((prevCategories) => [...prevCategories, selectedValue]);
+    } else {
+      // If the checkbox is unchecked, remove the category from the selected categories
+      const updatedCategories = selectedCategory.filter((category) => category !== selectedValue);
+      setSelectedCategory(updatedCategories);
+    }
+    setCurrentPage(1);
+  };
+
+  const isCategorySelected = (category) => selectedCategory.includes(category);
+
+  const filteredItems = selectedCategory.length
+    ? productos.filter((product) => isCategorySelected(product.categoria.nombre))
+    : productos;
+
+  const indexOfLastItem2 = currentPage * itemsPerPage;
+  const indexOfFirstItem2 = indexOfLastItem2 - itemsPerPage;
+  const currentItems2 = filteredItems.slice(indexOfFirstItem2, indexOfLastItem);
+
+  const categorias = ['VIENTO', 'CUERDAS', 'PERCUSIÓN', 'TECLADOS', 'MICRÓFONOS', 'SISTEMA DE AUDIO'];
+
   return (
-    <ProductosStyle>
-      <Pagination itemsPerPage={itemsPerPage} totalItems={productos.length} paginate={paginate} currentPage={currentPage} />
-      <div className='productos'>
-        <div className='container-items'>
-          {currentItems.map((product) => (
-            <div className='item' key={product.id}>
-              <figure>
-                <img src={product.image} alt={product.title} className='cardImage' />
-              </figure>
-              <div className='info-product'>
-                <Link className='link' to={`/details/${product.id}`} key={product.id}>
-                  <h3>{product.title}</h3>
-                </Link>
-              </div>
-              {localRatings[product.id] && renderStars(localRatings[product.id])}
-              {token && (
-                <>
-                  {estaEnFavoritos(product.id) ? (
-                    <FaHeart className='heartIconFilled' onClick={() => handleEliminarFavorito(product.id)} />
-                  ) : (
-                    <FaRegHeart className='heartIconFilled' onClick={() => handleAgregarFavorito(product)} />
-                  )}
-                </>
-              )}
-            </div>
-          ))}
+    <>
+        <Filter>
+        <div className='divFilters'>
+          <label className='titleFilter'>Filtrar por categoría</label>
+          <div className='divCategorias'>
+            {categorias?.map((category) => (
+              <CheckboxContainer key={category}>
+                <label htmlFor={category}>{category}</label>
+                <input
+                  type='checkbox'
+                  id={category}
+                  value={category}
+                  checked={isCategorySelected(category)}
+                  onChange={handleCheckboxChange}
+                />
+              </CheckboxContainer>
+            ))}
+          </div>
         </div>
-      </div>
-    </ProductosStyle>
+      </Filter>
+      <Pagination itemsPerPage={itemsPerPage} totalItems={filteredItems.length} paginate={paginate} currentPage={currentPage} />
+      <ProductosStyle>
+        <div className='productos'>
+          <div className='container-items'>
+            {currentItems2.map((product) => (
+              <div className='item' key={product.id}>
+                <figure>
+                  <img src={product.image} alt={product.title} className='cardImage' />
+                </figure>
+                <div className='info-product'>
+                  <Link className='link' to={`/details/${product.id}`} key={product.id}>
+                    <h3>{product.title}</h3>
+                  </Link>
+                </div>
+                {localRatings[product.id] && renderStars(localRatings[product.id])}
+                {token && (
+                  <>
+                    {estaEnFavoritos(product.id) ? (
+                      <FaHeart className='heartIconFilled' onClick={() => handleEliminarFavorito(product.id)} />
+                    ) : (
+                      <FaRegHeart className='heartIconFilled' onClick={() => handleAgregarFavorito(product)} />
+                    )}
+                  </>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      </ProductosStyle>
+    </>
   );
 };
 
 export default Productos;
     
-    
-    
-    const ProductosStyle = styled.div`
-        margin: 2rem;
-   
+
+const CheckboxContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 8px;
+  color: #ffffff;
+  font-weight: 600;
+  width: 200px;
+  gap: 10px;
+  background-color: #3F51B5;
+  padding: 10px;
+  border-radius: 10px;
+  input {
+    cursor: pointer;
+    width: 15px;
+    height: 15px;
+    border: none;
+  }
+`;
+
+const Filter = styled.div`
+  background-color: white;
+  margin: 250px 2rem 2rem 2rem;
+  padding: 20px;
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .divFilters{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 40px;
+  }
+  .titleFilter{
+    color: #3F51B5;
+    font-weight: 600;
+    font-size: 20px;
+  }
+  .divCategorias{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+  }
+`
+const ProductosStyle = styled.div`
+    margin: 5vh 2rem 2rem 2rem;
     background-color: white;
     border-radius:  20px;
     display: block;
+    .filter{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 30px;
+    }
     .link {
       color: #000000;
       border-bottom: 1px solid transparent; 

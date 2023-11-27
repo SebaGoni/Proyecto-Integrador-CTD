@@ -13,7 +13,7 @@ function Categorias() {
           <h2>CATEGORIAS</h2>
           <ButtonsContainer>
             <Link to={`/products/${selectedCategory || ''}`}>
-              <button onClick={() => setSelectedCategory(5)}>VIENTO</button>
+              <button onClick={() => setSelectedCategory('viento')}>VIENTO</button>
             </Link>
             <Link to={`/products/${selectedCategory || ''}`}>
               <button onClick={() => setSelectedCategory(6)}>CUERDAS</button>
