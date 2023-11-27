@@ -9,7 +9,6 @@ const Home = () => {
     <main>
       <ProductCalendar/>
       <Form/>
-      <Categorias/>
       <Cards/>    
     </main>
   )

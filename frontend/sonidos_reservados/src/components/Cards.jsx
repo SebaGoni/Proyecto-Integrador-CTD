@@ -2,7 +2,7 @@ import React, { useEffect, useContext, useState } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { GlobalContext } from '../components/utils/global_context';
-import { AiOutlineArrowLeft, AiOutlineArrowRight, AiFillStar, AiOutlineStar } from 'react-icons/ai';
+import { AiFillStar, AiOutlineStar } from 'react-icons/ai';
 import { FaRegHeart, FaHeart, FaFacebookSquare, FaInstagram, FaWhatsapp, FaShareAlt, FaTwitterSquare   } from "react-icons/fa";
 
 
@@ -119,25 +119,15 @@ const Cards = () => {
   return (
     <Recomendaciones>
       <div className='Productos'>
-        <TitleContainer>
-          <h2>RECOMENDACIONES</h2>
-          <div className='pages'>
-            <Link to='/'>
-              <AiOutlineArrowLeft className='iconArrow' />
-            </Link>
-            <Link to='/'>
-              <AiOutlineArrowRight className='iconArrow' />
-            </Link>
-          </div>
-        </TitleContainer>
+        <h2>RECOMENDACIONES</h2>
         <div className='container-items'>
           {productosAleatorios.map(product => (
             <div className='item' key={product.id}>
-                <figure>
-                  <img src={product.image} alt={product.title} className='cardImage' />
-                </figure>
                 <div className='info-product'>
                   <Link className='link' to={`/details/${product.id}`} key={product.id}>
+                    <figure>
+                      <img src={product.image} alt={product.title} className='cardImage' />
+                    </figure>
                     <h3>{product.title}</h3>
                   </Link> 
                 </div>
@@ -182,41 +172,6 @@ const Cards = () => {
 
 export default Cards;
 
-const TitleContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: solid black;
-  margin: 2rem;
-  padding: 1rem 1rem 0 1rem;
-  h2{
-    color: black;
-    font-family: 'Poppins', sans-serif;
-    font-weight: 500;
-    letter-spacing: 2px;
-    padding:1rem;
-    @media(min-width: 1000px){
-      font-size:2rem;
-    }
-    @media(max-width: 1000px){
-      font-size:1.8rem;
-      text-align: center;
-      
-    }
-  }
-  .pages{
-    @media(max-width: 700px){
-      display: none;
-    }
-  }
-  .iconArrow{
-    margin-right: 2rem;
-    font-size: 2.5rem;
-    color: black;
-    cursor: pointer;
-  }
-`
-
 const Recomendaciones = styled.div`
     margin: 2rem;
     padding: 1rem;
@@ -224,9 +179,26 @@ const Recomendaciones = styled.div`
     border-radius:  20px;
     display: block;
     box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
+    h2{
+      color: black;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 500;
+      letter-spacing: 3px;
+      margin: 1.5rem;
+      padding:1rem;
+      border-bottom: solid gray 1px;
+      @media(min-width: 1000px){
+        font-size:2.2rem;
+      }
+      @media(max-width: 1000px){
+        font-size:2.2rem;
+        text-align: center;  
+      }
+    }
     .link {
       color: #000000;
       border-bottom: 1px solid transparent; 
+      text-decoration: none;
     }
     .stars {
       position: absolute;
@@ -250,6 +222,7 @@ const Recomendaciones = styled.div`
     }
     .item{
         position: relative;
+        padding-top: 4.5rem;
         border-radius: 20px;
         justify-content: center;
         align-items: center;
@@ -272,7 +245,7 @@ const Recomendaciones = styled.div`
         padding: 1rem;
         color:black;
         font-family: 'Poppins', sans-serif;
-        font-weight: 600;
+        font-weight: 500;
         letter-spacing: 1px;
         @media(min-width: 1000px){
           font-size:1.5rem;

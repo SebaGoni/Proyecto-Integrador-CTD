@@ -229,6 +229,10 @@ const DetailContainer = styled.div`
     margin-right: 2rem;
     gap: 2rem;
     font-family: 'Poppins', sans-serif;
+    @media(max-width: 786px){
+            text-align: center;
+            justify-content: center;
+        }
     .divTitle{
       background-color: white;
       border-radius: 60px;
@@ -236,11 +240,17 @@ const DetailContainer = styled.div`
       display: flex;
       justify-content: space-between;
       align-items: center;
+      @media (max-width:786px) {
+        margin-top: 20vh;
+      }
     }
     .caractDiv{
       display: flex;
       flex-wrap: wrap;
       gap: 20px;
+      @media(max-width: 786px){
+            justify-content: center;
+        }
     }
     .caracteristicas{
       display: flex;
@@ -251,6 +261,9 @@ const DetailContainer = styled.div`
     }
     .caractTitle{
       font-size: 12px;
+      @media(max-width: 786px){
+            text-align: center;
+        }
     }
     .caractImg{
       width: 70px;
@@ -304,12 +317,13 @@ const DetailContainer = styled.div`
       justify-content: center; /* Centrar horizontalmente */
       align-items: center; /* Centrar verticalmente */
       flex-wrap: wrap; /* Para que los elementos internos puedan envolver si es necesario */
-      padding: 20px;
+      padding: 30px;
     }
 
     .img-container {
       position: relative;
       width: fit-content;
+      padding: 1rem;
     }
 
     .rating {

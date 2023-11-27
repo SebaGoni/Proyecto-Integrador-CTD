@@ -280,11 +280,16 @@ const ReservaContainer = styled.div`
   display: flex;
   height:450px;
   align-items: center;
-  background-color: black;
-  margin-top: 20vh; 
+  background-color: black; 
   margin-left:-10px;
   width: 105%;
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
+  @media (min-width: 786px){
+    margin-top: 18vh; 
+  }
+  @media (max-width: 786px){
+    margin-top: 40vh; 
+  }
   .banner{
     justify-content: left;
     margin-left: 5%;
