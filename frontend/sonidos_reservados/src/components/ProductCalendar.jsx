@@ -124,7 +124,7 @@ const ProductCalendar = () => {
         text: 'Por favor selecciona fechas',
         icon: 'warning',
       });
-    }
+    }s
   };
 
   return (
