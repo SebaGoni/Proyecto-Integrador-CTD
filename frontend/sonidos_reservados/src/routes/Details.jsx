@@ -5,20 +5,29 @@ import { AiOutlineArrowLeft, AiOutlineArrowRight, AiFillStar, AiOutlineStar } fr
 import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
 import Modal from 'react-modal';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import 'react-datepicker/dist/react-datepicker-cssmodules.css';
+import moment from 'moment';
+import Swal from 'sweetalert2';
 
 
 Modal.setAppElement('#root');
 
 const Details = () => {
-  const { getProductosById } = useContext(GlobalContext);
+  const { getProductosById, userRol } = useContext(GlobalContext);
   const [product, setProduct] = useState(null);
   const { id } = useParams();
 
   const [averageRating, setAverageRating] = useState(0);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [modalIsOpen2, setModalIsOpen2] = useState(false);
+  const [modalIsOpen3, setModalIsOpen3] = useState(false);
   const [ratings, setRatings] = useState([]);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [fechasReservadas, setFechasReservadas] = useState([]);
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
 
   useEffect(() => {
     if (id) {
@@ -99,6 +108,70 @@ const Details = () => {
     setCurrentImageIndex((prevIndex) => (prevIndex + increment + product.imagenes.length) % product.imagenes.length);
   };
 
+  const handleProductSelection = async () => {
+    try {
+      const response = await fetch(`http://ec2-54-198-119-206.compute-1.amazonaws.com:8080/reservas/producto/${id}`);
+      const data = await response.json();
+      console.log("Fechas desde el servidor:", data);
+    
+      if (response.ok) {
+        const fechasReservadas = data.map((fecha) => new Date(fecha));
+        setFechasReservadas(fechasReservadas);
+      } else {
+        console.error("Error al obtener las fechas reservadas");
+      }
+    } catch (error) {
+      console.error("Error de red:", error);
+    }
+  };
+
+  const disableReservedDates = (date) => {
+    const formattedDate = moment(date).format("YYYY-MM-DD");
+
+    if (fechasReservadas.length === 0) {
+      //const today = moment().format("YYYY-MM-DD");
+      return formattedDate;
+    }
+    
+
+    return !fechasReservadas.some((fecha) => {
+      const formattedReservedDate = moment(fecha).format("YYYY-MM-DD");
+      return formattedReservedDate === formattedDate;
+    });
+  };
+
+  const handleReserveClick = () => {
+    if (id && startDate && endDate) {
+      // Validar el rol del usuario antes de permitir la reserva
+      if (userRol === 'USER') {
+        // Realizar la reserva si el rol es USER
+        localStorage.setItem('reservaData', JSON.stringify({ idProducto: id, fechaInicio: startDate, fechaFin: endDate }));
+        window.location.href = "/newReservation";
+      } else {
+        // Mostrar mensaje con SweetAlert si el rol no es USER
+        Swal.fire({
+          title: 'Acceso no autorizado',
+          text: 'Debes iniciar sesión para realizar reservas',
+          icon: 'warning',
+        });
+      }
+    } else {
+      Swal.fire({
+        title: 'Error',
+        text: 'Por favor selecciona fechas',
+        icon: 'warning',
+      });
+    }s
+  };
+
+  const openModal3 = () => {
+    setModalIsOpen3(true);
+  };
+
+  const closeModal3 = () => {
+    setModalIsOpen3(false);
+  };
+
   return (
     <>
     <DetailContainer>
@@ -154,6 +227,95 @@ const Details = () => {
         </div>
         <button onClick={closeModal2} style={{ backgroundColor: '#3F51B5', color: 'white', border: 'none', borderRadius: '10px', fontFamily: 'Poppins', fontSize: '1rem', fontWeight: 600, padding: '10px 30px', cursor: 'pointer' }}>Cerrar</button>
             </Modal>
+            <button className='btnReserva' onClick={openModal3}>Reservar instrumento</button>
+      <Modal  style={{
+            content: {
+              top: '50%',
+              left: '50%',
+              right: 'auto',
+              bottom: 'auto',
+              borderRadius: '20px',
+              marginRight: '-50%',
+              marginTop: '30px',
+              transform: 'translate(-50%, -50%)',
+              color: 'black',
+              textAlign: 'center',
+              width: '1000px',
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-between",
+              alignItems: "center"
+            },
+          }}
+          isOpen={modalIsOpen3}
+          onRequestClose={closeModal3}>
+      
+    <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+  
+    <button onClick={closeModal3} style={{
+            marginRight: "10px",
+            padding: "8px 18px",
+            background: "#b20e0e",
+            color: "white",
+            border: "none",
+            borderRadius: "5px",
+            cursor: "pointer",
+            transition: "background 0.3s ease",
+            fontFamily: 'Poppins',
+            fontWeight: 600,
+          }}>Cerrar</button>
+      <DatePicker
+        showIcon
+        icon={
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="1em"
+              height="1em"
+              viewBox="0 0 48 48"
+            >
+              <mask id="ipSApplication0">
+                <g fill="none" stroke="#fff" strokeLinejoin="round" strokeWidth="4">
+                  <path strokeLinecap="round" d="M40.04 22v20h-32V22"></path>
+                  <path
+                    fill="#fff"
+                    d="M5.842 13.777C4.312 17.737 7.263 22 11.51 22c3.314 0 6.019-2.686 6.019-6a6 6 0 0 0 6 6h1.018a6 6 0 0 0 6-6c0 3.314 2.706 6 6.02 6c4.248 0 7.201-4.265 5.67-8.228L39.234 6H8.845l-3.003 7.777Z"
+                  ></path>
+                </g>
+              </mask>
+              <path
+                fill="currentColor"
+                d="M0 0h48v48H0z"
+                mask="url(#ipSApplication0)"
+              ></path>
+            </svg>
+          }
+        selectsRange
+        startDate={startDate}
+        endDate={endDate}
+        monthsShown={2}
+        onChange={(update) => {
+          const [start, end] = update;
+          setStartDate(start);
+          setEndDate(end);
+        }}
+        minDate={new Date()}
+        filterDate={disableReservedDates}
+        placeholderText="Rango de fechas"
+      />
+      <button onClick={handleReserveClick}style={{
+            marginLeft: "10px",
+            padding: "8px 18px",
+            background: "#3F51B5",
+            color: "white",
+            border: "none",
+            borderRadius: "5px",
+            cursor: "pointer",
+            transition: "background 0.3s ease",
+            fontFamily: 'Poppins',
+            fontWeight: 600,
+          }}>Reservar</button>
+    </div>
+      </Modal>
           </div>
         </div>
       </div>
@@ -224,7 +386,7 @@ const DetailContainer = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-top: 27vh;
+    margin-top: 29vh;
     margin-left: 2rem;
     margin-right: 2rem;
     gap: 2rem;
@@ -278,6 +440,18 @@ const DetailContainer = styled.div`
 
     .verComentarios{
       margin-top: 30px;
+      border: #3F51B5 solid 2px;
+      background-color: transparent;
+      color: #3F51B5;
+      border-radius: 10px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      padding: 10px 30px;
+      cursor: pointer;
+    }
+    .btnReserva{
+      margin-top: 10px;
       background-color: #3F51B5;
       color: white;
       border: none;
@@ -377,8 +551,8 @@ const DetailContainer = styled.div`
 
     .img2{
       object-fit: cover;
-      width: 245px;
-      height: 245px;
+      width: 145px;
+      height: 145px;
       margin-right: 5px;
       margin-left: 5px;
       @media(max-width: 600px){
