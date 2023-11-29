@@ -2,34 +2,36 @@ import React, {useState} from 'react'
 import styled from 'styled-components'
 import { useNavigate } from 'react-router-dom'
 import Swal from 'sweetalert2';
+import { Formik, Field, Form, ErrorMessage } from 'formik';
+import * as Yup from "yup"; 
 
 const Registro = () => {
 
     const navigate = useNavigate()
 
-    const [formData, setFormData] = useState({
-        password: '',
-        firstname: '',
-        lastname: '',
-        email: '',
-        role: 'USER',
-      });
+    const initialValues = {
+      password: '',
+      firstname: '',
+      lastname: '',
+      email: '',
+      role: 'USER',
+    };
     
-      const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        setFormData({ ...formData, [name]: value });
-      };
+    const validationSchema = Yup.object().shape({
+        firstname: Yup.string().matches(/^[A-Za-z]+$/, '*El nombre debe contener únicamente letras').min(2,'*El nombre debe contener 2 o más dígitos'),
+        lastname: Yup.string().matches(/^[A-Za-z]+$/, '*El apellido debe contener únicamente letras').min(2,'*El apellido debe contener 2 o más dígitos'),
+        email: Yup.string().email('*Correo electrónico no válido').required('El correo electrónico es requerido'),
+        password: Yup.string().min(6,'*La contraseña debe contener al menos 6 dígitos'),
+    });
     
-      const submitForm = async () => {
-        const jsonObject = formData;
-    
-        try {
+    const submitForm = async (values) => {
+      try {
           const response = await fetch('http://ec2-54-198-119-206.compute-1.amazonaws.com:8080/auth/register', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
             },
-            body: JSON.stringify(jsonObject),
+            body: JSON.stringify(values),
           });
     
           if (response.status === 200) {
@@ -53,35 +55,42 @@ const Registro = () => {
 
   return (
     <FormContainer>
-      <form>
-      <h2>Registro de Usuario</h2>
-        <div className='input-container'>
-
-
+      <Formik
+        initialValues={initialValues}
+        validationSchema={validationSchema}
+        onSubmit={submitForm}
+      >
+        <Form>
+          <h2>Registro de Usuario</h2>
+          <div className='input-container'>
             <div className='input-row'>
-                <label htmlFor="firstname">Nombre</label>
-                <input type="text" id="firstname" name="firstname" value={formData.firstname} onChange={handleInputChange} required />
+              <label htmlFor="firstname">Nombre</label>
+              <Field type="text" id="firstname" name="firstname"/>
+              <ErrorMessage name="firstname" component="div" className="error" />
             </div>
 
             <div className='input-row'>
-                <label htmlFor="lastname">Apellido</label>
-                <input type="text" id="lastname" name="lastname" value={formData.lastname} onChange={handleInputChange} required />
+              <label htmlFor="lastname">Apellido</label>
+              <Field type="text" id="lastname" name="lastname" />
+              <ErrorMessage name="lastname" component="div" className="error" />
             </div>
 
             <div className='input-row'>
-                <label htmlFor="email">Correo Electrónico</label>
-                <input type="email" id="email" name="email" value={formData.email} onChange={handleInputChange} required />
+              <label htmlFor="email">Correo Electrónico</label>
+              <Field type="email" id="email" name="email" />
+              <ErrorMessage name="email" component="div" className="error" />
             </div>
-            
-            <div className='input-row'>
-                <label htmlFor="password">Contraseña</label>
-                <input type="password" id="password" name="password" value={formData.password} onChange={handleInputChange} required />
-            </div>
-        </div>
-        <button className="BotonDeIngreso" type="button" onClick={submitForm}>Registrar</button>
-      </form>
 
-    </FormContainer>
+            <div className='input-row'>
+              <label htmlFor="password">Contraseña</label>
+              <Field type="password" id="password" name="password" />
+              <ErrorMessage name="password" component="div" className="error" />
+            </div>
+          </div>
+          <button className="BotonDeIngreso" type="submit">Registrar</button>
+        </Form>
+      </Formik>
+      </FormContainer>
   )
 }
 
@@ -93,7 +102,7 @@ const FormContainer = styled.div`
     margin-top: 200px;
     margin-bottom: 100px;
     width: 600px;
-    height: 500px;
+    height: 600px;
     background-color: white;
     color: black;
     display: flex;
@@ -131,5 +140,11 @@ const FormContainer = styled.div`
         font-weight: 600;
         padding: 5px 30px;
         cursor: pointer;
+    }
+    .error {
+    color: red;
+    font-size: 0.8rem;
+    font-style: italic;
+    margin-top: 4px; 
     }
     `
