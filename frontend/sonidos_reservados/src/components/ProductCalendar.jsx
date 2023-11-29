@@ -11,7 +11,7 @@ import { MdCancel } from "react-icons/md";
 
 Modal.setAppElement('#root');
 
-const BannerReserva= '/src/assets/musicians-stage-lights.jpg';
+const BannerReserva = 'https://sonidos-reservados.s3.amazonaws.com/imgFront/musicians-stage-lights.jpg';
 const ProductCalendar = () => {
 
   const [modalIsOpen, setModalIsOpen] = useState(false);

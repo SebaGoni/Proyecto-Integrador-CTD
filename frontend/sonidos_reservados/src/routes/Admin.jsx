@@ -2,7 +2,7 @@ import React from 'react'
 import {Link} from 'react-router-dom'
 import styled from 'styled-components'
 
-const iconErr = '/src/assets/error-purple.png';
+const iconErr = 'https://sonidos-reservados.s3.amazonaws.com/imgFront/error-purple.png';
 const Admin = () => {
   return (
     <>

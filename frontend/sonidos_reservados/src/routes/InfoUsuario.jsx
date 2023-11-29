@@ -7,7 +7,18 @@ import { IoPerson } from 'react-icons/io5'
 const InfoUsuario = () => {
 
      const { firstname, lastname, email, userRol } = useContext(GlobalContext);
+     const reenviarCorreo = () => {
+        /*endpoint: http://ec2-54-198-119-206.compute-1.amazonaws.com:8080/auth/emailRegistro
+        
+        data:
 
+        {
+        "email": "sebastiangoni@gmail.com",
+        "firstname": "seba"
+        }*/
+
+
+     }; 
   return (
     <FormContainer>
         <h2>INFORMACIÓN PERSONAL</h2>
@@ -24,6 +35,7 @@ const InfoUsuario = () => {
                         <h2>Correo electrónico: <span>{email}</span></h2>
                         <h2>Rol: <span>{userRol}</span></h2>
                     </div>
+                    <button type="button" onClick={reenviarCorreo}>Reenviar correo de confirmación</button>
                 </div>
             </div>
     </FormContainer>
@@ -55,9 +67,21 @@ const FormContainer = styled.div`
     }
     .divBodyInfo{
         display: flex;
-        justify-content: center;
+        justify-content: left;
         align-items: center;
+        text-align: start;
         gap: 40px;
         padding-top: 40px;
+    }
+    button{
+        margin-top:1rem;
+        padding: 1rem;
+        background:#3F51B5;
+        background-image: linear-gradient(#7E57C2 50%, #3F51B5);
+        border-radius: 15px;
+        color: white;
+        font-size: 1.4rem;
+        font-family: 'Poppins', sans-serif;
+        cursor: pointer;
     }
 `
