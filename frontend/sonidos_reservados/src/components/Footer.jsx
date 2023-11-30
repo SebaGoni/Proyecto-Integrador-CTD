@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from "styled-components";
+import WhatsAppButton from './WhatsAppButton';
 
 const logoFooterColor = '/src/assets/SonidosreservadosFooterV2.png'
 const Footer = () => {
@@ -8,6 +9,7 @@ const Footer = () => {
         <div className='foot-container'>
             <img className='LogoFooter' src={logoFooterColor} alt='Logo de colores' height="240px"/>
             <p>©2023. Copyright Sonidos Reservados DH</p>
+            <WhatsAppButton/>
         </div>    
     </BlackFooter>
   )

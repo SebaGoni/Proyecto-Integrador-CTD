@@ -6,7 +6,6 @@ import { Link } from 'react-router-dom';
 const Navbar = () => {
 
     const { userRol, token, email, lastname, firstname, username, logout } = useContext(GlobalContext);
-    console.log(firstname);
     const [clickedInitials, setClickedInitials] = useState(false);
     const handleClickInitials = () => {
         setClickedInitials(!clickedInitials)
@@ -30,8 +29,8 @@ const Navbar = () => {
             )}
             {token && userRol === 'USER' &&(
                 <div>
-                   <div className='divInitials'>
-                        <h2 className='initials' onClick={handleClickInitials}>{initials}</h2>
+                   <div className='divInitials' onClick={handleClickInitials}>
+                        <h2 className='initials'>{initials}</h2>
                     </div>
                     {clickedInitials && (
                         <>
@@ -44,8 +43,8 @@ const Navbar = () => {
                 </div>
             ) || token && userRol === 'ADMIN' && (
                 <div>
-                    <div className='divInitials'>
-                        <h2 className='initials' onClick={handleClickInitials}>{initials}</h2>
+                    <div className='divInitials' onClick={handleClickInitials}>
+                        <h2 className='initials'>{initials}</h2>
                     </div>
                     {clickedInitials && (
                         <>

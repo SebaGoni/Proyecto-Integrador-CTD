@@ -110,6 +110,7 @@ const Details = () => {
 
   const handleProductSelection = async () => {
     try {
+      openModal3()
       const response = await fetch(`http://ec2-54-198-119-206.compute-1.amazonaws.com:8080/reservas/producto/${id}`);
       const data = await response.json();
       console.log("Fechas desde el servidor:", data);
@@ -227,7 +228,7 @@ const Details = () => {
         </div>
         <button onClick={closeModal2} style={{ backgroundColor: '#3F51B5', color: 'white', border: 'none', borderRadius: '10px', fontFamily: 'Poppins', fontSize: '1rem', fontWeight: 600, padding: '10px 30px', cursor: 'pointer' }}>Cerrar</button>
             </Modal>
-            <button className='btnReserva' onClick={openModal3}>Reservar instrumento</button>
+            <button className='btnReserva' onClick={() => handleProductSelection()}>Reservar instrumento</button>
       <Modal  style={{
             content: {
               top: '50%',
@@ -241,6 +242,7 @@ const Details = () => {
               color: 'black',
               textAlign: 'center',
               width: '1000px',
+              height: '300px',
               display: "flex",
               flexDirection: "column",
               justifyContent: "space-between",

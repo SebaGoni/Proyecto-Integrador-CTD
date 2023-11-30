@@ -21,7 +21,8 @@ const initialState = {
   getProductosById: () => {},
   getValoracionesByProductoId: () => {},
   reservaData: null,
-  valoraciones: {}
+  valoraciones: {},
+  reservas: []
 };
 
 export const GlobalContext = createContext(initialState);
@@ -31,6 +32,8 @@ const reducer = (state, action) => {
   switch (action.type) {
         case "setReservaData":
           return { ...state, reservaData: action.payload };
+        case "getReservas":
+          return { ...state, reservas: action.payload };
         case "setValoraciones":
           return {...state, valoraciones: action.payload};
         case "setProductos":
@@ -343,6 +346,13 @@ export const GlobalProvider = ({ children }) => {
     return productoData;
   };
 
+  const getReservas = async () => {
+    const reservasData = await fetchData(
+      "http://ec2-54-198-119-206.compute-1.amazonaws.com:8080/reservas"
+    );
+    dispatch({ type: "getReservas", payload: reservasData });
+  };
+
   const getReservaData = (idProducto, fechaInicio, fechaFin) => {
     const reservaData = {
       idProducto: idProducto.id,
@@ -612,7 +622,7 @@ export const GlobalProvider = ({ children }) => {
   }, []);
 
   return (
-    <GlobalContext.Provider value={{ ...state, getProductosById, postProducto, getProductos, getProductosAleatorios, deleteProducto, login, logout, getUsuarios, deleteUsuario, updateUsuario, getUsuarioById, getValoracionesByProductoId, getReservaData, agregarProductoFavorito, eliminarProductoFavorito, getCategorias, getCaracteristicas, postCategoria, deleteCategoria, updateCategoria, postCaracteristica, deleteCaracteristica, updateCaracteristica }}>
+    <GlobalContext.Provider value={{ ...state, getProductosById, postProducto, getProductos, getProductosAleatorios, deleteProducto, login, logout, getUsuarios, deleteUsuario, updateUsuario, getUsuarioById, getValoracionesByProductoId, getReservaData, agregarProductoFavorito, eliminarProductoFavorito, getCategorias, getCaracteristicas, postCategoria, deleteCategoria, updateCategoria, postCaracteristica, deleteCaracteristica, updateCaracteristica, getReservas }}>
       {children}
     </GlobalContext.Provider>
   );
