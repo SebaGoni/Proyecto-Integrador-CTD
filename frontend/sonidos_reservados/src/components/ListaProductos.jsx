@@ -80,7 +80,7 @@ const ProductContainer = styled.div`
   background-color: white;
   border-radius: 20px;
   color: black;
-  margin: 1rem 2rem 1rem 2rem;
+  margin: 10rem 2rem 1rem 2rem;
   padding: 2rem;
   .iconArrow{
       margin-right: 2rem;

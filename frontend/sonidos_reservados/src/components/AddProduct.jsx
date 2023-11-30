@@ -141,7 +141,7 @@ const NuevoContainer = styled.div`
   background-color: white;
   border-radius: 20px;
   color: black;
-  margin-top: 200px;
+  margin-top: 15rem;
   margin-bottom: 50px;
   margin-right: 2rem;
   margin-left: 2rem;
@@ -149,6 +149,7 @@ const NuevoContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 20px;
   h1 {
     text-align: center;
   }
@@ -173,7 +174,7 @@ const NuevoContainer = styled.div`
   }
   .iconArrow{
       position: absolute;
-      top: 14rem;
+      top: 17rem;
       left: 4rem;
       font-size: 2rem;
       color: black;
