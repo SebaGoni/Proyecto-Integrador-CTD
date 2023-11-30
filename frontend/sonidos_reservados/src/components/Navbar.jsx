@@ -6,12 +6,11 @@ import { Link } from 'react-router-dom';
 const Navbar = () => {
 
     const { userRol, token, email, lastname, firstname, username, logout } = useContext(GlobalContext);
-    console.log(firstname);
     const [clickedInitials, setClickedInitials] = useState(false);
     const handleClickInitials = () => {
         setClickedInitials(!clickedInitials)
     }
-    const iconsr= 'https://sonidos-reservados.s3.amazonaws.com/imgFront/SonidosreservadosV2.png';
+    const iconsr= '/src/assets/SonidosreservadosV2.png';
 
     const initials = `${firstname?.toUpperCase().charAt(0) || ''}${lastname?.toUpperCase().charAt(0) || ''}`;
   return (
@@ -29,10 +28,9 @@ const Navbar = () => {
                 </div>
             )}
             {token && userRol === 'USER' &&(
-                <div className='divUser'>
-                    <p>{firstname}</p>
-                   <div className='divInitials'>
-                        <h2 className='initials' onClick={handleClickInitials}>{initials}</h2>
+                <div>
+                   <div className='divInitials' onClick={handleClickInitials}>
+                        <h2 className='initials'>{initials}</h2>
                     </div>
                     {clickedInitials && (
                         <>
@@ -44,11 +42,9 @@ const Navbar = () => {
                     )}
                 </div>
             ) || token && userRol === 'ADMIN' && (
-                <div className='divUser'>
-                    <p>{firstname}</p>
-                    <div className='divInitials'>
-                        
-                        <h2 className='initials' onClick={handleClickInitials}>{initials}</h2>
+                <div>
+                    <div className='divInitials' onClick={handleClickInitials}>
+                        <h2 className='initials'>{initials}</h2>
                     </div>
                     {clickedInitials && (
                         <>
@@ -107,19 +103,8 @@ const NavContainer = styled.nav`
         margin: 0 1rem 1rem 1rem;
         padding-top: .5rem;
     }
-    .divUser{
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        p{
-            margin-right:1rem;
-            letter-spacing: 1px;
-            font-weight: 600;
-            font-size: 1.2rem;
-        }
-
-    }
     .divInitials{
+        display: flex;
         justify-content: center;
         align-items: center;
         background:#3F51B5;
@@ -135,11 +120,11 @@ const NavContainer = styled.nav`
         margin: 0;
         cursor: pointer;
         background:#3F51B5;
-        padding: 6px 12px;
+        padding: 5px 8px;
         border-radius: 20px;
         color: white;
         position: absolute;
-        top: 150px;
+        top: 145px;
         right: 10px;
         font-size: 20px;
         font-weight: 500;
@@ -151,7 +136,7 @@ const NavContainer = styled.nav`
         margin: 0;
         cursor: pointer;
         background:#3F51B5;
-        padding: 6px 12px;
+        padding: 5px 8px;
         border-radius: 20px;
         color: white;
         position: absolute;
@@ -165,12 +150,12 @@ const NavContainer = styled.nav`
     }
     .linkAdmin{
         background:#3F51B5;
-        padding: 6px 12px;
+        padding: 5px 8px;
         border-radius: 20px;
         color: white;
         position: absolute;
         right: 10px;
-        top: 200px;
+        top: 190px;
         font-size: 20px;
         font-weight: 500;
         text-decoration: none;

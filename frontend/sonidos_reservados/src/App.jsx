@@ -25,7 +25,7 @@ import NuevaCatacteristica from './routes/NuevaCatacteristica';
 function App() {
 
   const { userRol } = useContext(GlobalContext);
-  console.log(userRol);
+
 
   return (
     <>

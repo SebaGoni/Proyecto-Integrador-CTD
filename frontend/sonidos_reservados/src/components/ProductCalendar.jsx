@@ -311,6 +311,7 @@ const ReservaContainer = styled.div`
     box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.75);
         -webkit-box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.75);
         -moz-box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.75);
+    
     @media (max-width: 900px) {
       left: 50%;
       transform: translateX(-50%);
@@ -320,4 +321,5 @@ const ReservaContainer = styled.div`
       margin-left: 60%;
       margin-top: 30px;
   }
+}
 `

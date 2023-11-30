@@ -5,46 +5,92 @@ import { Link } from 'react-router-dom';
 import Pagination from '../components/Pagination';
 import { AiFillStar, AiOutlineStar } from 'react-icons/ai';
 import { FaRegHeart, FaHeart } from 'react-icons/fa';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
 const Productos = () => {
-  const { productos, agregarProductoFavorito, eliminarProductoFavorito, token, productosFavoritos } = useContext(
+  const { productos, agregarProductoFavorito, eliminarProductoFavorito, token, productosFavoritos, reservas, getReservas } = useContext(
     GlobalContext
   );
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = productos.slice(indexOfFirstItem, indexOfLastItem);
   const [localRatings, setLocalRatings] = useState({});
   const [selectedCategory, setSelectedCategory] = useState([]);
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
 
-  const obtenerValoraciones = async (productId) => {
-      const response = await fetch(
-        `http://ec2-54-198-119-206.compute-1.amazonaws.com:8080/valoraciones/producto/${productId}`
-      );
-      const data = await response.json();
-      if (data && data.length > 0) {
-        const average = calcularPromedio(data);
-        setLocalRatings((prevRatings) => ({ ...prevRatings, [productId]: average }));
-      }
+  const filterProducts = () => {
+    const filteredByCategory = selectedCategory.length
+      ? productos.filter((product) => isCategorySelected(product.categoria.nombre))
+      : productos;
+
+    const filteredByDateAndCategory = filterProductsByDate(filteredByCategory);
+
+    return filteredByDateAndCategory;
   };
 
-  const calcularPromedio = (ratings) => {
-    const sum = ratings.reduce((accumulator, currentValue) => accumulator + currentValue.rating, 0);
-    return sum / ratings.length;
-  };
-
-  const renderStars = (averageRating) => {
-    const starIcons = [];
-    for (let i = 1; i <= 5; i++) {
-      if (i <= Math.round(averageRating)) {
-        starIcons.push(<AiFillStar key={i} className='star' />);
-      } else {
-        starIcons.push(<AiOutlineStar key={i} className='star' />);
-      }
+  const filterProductsByDate = (items) => {
+    if (!startDate || !endDate) {
+      return items;
     }
-    return <div className='stars'>{starIcons}</div>;
+
+    const fechasReservadas = reservas.filter((reserva) => {
+      const reservaInicio = new Date(reserva.fechaInicio);
+      const reservaFin = new Date(reserva.fechaFin);
+      return startDate <= reservaFin && endDate >= reservaInicio;
+    });
+
+    const productosReservados = fechasReservadas.map((reserva) => reserva.producto.id);
+    const productosReservadosFiltrados = items.filter((producto) => !productosReservados.includes(producto.id));
+
+    return productosReservadosFiltrados;
   };
+
+  const isCategorySelected = (category) => selectedCategory.includes(category);
+
+  const finalFilteredItems = filterProducts();
+
+  const indexOfLastItem2 = currentPage * itemsPerPage;
+  const indexOfFirstItem2 = indexOfLastItem2 - itemsPerPage;
+  const currentItems2 = finalFilteredItems.slice(indexOfFirstItem2, indexOfLastItem2);
+
+  useEffect(() => {
+    getReservas()
+  }, [reservas]);
+
+  const handleDateChange = (dates) => {
+    const [start, end] = dates;
+    setStartDate(start);
+    setEndDate(end);
+  };
+
+  // const obtenerValoraciones = async (productId) => {
+  //     const response = await fetch(
+  //       `http://ec2-54-198-119-206.compute-1.amazonaws.com:8080/valoraciones/producto/${productId}`
+  //     );
+  //     const data = await response.json();
+  //     if (data && data.length > 0) {
+  //       const average = calcularPromedio(data);
+  //       setLocalRatings((prevRatings) => ({ ...prevRatings, [productId]: average }));
+  //     }
+  // };
+
+  // const calcularPromedio = (ratings) => {
+  //   const sum = ratings.reduce((accumulator, currentValue) => accumulator + currentValue.rating, 0);
+  //   return sum / ratings.length;
+  // };
+
+  // const renderStars = (averageRating) => {
+  //   const starIcons = [];
+  //   for (let i = 1; i <= 5; i++) {
+  //     if (i <= Math.round(averageRating)) {
+  //       starIcons.push(<AiFillStar key={i} className='star' />);
+  //     } else {
+  //       starIcons.push(<AiOutlineStar key={i} className='star' />);
+  //     }
+  //   }
+  //   return <div className='stars'>{starIcons}</div>;
+  // };
 
   const paginate = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -62,9 +108,9 @@ const Productos = () => {
     agregarProductoFavorito(producto);
   };
 
-  useEffect(() => {
-    currentItems.forEach((product) => obtenerValoraciones(product.id));
-  }, [currentItems]);
+  // useEffect(() => {
+  //   currentItems2.forEach((product) => obtenerValoraciones(product.id));
+  // }, [currentItems2]);
 
   const handleCheckboxChange = (event) => {
     const selectedValue = event.target.value;
@@ -78,16 +124,6 @@ const Productos = () => {
     }
     setCurrentPage(1);
   };
-
-  const isCategorySelected = (category) => selectedCategory.includes(category);
-
-  const filteredItems = selectedCategory.length
-    ? productos.filter((product) => isCategorySelected(product.categoria.nombre))
-    : productos;
-
-  const indexOfLastItem2 = currentPage * itemsPerPage;
-  const indexOfFirstItem2 = indexOfLastItem2 - itemsPerPage;
-  const currentItems2 = filteredItems.slice(indexOfFirstItem2, indexOfLastItem);
 
   const categorias = ['VIENTO', 'CUERDAS', 'PERCUSIÓN', 'TECLADOS', 'MICRÓFONOS', 'SISTEMA DE AUDIO'];
 
@@ -110,9 +146,19 @@ const Productos = () => {
               </CheckboxContainer>
             ))}
           </div>
+          <label className='titleFilter'>Filtrar por fecha disponible</label>
+          <DatePicker
+            selectsRange
+            startDate={startDate}
+            endDate={endDate}
+            monthsShown={2}
+            onChange={handleDateChange}
+            className='datePicker'
+            placeholderText='Seleccionar fechas'
+          />
         </div>
       </Filter>
-      <Pagination itemsPerPage={itemsPerPage} totalItems={filteredItems.length} paginate={paginate} currentPage={currentPage} />
+      <Pagination itemsPerPage={itemsPerPage} totalItems={finalFilteredItems.length} paginate={paginate} currentPage={currentPage} />
       <ProductosStyle>
         <div className='productos'>
           <div className='container-items'>
@@ -181,12 +227,24 @@ const Filter = styled.div`
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    gap: 40px;
+    gap: 20px;
   }
   .titleFilter{
     color: #3F51B5;
     font-weight: 600;
     font-size: 20px;
+  }
+  .datePicker{
+    outline: none;
+    border: #3F51B5 solid 3px;
+    padding: 10px;
+    text-align: center;
+    color: #3F51B5;
+    cursor: pointer;
+  }
+  .datePicker::placeholder{
+    font-weight: 600;
+    color: #3F51B5;
   }
   .divCategorias{
     display: flex;
