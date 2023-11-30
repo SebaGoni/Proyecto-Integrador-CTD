@@ -2,7 +2,7 @@ import React from 'react';
 import styled from "styled-components";
 import WhatsAppButton from './WhatsAppButton';
 
-const logoFooterColor = '/src/assets/SonidosreservadosFooterV2.png'
+const logoFooterColor = 'https://sonidos-reservados.s3.amazonaws.com/imgFront/SonidosreservadosFooterV2.png'
 const Footer = () => {
   return (
     <BlackFooter>
