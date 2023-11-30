@@ -18,10 +18,10 @@ const Registro = () => {
     };
     
     const validationSchema = Yup.object().shape({
-        firstname: Yup.string().matches(/^[A-Za-z]+$/, '*El nombre debe contener únicamente letras').min(2,'*El nombre debe contener 2 o más dígitos'),
-        lastname: Yup.string().matches(/^[A-Za-z]+$/, '*El apellido debe contener únicamente letras').min(2,'*El apellido debe contener 2 o más dígitos'),
+        firstname: Yup.string().matches(/^[A-Za-z]+$/, '*El nombre debe contener únicamente letras').min(2,'*El nombre debe contener 2 o más letras'),
+        lastname: Yup.string().matches(/^[A-Za-z]+$/, '*El apellido debe contener únicamente letras').min(2,'*El apellido debe contener 2 o más letras'),
         email: Yup.string().email('*Correo electrónico no válido').required('El correo electrónico es requerido'),
-        password: Yup.string().min(6,'*La contraseña debe contener al menos 6 dígitos'),
+        password: Yup.string().min(6,'*La contraseña debe contener al menos 6 carácteres'),
     });
     
     const submitForm = async (values) => {
