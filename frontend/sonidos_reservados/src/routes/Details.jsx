@@ -374,6 +374,31 @@ const Details = () => {
         </Modal>
         </div>
         <h2 className='price'>Precio por hora: ${product.price}.00</h2>
+        
+        <h3>Políticas del producto</h3>
+        <div className='politicas-producto'>
+          <div className='politica-container'>
+              <h4>Políticas de alquiler: </h4>
+              <span>La formalización del contrato de alquiler se realizará de manera física 
+              en el lugar donde se suministra el producto. En caso de averío o daños a 
+              algún producto la persona que realizó el pago tendrá la responsabilidad 
+              de asumir los costos de reparación, los cuales serán cargados a su cuenta el mismo día.
+              </span>
+              </div>
+          <div className='politica-container'>
+              <h4>Cambios en su reserva:</h4>
+              <span>
+              Una vez reservados los instrumentos el cliente podrá realizar los cambios 
+              que desee en la plataforma, sujeto a disponibilidad. No se podrán realizar cambios una
+              vez iniciado el período de alquiler y formalizado el contrato. </span>
+          </div>
+          <div className='politica-container'>
+            <h4>Políticas de cancelación:</h4>
+              <span> Si el cliente ya no desea reservar ningún producto, lo deberá cancelar con 2 
+              días de anticipación. No es posible la cancelación una vez iniciado el período indicado de reserva
+              por lo cual será cargado a su cuenta una multa por el 100% del valor de la reserva.</span>
+          </div>
+        </div>
       </div>
       
     </DetailContainer>
@@ -438,6 +463,13 @@ const DetailContainer = styled.div`
    
     .star {
       color: #3F51B5;
+    }
+
+    h2{
+      margin: 2rem;
+    }
+    p{
+      margin: 2rem;
     }
 
     .verComentarios{
@@ -578,10 +610,6 @@ const DetailContainer = styled.div`
       padding: 2rem;
       font-size: 1.2rem;
     }
-    h3{
-      color:black;
-      font-style: italic;
-    }
 
     .description{
       color: black;
@@ -592,6 +620,32 @@ const DetailContainer = styled.div`
       color:  #3F51B5;
       text-align: right;
       margin-right: 4rem;
+    }
+    //POLITICAS DEL PRODUCTO ///////////////////////////////////////////
+    h3{
+      color:black;
+      font-style: italic;
+      text-decoration: underline;
+      margin: 1rem;
+    }
+    .politicas-producto{
+      display: flex;
+      justify-content: space-between;
+    }
+    .politica-container{
+      margin: 0 2rem ;
+      width: 30%;
+    }
+    h4{
+      color: gray;
+      font-weight:500;
+      font-style: italic;
+      text-decoration: underline;
+    }
+    span{
+      color: gray;
+      font-style: italic;
+      text-align: justify;
     }
 `;
 

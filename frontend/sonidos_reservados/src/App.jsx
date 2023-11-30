@@ -21,6 +21,7 @@ import ListaDeCategorias from './routes/ListaDeCategorias';
 import ListaDeCaracteristicas from './routes/ListaDeCaracteristicas';
 import NuevaCategoria from './routes/NuevaCategoria';
 import NuevaCatacteristica from './routes/NuevaCatacteristica';
+import ProductosPorCategorias from './routes/ProductosPorCategorias';
 
 function App() {
 
@@ -35,6 +36,7 @@ function App() {
           <Route path='/register' element={<Registro />} />
           <Route path="/login" element={<Ingreso/>}></Route>
           <Route path="/products" element={<Productos/>}></Route>
+          <Route path="/categorias/:id" element={<ProductosPorCategorias/>}></Route>
           <Route path="/details/:id" element={<Details/>}></Route>
           <Route path="/newReservation" element={<NuevaReserva/>}></Route>
           <Route path="/reservations" element={<Reservas/>}></Route>
