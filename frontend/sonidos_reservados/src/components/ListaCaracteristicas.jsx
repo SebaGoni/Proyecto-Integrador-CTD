@@ -17,6 +17,10 @@ const ListaCaracteristicas = () => {
         nombre: '',
         image: '', // Add any other properties that you want to edit
     });
+
+    useEffect(() => {
+      window.scrollTo(0, 0);
+    }, []);
     
     useEffect(() => {
         if (!loaded) {
