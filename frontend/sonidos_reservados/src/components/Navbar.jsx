@@ -34,12 +34,12 @@ const Navbar = () => {
                         <h2 className='initials'>{initials}</h2>
                     </div>
                     {clickedInitials && (
-                        <>
-                            <h2 className='logout' onClick={logout}>CERRAR SESIÓN</h2>
+                        <div className='divCampos'>
                             <Link to='/account'>
                                 <h2 className='perfil'>PERFIL</h2>
                             </Link>
-                        </>
+                            <h3 className='logout' onClick={logout}>CERRAR SESIÓN</h3>
+                        </div>
                     )}
                 </div>
             ) || token && userRol === 'ADMIN' && (
@@ -49,13 +49,13 @@ const Navbar = () => {
                         <h2 className='initials'>{initials}</h2>
                     </div>
                     {clickedInitials && (
-                        <>
-                            <h2 className='logout' onClick={logout}>CERRAR SESIÓN</h2>
-                            <a className='linkAdmin' href="/admin">ADMINISTRACIÓN</a>
+                        <div className='divCampos'>
                             <Link to='/account'>
                                 <h2 className='perfil'>PERFIL</h2>
                             </Link>
-                        </>
+                            <a className='linkAdmin' href="/admin">ADMINISTRACIÓN</a>
+                            <h3 className='logout' onClick={logout}>CERRAR SESIÓN</h3>
+                        </div>
                     )}  
                 </div>
             )}
@@ -117,6 +117,8 @@ const NavContainer = styled.nav`
         }
     }
     .divInitials{
+        display: flex;
+        align-items: center;
         justify-content: center;
         align-items: center;
         background:#3F51B5;
@@ -131,46 +133,37 @@ const NavContainer = styled.nav`
     .logout{
         margin: 0;
         cursor: pointer;
-        background:#3F51B5;
-        padding: 6px 12px;
-        border-radius: 20px;
         color: white;
-        position: absolute;
-        top: 150px;
-        right: 10px;
-        font-size: 20px;
+        font-size: 15px;
         font-weight: 500;
-        box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.75);
-        -webkit-box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.75);
-        -moz-box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.75);
     }
     .perfil{
         margin: 0;
         cursor: pointer;
-        background:#3F51B5;
-        padding: 6px 12px;
-        border-radius: 20px;
         color: white;
-        position: absolute;
-        top: 100px;
-        right: 10px;
-        font-size: 20px;
+        font-size: 15px;
         font-weight: 500;
-        box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.75);
-        -webkit-box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.75);
-        -moz-box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.75);
     }
     .linkAdmin{
-        background:#3F51B5;
-        padding: 6px 12px;
-        border-radius: 20px;
+        margin: 0;
+        cursor: pointer;
         color: white;
-        position: absolute;
-        right: 10px;
-        top: 200px;
-        font-size: 20px;
+        font-size: 15px;
         font-weight: 500;
-        text-decoration: none;
+    }
+    .divCampos{
+        position: absolute;
+        margin-right: 10px;
+        top: 100px;
+        padding: 8px;
+        background:#3F51B5;
+        background-image: linear-gradient(#7E57C2 50%, #3F51B5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        flex-direction: column;
+        border-radius: 20px;
         box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.75);
         -webkit-box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.75);
         -moz-box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.75);
