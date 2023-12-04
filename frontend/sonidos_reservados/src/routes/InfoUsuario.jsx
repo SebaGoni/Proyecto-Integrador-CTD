@@ -1,36 +1,45 @@
 import React from 'react'
 import { useContext } from 'react';
-import styled from 'styled-components'
+import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 import { GlobalContext } from '../components/utils/global_context';
 import { IoPerson } from 'react-icons/io5'
 
 const InfoUsuario = () => {
 
-     const { firstname, lastname, email, userRol } = useContext(GlobalContext);
+  const navigate = useNavigate()
+
+  const { firstname, lastname, email, userRol } = useContext(GlobalContext);
      
-     const reenviarCorreo = async () => {
-        const url = 'http://ec2-54-198-119-206.compute-1.amazonaws.com:8080/auth/emailRegistro';
-        const data = {
-          email: 'sebastiangoni@gmail.com',
-          firstname: 'seba',
-        };
-        try {
-            const response = await fetch(url, {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify(data),
-            });
-        if (response.ok) {
-                console.log('Email sent successfully!');
-              } else {
-                console.error('Failed to send email.');
-              }
-            } catch (error) {
-              console.error('Network error:', error);
-            }
-        };
+  const reenviarCorreo = async () => {
+    const url = 'http://ec2-54-198-119-206.compute-1.amazonaws.com:8080/auth/emailRegistro';
+    const data = {
+      email: email,
+      firstname: firstname,
+    };
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+    if (response.ok) {
+      Swal.fire({
+        title: 'Envío exitoso',
+        text: 'Se ha enviado nuevamente el correo de confirmación',
+        icon: 'success',
+      }) 
+      navigate('/account')
+    } else {
+      console.error('Failed to send email.');
+    }
+    } catch (error) {
+      console.error('Network error:', error);
+    }
+  };
   return (
     <FormContainer>
         <h2>INFORMACIÓN PERSONAL</h2>
@@ -54,7 +63,7 @@ const InfoUsuario = () => {
     );
 };
 
-export default InfoUsuario
+export default InfoUsuario;
 
 const FormContainer = styled.div`
     border-radius:  20px;
