@@ -15,6 +15,10 @@ const AddCaracteristica = () => {
         postCaracteristica(formData);
       };
 
+      useEffect(() => {
+        window.scrollTo(0, 0);
+      }, []);
+
   return (
     <NuevoContainer>
         <Link to='/admin'>

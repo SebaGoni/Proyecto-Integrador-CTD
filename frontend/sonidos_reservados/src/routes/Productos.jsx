@@ -58,6 +58,10 @@ const Productos = () => {
   const currentItems2 = finalFilteredItems.slice(indexOfFirstItem2, indexOfLastItem2);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
     getReservas()
   }, [reservas]);
 

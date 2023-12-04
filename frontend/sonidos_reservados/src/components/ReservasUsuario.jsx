@@ -11,6 +11,7 @@ const ReservasUsuario = () => {
   });
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     const obtenerReservas = async () => {
       try {
         const response = await fetch(`http://ec2-54-198-119-206.compute-1.amazonaws.com:8080/reservas/usuario/${userId}`);

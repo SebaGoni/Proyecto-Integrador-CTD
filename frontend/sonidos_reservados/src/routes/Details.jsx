@@ -30,6 +30,7 @@ const Details = () => {
   const [endDate, setEndDate] = useState(null);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     if (id) {
       getProductosById(id)
         .then((productData) => {

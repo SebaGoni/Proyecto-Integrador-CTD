@@ -18,7 +18,10 @@ const ListaCategorias = () => {
         image: '', // Add any other properties that you want to edit
     });
     
-    console.log(editedCategoria);
+    useEffect(() => {
+      window.scrollTo(0, 0);
+    }, []);
+
     useEffect(() => {
         if (!loaded) {
             getCategorias();

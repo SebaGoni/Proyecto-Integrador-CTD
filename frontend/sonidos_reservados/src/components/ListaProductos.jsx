@@ -26,7 +26,9 @@ const ListaProductos = () => {
     categoria: {}
 });
 
-console.log(editedProducto.caracteristicas);
+useEffect(() => {
+  window.scrollTo(0, 0);
+}, []);
 
 const handleCategoriaChange = (event) => {
   setSelectedCategoriaId(event.target.value);
