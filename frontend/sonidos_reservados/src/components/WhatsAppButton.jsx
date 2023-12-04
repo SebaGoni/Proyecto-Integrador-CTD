@@ -20,7 +20,7 @@ const WhatsAppButton = () => {
         width: 50,
         height: 50,
         backgroundColor: '#000000',
-        padding: '20px',
+        padding: '10px',
         borderRadius: '100%',
         boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.06)',
         display: 'flex',
@@ -34,8 +34,8 @@ const WhatsAppButton = () => {
             alt="WhatsApp"
             style={{
                 zIndex: 100,
-                width: 50,
-                height: 50,
+                width: 40,
+                height: 40,
               }}
         />
       </a>

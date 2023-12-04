@@ -75,6 +75,14 @@ const reducer = (state, action) => {
             return usuario;
           });
           return { ...state, usuarios: usuariosModificados };
+        case "updateProducto":
+          const productosActualizados2 = state.productos.map((product) => {
+            if (product.id === action.payload.id) {
+              return action.payload.updateProducto;
+            }
+            return product;
+          });
+          return { ...state, productos: productosActualizados2 };
         case "updateCategoria":
           const categoriasActualizadas2 = state.categorias.map((categoria) => {
             if (categoria.id === action.payload.id) {
@@ -371,6 +379,33 @@ export const GlobalProvider = ({ children }) => {
     dispatch({ type: "agregarProductoFavorito", payload: producto });
   };
 
+  const updateProducto = async (id, formData) => {
+    try {
+      const response = await axios.put(
+        `http://ec2-54-198-119-206.compute-1.amazonaws.com:8080/productos/${id}`,
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      dispatch({ type: "updateProducto", payload: { id, updateProducto: response.data } });
+  
+      Swal.fire({
+        title: 'Producto actualizado exitosamente!',
+        icon: 'success',
+      });
+    } catch (error) {
+      console.error("Error al actualizar producto", error);
+      Swal.fire({
+        title: '¡Error al actualizar producto!',
+        text: error.response?.data?.message || 'Ocurrió un error inesperado',
+        icon: 'error',
+      });
+    }
+  };
+
   const deleteProducto = async (id) => {
     try {
       const confirmacion = await Swal.fire({
@@ -622,7 +657,7 @@ export const GlobalProvider = ({ children }) => {
   }, []);
 
   return (
-    <GlobalContext.Provider value={{ ...state, getProductosById, postProducto, getProductos, getProductosAleatorios, deleteProducto, login, logout, getUsuarios, deleteUsuario, updateUsuario, getUsuarioById, getValoracionesByProductoId, getReservaData, agregarProductoFavorito, eliminarProductoFavorito, getCategorias, getCaracteristicas, postCategoria, deleteCategoria, updateCategoria, postCaracteristica, deleteCaracteristica, updateCaracteristica, getReservas }}>
+    <GlobalContext.Provider value={{ ...state, getProductosById, postProducto, getProductos, getProductosAleatorios, deleteProducto, login, logout, getUsuarios, deleteUsuario, updateUsuario, getUsuarioById, getValoracionesByProductoId, getReservaData, agregarProductoFavorito, eliminarProductoFavorito, getCategorias, getCaracteristicas, postCategoria, deleteCategoria, updateCategoria, postCaracteristica, deleteCaracteristica, updateCaracteristica, getReservas, updateProducto }}>
       {children}
     </GlobalContext.Provider>
   );

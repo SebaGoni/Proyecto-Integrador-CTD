@@ -98,7 +98,7 @@ const ProductCalendar = () => {
     
 
     return !fechasReservadas.some((fecha) => {
-      const formattedReservedDate = moment(fecha).format("YYYY-MM-DD");
+      const formattedReservedDate = moment(fecha).add(1, 'day').format("YYYY-MM-DD");
       return formattedReservedDate === formattedDate;
     });
   };
