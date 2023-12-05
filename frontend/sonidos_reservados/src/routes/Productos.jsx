@@ -287,6 +287,10 @@ const Filter = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  @media (max-width: 786px) {
+    margin-top: 45vh;
+  }
+  
   .divFilters{
     display: flex;
     justify-content: center;
@@ -311,11 +315,17 @@ const Filter = styled.div`
     font-weight: 600;
     color: #3F51B5;
   }
-  .divCategorias{
+  .divCategorias {
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 10px;
+    flex-wrap: wrap;
+    @media (max-width: 786px) {
+        flex-direction: column;
+        align-items: stretch; 
+        
+    }
   }
 `
 const ProductosStyle = styled.div`

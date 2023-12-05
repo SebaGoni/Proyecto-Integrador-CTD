@@ -84,6 +84,11 @@ const FormContainer = styled.div`
     padding: 4rem;
     font-family: 'Poppins', sans-serif;
     text-align: center; 
+    @media (max-width: 786px) {
+    margin-top:45vh;
+    display:block;
+    height: 95vh;
+  }
     .icon{
         font-size: 300px;
         padding: 30px;
@@ -98,6 +103,9 @@ const FormContainer = styled.div`
         text-align: start;
         gap: 40px;
         padding-top: 40px;
+        @media (max-width: 786px) {
+          display: block;
+          }
     }
     button{
         margin-top:1rem;
