@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import styled from "styled-components";
+import styled from 'styled-components';
 import { Link } from 'react-router-dom'; // Import Link from react-router-dom
 
 function Categorias() {
-
   const [categories, setCategories] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState(null);
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -25,39 +23,38 @@ function Categorias() {
     fetchCategories();
   }, []);
 
-
-  
-/*Para routearlo en Link al endpoint pero aun no sirve to={`/categorias/${category.id}`}*/
-  
-return (
+  return (
+    <div>
       <DivCategorias>
+        <div className='categorias'>
           <h2>CATEGORIAS</h2>
           <ButtonsContainer>
             {categories.map((category) => (
-              <Link key={category.id} to={`/products`} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}> 
+              <Link key={category.id} to={`/categorias/${encodeURIComponent(category.nombre)}`}>
+                {/* Enlace dinámico a la categoría */}
                 <button
-                  onClick={() => setSelectedCategory(category.nombre)}
                   style={{
                     backgroundImage: `url(${category.image})`,
                     backgroundSize: 'cover',
                     backgroundPosition: 'center',
                     backgroundRepeat: 'no-repeat',
-                    backgroundColor: 'rgba(0, 0, 0, 0.5)', 
+                    backgroundColor: 'rgba(0, 0, 0, 0.5)',
                   }}
                 >
                   <div className="button-content">{category.nombre}</div>
                 </button>
-            </Link>
+              </Link>
             ))}
           </ButtonsContainer>
+        </div>
       </DivCategorias>
+    </div>
   );
 }
 
 export default Categorias;
 
 const DivCategorias = styled.div`
-  
   margin: 2rem;
   padding: 2.5rem;
   background-color:rgba(255, 255, 255, 0.8);
@@ -84,7 +81,7 @@ const DivCategorias = styled.div`
 const ButtonsContainer = styled.div`
   display: grid;
   gap: 1.2rem;
-  width: 100%;
+
   @media (min-width: 901px) and (max-width: 1200px) {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -96,9 +93,11 @@ const ButtonsContainer = styled.div`
   @media (max-width: 900px) {
     grid-template-columns: 1fr;
   }
+
+  
   button {
-    width: 400px;
-    height: 200px;
+    width: 100%;
+    height: 300px;
     padding: 1rem;
     background-color: black;
     border: none;

@@ -391,6 +391,7 @@ const ProductContainer = styled.div`
   }
 
 .BotonEditar{
+  cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -401,6 +402,7 @@ const ProductContainer = styled.div`
   font-weight: 600;
   color: white;
   text-decoration: none;
+  border: none;
 }
 .BotonEliminar{
   display: flex;
