@@ -141,6 +141,9 @@ const Recomendaciones = styled.div`
     background-color: white;
     border-radius:  20px;
     display: block;
+    @media (max-width: 786px) {
+    margin-top:45vh;
+  }
     .link {
       color: #000000;
       border-bottom: 1px solid transparent; 

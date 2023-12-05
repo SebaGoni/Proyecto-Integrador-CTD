@@ -21,6 +21,11 @@ const Navbar = () => {
                     <img src={iconsr} alt="logo" height="80"></img>
                 </a>
             </div>
+            <div className='logoxs'>
+                <a href='/'>
+                    <img src={iconsr} alt="logo" height="60"></img>
+                </a>
+            </div>
             {!token && (
                 <div className='divAccount'>
                     <a className='titleLogin' href='/register'>CREAR CUENTA</a>
@@ -82,7 +87,7 @@ const NavContainer = styled.nav`
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
+    width: 100vw;
     padding: 1rem 0 1rem 0;
     background-color: black;
     display: flex;
@@ -90,8 +95,20 @@ const NavContainer = styled.nav`
     justify-content: space-between;
     color: white;
     z-index: 10;
+    @media (max-width: 786px) {
+            height: 80px;
+          }
+    
     .logo{
         margin-left: 10px;
+        @media (max-width: 786px) {
+            display: none;
+          }
+    }
+    .logoxs{
+        @media (min-width: 786px) {
+            display: none;
+          }
     }
     .divAccount{
         margin-right: 10px;
@@ -109,6 +126,7 @@ const NavContainer = styled.nav`
         display: flex;
         justify-content: center;
         align-items: center;
+        margin-right: 30px;
         p{
             margin-right:1rem;
             letter-spacing: 1px;
@@ -125,8 +143,11 @@ const NavContainer = styled.nav`
         border-radius: 100%;
         color: white;
         padding: .1px 10px;
-        margin-right: 10px;
+        margin-right: 15px;
         cursor: pointer;
+    }
+    .initials{
+        text-align: center;
     }
     .logout{
         margin: 0;
@@ -143,6 +164,9 @@ const NavContainer = styled.nav`
         box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.75);
         -webkit-box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.75);
         -moz-box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.75);
+        @media (max-width: 786px) {
+            margin-right: 40px;
+            }
     }
     .perfil{
         margin: 0;
@@ -159,7 +183,9 @@ const NavContainer = styled.nav`
         box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.75);
         -webkit-box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.75);
         -moz-box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.75);
-    }
+        @media (max-width: 786px) {
+            margin-right: 40px;
+            }
     .linkAdmin{
         background:#3F51B5;
         padding: 6px 12px;
@@ -174,11 +200,14 @@ const NavContainer = styled.nav`
         box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.75);
         -webkit-box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.75);
         -moz-box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.75);
+        @media (max-width: 786px) {
+            margin-right: 40px;
+            }
     }
 `
 const BgDiv = styled.nav`
     position: absolute;
-    width: 102%;
+    width: 100vw;
     top: 112px;
     margin-left: -10px;
     background-color: white;
