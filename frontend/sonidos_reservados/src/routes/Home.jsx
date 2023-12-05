@@ -6,7 +6,7 @@ import ProductCalendar from '../components/ProductCalendar'
 
 const Home = () => {
   return (
-    <main>
+    <main style={{ width: '100%' }}>
       <ProductCalendar/>
       <Form/>
       <Categorias/>

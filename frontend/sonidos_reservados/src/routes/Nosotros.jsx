@@ -3,7 +3,6 @@ import styled from 'styled-components'
 
 const Nosotros = () => {
   return (
-    <main>
         <UsContainer>
             <h2>Equipo 5</h2>
             <p>Integrantes que participaron en el sprint y roles que asumieron:</p>
@@ -12,11 +11,8 @@ const Nosotros = () => {
                 <li>Facundo Recabarren (TL Frontend)</li>
                 <li>Daniel Pomareda (TL Testing)</li>
                 <li>Amy Montenegro (TL Ref UX-UI)</li>
-                <li>Alan Oliva ( )</li>
             </ul> 
-        </UsContainer>
-             
-    </main>
+        </UsContainer>      
   )
 }
 
@@ -37,7 +33,6 @@ const UsContainer = styled.div`
       height: 80vh;  
       font-size: 1.5rem;
     }
-  }
     li{
       margin: auto;
       padding: .3rem;

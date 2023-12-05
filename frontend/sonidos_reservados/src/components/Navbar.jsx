@@ -14,7 +14,6 @@ const Navbar = () => {
 
     const initials = `${firstname?.toUpperCase().charAt(0) || ''}${lastname?.toUpperCase().charAt(0) || ''}`;
   return (
-    <>
         <NavContainer>
             <div className='logo'>
                 <a href='/'>
@@ -64,19 +63,18 @@ const Navbar = () => {
                     )}  
                 </div>
             )}
+            <BgDiv>
+                <ul>
+                    <li><a href='/about'>SOBRE  NOSOTROS</a></li>
+                    {token && (
+                        <>
+                            <li><a href='/reservations'>MIS  RESERVAS</a></li>
+                            <li><a href='/favorites'>MIS  FAVORITOS</a></li>
+                        </>
+                    )}
+                </ul>
+            </BgDiv>
         </NavContainer>
-        <BgDiv>
-            <ul>
-                <li><a href='/about'>SOBRE  NOSOTROS</a></li>
-                {token && (
-                    <>
-                        <li><a href='/reservations'>MIS  RESERVAS</a></li>
-                        <li><a href='/favorites'>MIS  FAVORITOS</a></li>
-                    </>
-                )}
-            </ul>
-        </BgDiv>
-    </>
   )
 }
 
@@ -87,7 +85,8 @@ const NavContainer = styled.nav`
     position: fixed;
     top: 0;
     left: 0;
-    width: 100vw;
+    width: 100%;
+    margin: 0;
     padding: 1rem 0 1rem 0;
     background-color: black;
     display: flex;
@@ -145,7 +144,6 @@ const NavContainer = styled.nav`
         border-radius: 100%;
         color: white;
         padding: .1px 10px;
-        margin-right: 15px;
         cursor: pointer;
     }
     .initials{
@@ -157,12 +155,6 @@ const NavContainer = styled.nav`
         color: white;
         font-size: 15px;
         font-weight: 500;
-        box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.75);
-        -webkit-box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.75);
-        -moz-box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.75);
-        @media (max-width: 786px) {
-            margin-right: 40px;
-            }
     }
     .perfil{
         margin: 0;
@@ -170,12 +162,6 @@ const NavContainer = styled.nav`
         color: white;
         font-size: 15px;
         font-weight: 500;
-        box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.75);
-        -webkit-box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.75);
-        -moz-box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.75);
-        @media (max-width: 786px) {
-            margin-right: 40px;
-            }
     }
     .linkAdmin{
         margin: 0;
@@ -185,8 +171,8 @@ const NavContainer = styled.nav`
         font-weight: 500;
     }
     .divCampos{
+        z-index: 10;
         position: absolute;
-        margin-right: 10px;
         top: 100px;
         padding: 8px;
         background:#3F51B5;
@@ -200,16 +186,12 @@ const NavContainer = styled.nav`
         box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.75);
         -webkit-box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.75);
         -moz-box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.75);
-        @media (max-width: 786px) {
-            margin-right: 40px;
-            }
     }
 `
 const BgDiv = styled.nav`
     position: absolute;
-    width: 100vw;
+    width: 100%;
     top: 112px;
-    margin-left: -10px;
     background-color: white;
     @media (min-width: 786px){
         ul{
@@ -230,7 +212,6 @@ const BgDiv = styled.nav`
         }
     }
     @media (max-width: 786px) {
-        width:102%;
         ul{
             display: block;
             align-items: center;
