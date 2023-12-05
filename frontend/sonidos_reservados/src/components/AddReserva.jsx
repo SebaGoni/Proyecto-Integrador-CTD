@@ -110,6 +110,9 @@ const NuevoContainer = styled.div`
   padding: 2rem;
   display: block;
   justify-content: center;
+  @media (max-width: 786px) {
+    margin-top:45vh;
+  }
 
   h1 {
     display: block;

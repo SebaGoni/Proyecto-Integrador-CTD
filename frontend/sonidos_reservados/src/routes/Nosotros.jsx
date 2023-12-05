@@ -12,7 +12,7 @@ const Nosotros = () => {
                 <li>Facundo Recabarren (TL Frontend)</li>
                 <li>Daniel Pomareda (TL Testing)</li>
                 <li>Amy Montenegro (TL Ref UX-UI)</li>
-                <li>Alan Oliva (TL Backend)</li>
+                <li>Alan Oliva ( )</li>
             </ul> 
         </UsContainer>
              
@@ -32,11 +32,22 @@ const UsContainer = styled.div`
     text-align: center;
     padding: 2rem;
     font-family: 'Poppins', sans-serif;
+    @media (max-width: 786px) {
+      margin-top: 45vh;
+      height: 80vh;  
+      font-size: 1.5rem;
+    }
+  }
     li{
       margin: auto;
       padding: .3rem;
       list-style-type: none;
       border-bottom: solid .2px #e7e7e7;
       width: 400px;
+      @media (max-width: 786px) {
+      width: 45vw;  
+      margin-left: -.8rem;
+      text-align: start;
+    }
     }
     `
