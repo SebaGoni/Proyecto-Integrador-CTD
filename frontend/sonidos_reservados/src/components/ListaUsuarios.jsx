@@ -19,8 +19,9 @@ const ListaUsuarios = () => {
     role: '',
   });
 
-  console.log(typeof editedUser);
-  console.log(editedUserId);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   useEffect(() => {
     if (!loaded) {

@@ -48,6 +48,10 @@ function AddProduct() {
     );
     setSelectedCaracteristicas(updatedSelectedCaracteristicas);
   };
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   
 
   return (

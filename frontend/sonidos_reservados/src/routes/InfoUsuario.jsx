@@ -1,5 +1,5 @@
 import React from 'react'
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
@@ -40,6 +40,11 @@ const InfoUsuario = () => {
       console.error('Network error:', error);
     }
   };
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <FormContainer>
         <h2>INFORMACIÓN PERSONAL</h2>

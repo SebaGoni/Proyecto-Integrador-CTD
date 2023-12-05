@@ -12,6 +12,7 @@ const Favoritos = () => {
     const [ratings, setRatings] = useState({});
 
     useEffect(() => {
+      window.scrollTo(0, 0);
       productosFavoritos.forEach(product => {
         obtenerValoraciones(product.id);
       });
