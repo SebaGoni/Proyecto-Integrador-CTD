@@ -34,12 +34,15 @@ function AddProduct() {
     setSelectedCategoriaId(event.target.value);
   }
 
-  const handleCaracteristicasChange = (event) => {
-    const selectedOptions = Array.from(
-      event.target.selectedOptions,
-      (option) => caracteristicas.find((c) => c.id === parseInt(option.value))
-    );
-    setSelectedCaracteristicas(selectedOptions);
+  const handleCheckboxChange = (event, caracteristica) => {
+    if (event.target.checked) {
+      setSelectedCaracteristicas([...selectedCaracteristicas, caracteristica]);
+    } else {
+      const updatedSelectedCaracteristicas = selectedCaracteristicas.filter(
+        (c) => c.id !== caracteristica.id
+      );
+      setSelectedCaracteristicas(updatedSelectedCaracteristicas);
+    }
   };
 
   const handleRemoveCaracteristica = (caracteristicaId) => {
@@ -103,33 +106,21 @@ function AddProduct() {
 
           <GridItem>
             <label htmlFor="caracteristicas">Características</label>
-            <select
-              id="caracteristicas"
-              name="caracteristicas"
-              multiple
-              value={selectedCaracteristicas.map((c) => c.id)}
-              onChange={handleCaracteristicasChange}
-            >
-              {caracteristicas.map((caracteristica) => (
-                <option key={caracteristica.id} value={caracteristica.id}>
+            {caracteristicas.map((caracteristica) => (
+              <div key={caracteristica.id}>
+                <input
+                  value={caracteristica.id}
+                  type="checkbox"
+                  id="caracteristicas"
+                  name="caracteristicas"
+                  checked={selectedCaracteristicas.some((c) => c.id === caracteristica.id)}
+                  onChange={(e) => handleCheckboxChange(e, caracteristica)}
+                />
+                <label htmlFor="caracteristicas">
                   {caracteristica.nombre}
-                </option>
-              ))}
-            </select>
-          </GridItem>
-
-          <GridItem>
-            <label>Características seleccionadas</label>
-            <ul className='ulCaracteristicas'>
-              {selectedCaracteristicas.map((caracteristica) => (
-                <li onClick={() =>
-                  handleRemoveCaracteristica(caracteristica.id)
-                } className='liCaracteristicas' key={caracteristica.id}>
-                  {caracteristica.nombre}{' '}
-                    <MdCancel />
-                </li>
-              ))}
-            </ul>
+                </label>
+              </div>
+            ))}
           </GridItem>
         </GridContainer>
         <div className='divButton'>
