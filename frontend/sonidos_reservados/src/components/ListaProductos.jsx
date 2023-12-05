@@ -208,7 +208,7 @@ const handleChange = (e) => {
                             isOpen={modalIsOpen}
                             onRequestClose={closeModal}
                         >
-                            <div style={{ textAlign: 'center' }}>
+                            <div className='divEditar' style={{ textAlign: 'center' }}>
                                 <h2 style={{ marginBottom: '30px' }}>Editar Producto</h2>
                                 <form style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', gap: '35px' }}>
                                     <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '25px', flexWrap: 'wrap' }}>
@@ -415,6 +415,10 @@ const ProductContainer = styled.div`
   margin-left: 1rem;
   color: white;
   cursor: pointer;
+}
+
+.divEditar{
+  background-color: red;
 }
 `
 
