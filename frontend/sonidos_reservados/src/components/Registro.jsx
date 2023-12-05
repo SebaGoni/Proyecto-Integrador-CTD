@@ -111,6 +111,11 @@ const FormContainer = styled.div`
     padding: 2rem;
     font-family: 'Poppins', sans-serif;
     text-align: center; 
+    @media (max-width: 786px) {
+      margin-top: 28vh;
+      width: 75vw;
+      
+    }
     h2{ 
         padding-bottom: 5px;
         border-bottom: solid #E7E7E7;
