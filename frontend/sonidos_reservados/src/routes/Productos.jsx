@@ -9,9 +9,12 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
 const Productos = () => {
-  const { productos, agregarProductoFavorito, eliminarProductoFavorito, token, productosFavoritos, reservas, getReservas } = useContext(
+  const { productos, agregarProductoFavorito, eliminarProductoFavorito, token, productosFavoritos, reservas, getReservas, categorias, getCategorias } = useContext(
     GlobalContext
   );
+
+  
+  
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
   const [localRatings, setLocalRatings] = useState({});
@@ -62,13 +65,19 @@ const Productos = () => {
   }, []);
 
   useEffect(() => {
+    getCategorias()
     getReservas()
-  }, [reservas]);
+  }, [reservas, categorias]);
 
   const handleDateChange = (dates) => {
     const [start, end] = dates;
     setStartDate(start);
     setEndDate(end);
+  };
+
+  const handleDateClick = () => {
+    setStartDate('');
+    setEndDate('');
   };
 
   // const obtenerValoraciones = async (productId) => {
@@ -132,8 +141,6 @@ const Productos = () => {
     setCurrentPage(1);
   };
 
-  const categorias = ['VIENTO', 'CUERDAS', 'PERCUSIÓN', 'TECLADOS', 'MICRÓFONOS', 'SISTEMA DE AUDIO'];
-
   const openShareButtons = (product) => {
     setSelectedProduct(product);
     setShowShareButtons(true);
@@ -178,29 +185,32 @@ const Productos = () => {
         <div className='divFilters'>
           <label className='titleFilter'>Filtrar por categoría</label>
           <div className='divCategorias'>
-            {categorias?.map((category) => (
-              <CheckboxContainer key={category}>
-                <label htmlFor={category}>{category}</label>
-                <input
-                  type='checkbox'
-                  id={category}
-                  value={category}
-                  checked={isCategorySelected(category)}
-                  onChange={handleCheckboxChange}
-                />
-              </CheckboxContainer>
-            ))}
+          {categorias.map((category) => (
+            <CheckboxContainer key={category.nombre}>
+              <label htmlFor={category.nombre}>{category.nombre}</label>
+              <input
+                type='checkbox'
+                id={category.nombre}
+                value={category.nombre}
+                checked={isCategorySelected(category.nombre)}
+                onChange={handleCheckboxChange}
+              />
+            </CheckboxContainer>
+          ))}
           </div>
           <label className='titleFilter'>Filtrar por fecha disponible</label>
-          <DatePicker
-            selectsRange
-            startDate={startDate}
-            endDate={endDate}
-            monthsShown={2}
-            onChange={handleDateChange}
-            className='datePicker'
-            placeholderText='Seleccionar fechas'
-          />
+          <div className='divFechas'>
+            <DatePicker
+              selectsRange
+              startDate={startDate}
+              endDate={endDate}
+              monthsShown={2}
+              onChange={handleDateChange}
+              className='datePicker'
+              placeholderText='Seleccionar fechas'
+            />
+            <button className='btnFecha' onClick={handleDateClick}>Quitar fecha</button>
+          </div>
         </div>
       </Filter>
       <Pagination itemsPerPage={itemsPerPage} totalItems={finalFilteredItems.length} paginate={paginate} currentPage={currentPage} />
@@ -321,11 +331,30 @@ const Filter = styled.div`
     align-items: center;
     gap: 10px;
     flex-wrap: wrap;
+
+  }
+  .divFechas{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+  }
+  .btnFecha{
+    font-weight: 600;
+    background-color: transparent;
+    outline: none;
+    border: #b20e0e solid 3px;
+    padding: 10px;
+    text-align: center;
+    color: #b20e0e;
+    cursor: pointer;
+
     @media (max-width: 786px) {
         flex-direction: column;
         align-items: stretch; 
         
     }
+
   }
 `
 const ProductosStyle = styled.div`
