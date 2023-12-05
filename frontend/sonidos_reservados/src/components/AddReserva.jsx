@@ -8,6 +8,10 @@ function AddReserva() {
   const storedData = localStorage.getItem('reservaData');
   const parsedData = JSON.parse(storedData);
 
+  const storedName = localStorage.getItem('firstname');
+  const storedLastname = localStorage.getItem('lastname');
+  const storedEmail = localStorage.getItem('email');
+
   const { getProductosById } = useContext(GlobalContext);
   const idProducto = parsedData.idProducto;
 
@@ -75,6 +79,10 @@ function AddReserva() {
       });
     }
   };
+  const handleCancelReserva = () => {
+    localStorage.removeItem('reservaData');
+    window.history.back();
+  };
 
   return (
     <NuevoContainer>
@@ -82,19 +90,33 @@ function AddReserva() {
         <div>
           <h1>Confirmación de Reserva</h1>
           <p>Producto id: {parsedData ? parsedData.idProducto : 'N/A'}</p>
-          {datosProducto && datosProducto.image && (
-            <img
-              src={datosProducto.image}
-              alt="Imagen del producto"
-              style={{ width: '100px', height: '100px' }}
-            />
-          )}
           <p>Nombre: {datosProducto ? datosProducto.title : 'N/A'}</p>
-          <p>Fecha de inicio: {parsedData ? parsedData.fechaInicio : 'N/A'}</p>
-          <p>Fecha de fin: {parsedData ? parsedData.fechaFin : 'N/A'}</p>
+          {datosProducto && datosProducto.image && (
+            <div className="mainImage">
+              <img src={datosProducto.image} alt="Imagen principal del producto" />
+            </div>
+          )}
+          <div className="imageGallery">
+            {datosProducto && datosProducto.imagenes && datosProducto.imagenes.map((imagen, index) => (
+              <div className="imageContainer" key={index}>
+                <img
+                  src={imagen}
+                  alt={`Imagen ${index + 1}`}
+                />
+              </div>
+            ))}
+          </div>
+          <p>Fecha de inicio: <strong>{parsedData ? parsedData.fechaInicio.split('T')[0] : 'N/A'}</strong></p>
+          <p>Fecha de finalización: <strong>{parsedData ? parsedData.fechaFin.split('T')[0] : 'N/A'}</strong></p>
+          <h2>Datos del usuario</h2>
+          <p>Nombre: {storedName}  {storedLastname}</p>
+          <p>Email: {storedEmail}</p>
         </div>
       </ContainerForm>
-      <Button onClick={handleConfirmReserva}>Confirmar Reserva</Button>
+      <ButtonContainer>
+          <CancelButton onClick={handleCancelReserva}>Cancelar</CancelButton>
+          <Button onClick={handleConfirmReserva}>Confirmar Reserva</Button>
+      </ButtonContainer>
     </NuevoContainer>
   );
 }
@@ -110,9 +132,6 @@ const NuevoContainer = styled.div`
   padding: 2rem;
   display: block;
   justify-content: center;
-  @media (max-width: 786px) {
-    margin-top:45vh;
-  }
 
   h1 {
     display: block;
@@ -128,12 +147,17 @@ const NuevoContainer = styled.div`
   }
 `;
 
+const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: space-around;
+`;
+
 const Button = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
   width: 200px;
-  margin: auto;
+ 
   margin-top: 50px;
   margin-bottom: 50px;
   border: solid 0.1px gray;
@@ -147,26 +171,60 @@ const Button = styled.button`
 `;
 
 const ContainerForm = styled.div`
-  .input-row {
-    margin: auto;
-    width: 900px;
-    margin: 1rem;
-    padding: 0.5rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    text-align: left;
+  flex: 1;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  margin-right: 20px;
 
-    input {
-      margin: 1rem;
-      padding: 0.3rem;
-      width: 70%;
-    }
-    textarea {
-      margin: 1rem;
-      padding: 0.3rem;
-      width: 70%;
-      height: 100px;
-    }
+  div {
+    text-align: left;
   }
+
+  .mainImage {
+    margin-bottom: 10px;
+  }
+
+  .mainImage img {
+    width: 200px;
+    height: auto;
+    object-fit: cover;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+
+  .imageGallery {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 20px;
+  }
+
+  .imageContainer {
+    margin-right: 10px;
+    margin-bottom: 10px;
+  }
+
+  .imageContainer img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+`;
+const CancelButton = styled.button`
+display: flex;
+justify-content: center;
+align-items: center;
+width: 200px;
+margin-top: 50px;
+margin-bottom: 50px;
+border: none;
+border-radius: 10px;
+padding: 1rem;
+background-color: #b20e0e;
+color: white;
+font-size: 1rem;
+font-weight: 600;
+cursor: pointer;
 `;
