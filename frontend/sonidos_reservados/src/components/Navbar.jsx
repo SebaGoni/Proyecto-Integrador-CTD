@@ -11,6 +11,8 @@ const Navbar = () => {
         setClickedInitials(!clickedInitials)
     }
     const iconsr= 'https://sonidos-reservados.s3.amazonaws.com/imgFront/SonidosreservadosV2.png';
+    const iconLogin = 'https://sonidos-reservados.s3.amazonaws.com/imgFront/login.png';
+    const iconRegister= 'https://sonidos-reservados.s3.amazonaws.com/imgFront/register.png';
 
     const initials = `${firstname?.toUpperCase().charAt(0) || ''}${lastname?.toUpperCase().charAt(0) || ''}`;
   return (
@@ -30,6 +32,14 @@ const Navbar = () => {
                 <div className='divAccount'>
                     <a className='titleLogin' href='/register'>CREAR CUENTA</a>
                     <a className='titleLogin' href='/login'>INICIAR SESIÓN</a>
+                    <div className='iconLogin'>
+                        <a className= 'registerIcon' href='/register'>
+                            <img src={iconRegister} alt="register" height="60"></img>
+                        </a>
+                        <a className= 'loginIcon' href='/login'>
+                            <img src={iconLogin} alt="login" height="60"></img>
+                        </a>
+                    </div>
                 </div>
             )}
             {token && userRol === 'USER' &&(
@@ -121,6 +131,31 @@ const NavContainer = styled.nav`
         padding: 8px;
         margin: 0 1rem 1rem 1rem;
         padding-top: .5rem;
+        @media (max-width: 900px) {
+            display:none;
+        }
+    }
+    .iconLogin{
+        display: flex;
+        margin-right: 2rem;
+        gap: 30px;
+        @media (min-width: 900px) {
+            display:none;
+        }
+    }
+    .registerIcon,
+    .loginIcon {
+        transition: transform 0.3s ease;
+    }
+    .registerIcon:hover{
+        transform: scale(1.1); 
+    }
+    .loginIcon:hover{
+        transform: scale(1.1); 
+    }
+    .registerIcon:active,
+    .loginIcon:active {
+        transform: translateY(5px);
     }
     .divUser{
         display: flex;
@@ -152,33 +187,27 @@ const NavContainer = styled.nav`
         text-align: center;
     }
     .logout{
-        margin: 0;
+        margin: .5rem;
         cursor: pointer;
         color: white;
         font-size: 15px;
         font-weight: 500;
-        box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.75);
-        -webkit-box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.75);
-        -moz-box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.75);
         @media (max-width: 786px) {
             margin-right: 40px;
             }
     }
     .perfil{
-        margin: 0;
+        margin: .5rem;
         cursor: pointer;
         color: white;
         font-size: 15px;
         font-weight: 500;
-        box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.75);
-        -webkit-box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.75);
-        -moz-box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.75);
         @media (max-width: 786px) {
             margin-right: 40px;
             }
     }
     .linkAdmin{
-        margin: 0;
+        margin: .5rem;
         cursor: pointer;
         color: white;
         font-size: 15px;
@@ -223,7 +252,7 @@ const BgDiv = styled.nav`
         a{
             text-decoration: none;
             padding-left: 1rem;
-            font-size: .9rem;
+            font-size: 1.2rem;
             font-weight: 600;
             letter-spacing: 1px;
             color: black;

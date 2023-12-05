@@ -402,6 +402,13 @@ const Details = () => {
               días de anticipación. No es posible la cancelación una vez iniciado el período indicado de reserva
               por lo cual será cargado a su cuenta una multa por el 100% del valor de la reserva.</span>
           </div>
+          <div className='politica-container'>
+            <h4>Políticas de Privacidad y Seguridad:</h4>
+              <span> Nos comprometemos a proteger la privacidad y seguridad de la información 
+                proporcionada por nuestros usuarios mientras interactúa con nuestros servicios 
+                de reserva de instrumentos, con nuestras redes sociales y la comunicación a 
+                través de WhatsApp.</span>
+          </div>
         </div>
       </div>
       
@@ -607,12 +614,16 @@ const DetailContainer = styled.div`
       background-color: #D9D9D9;
       border-radius: 60px;
       margin: 1rem;
-      width: 96%;
+      margin-bottom:3rem;
+      width:90vw;
       color: #7E57C2;
       display: flex;
       flex-direction: column;
       padding: 2rem;
       font-size: 1.2rem;
+      @media (max-width:786px) {
+        width:75vw; 
+      }
     }
 
     .description{
@@ -635,21 +646,33 @@ const DetailContainer = styled.div`
     .politicas-producto{
       display: flex;
       justify-content: space-between;
+      margin-bottom: 3rem;
+      @media (max-width:786px) {
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: column;
+      }
     }
     .politica-container{
       margin: 0 2rem ;
       width: 30%;
+      text-align: justify;
+      @media (max-width:786px) {
+        width: 65vw;
+        margin: auto;
+      }
     }
     h4{
       color: gray;
       font-weight:500;
       font-style: italic;
       text-decoration: underline;
+      text-align: start;
     }
     span{
       color: gray;
       font-style: italic;
-      text-align: justify;
+      font-size: 1rem;
     }
 `;
 
