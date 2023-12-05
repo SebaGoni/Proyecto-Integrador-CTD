@@ -6,9 +6,6 @@
   background-attachment: fixed;
   padding: 0;
   margin: 0;
-  width: 100vw;
-  height: 100vh;
-  overflow-x: hidden;
 }
 a{
   text-decoration: none;

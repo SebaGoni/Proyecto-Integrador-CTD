@@ -11,12 +11,9 @@ const Navbar = () => {
         setClickedInitials(!clickedInitials)
     }
     const iconsr= 'https://sonidos-reservados.s3.amazonaws.com/imgFront/SonidosreservadosV2.png';
-    const iconLogin = 'https://sonidos-reservados.s3.amazonaws.com/imgFront/login.png';
-    const iconRegister= 'https://sonidos-reservados.s3.amazonaws.com/imgFront/register.png';
 
     const initials = `${firstname?.toUpperCase().charAt(0) || ''}${lastname?.toUpperCase().charAt(0) || ''}`;
   return (
-    <>
         <NavContainer>
             <div className='logo'>
                 <a href='/'>
@@ -32,14 +29,6 @@ const Navbar = () => {
                 <div className='divAccount'>
                     <a className='titleLogin' href='/register'>CREAR CUENTA</a>
                     <a className='titleLogin' href='/login'>INICIAR SESIÓN</a>
-                    <div className='iconLogin'>
-                        <a className= 'registerIcon' href='/register'>
-                            <img src={iconRegister} alt="register" height="60"></img>
-                        </a>
-                        <a className= 'loginIcon' href='/login'>
-                            <img src={iconLogin} alt="login" height="60"></img>
-                        </a>
-                    </div>
                 </div>
             )}
             {token && userRol === 'USER' &&(
@@ -74,19 +63,18 @@ const Navbar = () => {
                     )}  
                 </div>
             )}
+            <BgDiv>
+                <ul>
+                    <li><a href='/about'>SOBRE  NOSOTROS</a></li>
+                    {token && (
+                        <>
+                            <li><a href='/reservations'>MIS  RESERVAS</a></li>
+                            <li><a href='/favorites'>MIS  FAVORITOS</a></li>
+                        </>
+                    )}
+                </ul>
+            </BgDiv>
         </NavContainer>
-        <BgDiv>
-            <ul>
-                <li><a href='/about'>SOBRE  NOSOTROS</a></li>
-                {token && (
-                    <>
-                        <li><a href='/reservations'>MIS  RESERVAS</a></li>
-                        <li><a href='/favorites'>MIS  FAVORITOS</a></li>
-                    </>
-                )}
-            </ul>
-        </BgDiv>
-    </>
   )
 }
 
@@ -97,7 +85,8 @@ const NavContainer = styled.nav`
     position: fixed;
     top: 0;
     left: 0;
-    width: 100vw;
+    width: 100%;
+    margin: 0;
     padding: 1rem 0 1rem 0;
     background-color: black;
     display: flex;
@@ -131,31 +120,6 @@ const NavContainer = styled.nav`
         padding: 8px;
         margin: 0 1rem 1rem 1rem;
         padding-top: .5rem;
-        @media (max-width: 900px) {
-            display:none;
-        }
-    }
-    .iconLogin{
-        display: flex;
-        margin-right: 2rem;
-        gap: 30px;
-        @media (min-width: 900px) {
-            display:none;
-        }
-    }
-    .registerIcon,
-    .loginIcon {
-        transition: transform 0.3s ease;
-    }
-    .registerIcon:hover{
-        transform: scale(1.1); 
-    }
-    .loginIcon:hover{
-        transform: scale(1.1); 
-    }
-    .registerIcon:active,
-    .loginIcon:active {
-        transform: translateY(5px);
     }
     .divUser{
         display: flex;
@@ -180,42 +144,35 @@ const NavContainer = styled.nav`
         border-radius: 100%;
         color: white;
         padding: .1px 10px;
-        margin-right: 15px;
         cursor: pointer;
     }
     .initials{
         text-align: center;
     }
     .logout{
-        margin: .5rem;
+        margin: 0;
         cursor: pointer;
         color: white;
         font-size: 15px;
         font-weight: 500;
-        @media (max-width: 786px) {
-            margin-right: 40px;
-            }
     }
     .perfil{
-        margin: .5rem;
+        margin: 0;
         cursor: pointer;
         color: white;
         font-size: 15px;
         font-weight: 500;
-        @media (max-width: 786px) {
-            margin-right: 40px;
-            }
     }
     .linkAdmin{
-        margin: .5rem;
+        margin: 0;
         cursor: pointer;
         color: white;
         font-size: 15px;
         font-weight: 500;
     }
     .divCampos{
+        z-index: 10;
         position: absolute;
-        margin-right: 10px;
         top: 100px;
         padding: 8px;
         background:#3F51B5;
@@ -229,16 +186,12 @@ const NavContainer = styled.nav`
         box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.75);
         -webkit-box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.75);
         -moz-box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.75);
-        @media (max-width: 786px) {
-            margin-right: 40px;
-            }
     }
 `
 const BgDiv = styled.nav`
     position: absolute;
-    width: 100vw;
+    width: 100%;
     top: 112px;
-    margin-left: -10px;
     background-color: white;
     @media (min-width: 786px){
         ul{
@@ -252,14 +205,13 @@ const BgDiv = styled.nav`
         a{
             text-decoration: none;
             padding-left: 1rem;
-            font-size: 1.2rem;
+            font-size: .9rem;
             font-weight: 600;
             letter-spacing: 1px;
             color: black;
         }
     }
     @media (max-width: 786px) {
-        width:102%;
         ul{
             display: block;
             align-items: center;
@@ -283,5 +235,7 @@ const BgDiv = styled.nav`
     }
     }
 `
+
+
 
 

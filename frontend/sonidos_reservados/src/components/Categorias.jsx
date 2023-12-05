@@ -30,13 +30,11 @@ function Categorias() {
 /*Para routearlo en Link al endpoint pero aun no sirve to={`/categorias/${category.id}`}*/
   
 return (
-    <div>
       <DivCategorias>
-        <div className='categorias'>
           <h2>CATEGORIAS</h2>
           <ButtonsContainer>
             {categories.map((category) => (
-              <Link key={category.id} to={`/products`}> 
+              <Link key={category.id} to={`/products`} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}> 
                 <button
                   onClick={() => setSelectedCategory(category.nombre)}
                   style={{
@@ -52,15 +50,14 @@ return (
             </Link>
             ))}
           </ButtonsContainer>
-        </div>
       </DivCategorias>
-    </div>
   );
 }
 
 export default Categorias;
 
 const DivCategorias = styled.div`
+  
   margin: 2rem;
   padding: 2.5rem;
   background-color:rgba(255, 255, 255, 0.8);
@@ -87,7 +84,7 @@ const DivCategorias = styled.div`
 const ButtonsContainer = styled.div`
   display: grid;
   gap: 1.2rem;
-
+  width: 100%;
   @media (min-width: 901px) and (max-width: 1200px) {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -99,11 +96,9 @@ const ButtonsContainer = styled.div`
   @media (max-width: 900px) {
     grid-template-columns: 1fr;
   }
-
-  
   button {
-    width: 100%;
-    height: 300px;
+    width: 400px;
+    height: 200px;
     padding: 1rem;
     background-color: black;
     border: none;
