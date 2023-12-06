@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import styled from "styled-components";
+import styled from 'styled-components';
 import { Link } from 'react-router-dom'; // Import Link from react-router-dom
 
 function Categorias() {
-
   const [categories, setCategories] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState(null);
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -25,31 +23,27 @@ function Categorias() {
     fetchCategories();
   }, []);
 
-
-  
-/*Para routearlo en Link al endpoint pero aun no sirve to={`/categorias/${category.id}`}*/
-  
-return (
+  return (
     <div>
       <DivCategorias>
         <div className='categorias'>
           <h2>CATEGORIAS</h2>
           <ButtonsContainer>
             {categories.map((category) => (
-              <Link key={category.id} to={`/products`}> 
+              <Link key={category.id} to={`/categorias/${encodeURIComponent(category.nombre)}`}>
+                {/* Enlace dinámico a la categoría */}
                 <button
-                  onClick={() => setSelectedCategory(category.nombre)}
                   style={{
                     backgroundImage: `url(${category.image})`,
                     backgroundSize: 'cover',
                     backgroundPosition: 'center',
                     backgroundRepeat: 'no-repeat',
-                    backgroundColor: 'rgba(0, 0, 0, 0.5)', 
+                    backgroundColor: 'rgba(0, 0, 0, 0.5)',
                   }}
                 >
                   <div className="button-content">{category.nombre}</div>
                 </button>
-            </Link>
+              </Link>
             ))}
           </ButtonsContainer>
         </div>

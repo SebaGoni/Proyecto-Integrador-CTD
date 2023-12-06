@@ -137,7 +137,7 @@ const TitleContainer = styled.div`
 `
 
 const Recomendaciones = styled.div`
-    margin: 25vh 2rem 2rem 2rem;
+    margin: 30vh 2rem 2rem 2rem;
     padding: 1rem;
     background-color: white;
     border-radius:  20px;

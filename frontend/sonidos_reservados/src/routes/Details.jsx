@@ -31,6 +31,9 @@ const Details = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
     if (id) {
       getProductosById(id)
         .then((productData) => {
@@ -324,7 +327,7 @@ const Details = () => {
       </div>
       <div className='divBodyText'>
         <h2>
-          CONOCE UN POCO DE ESTE INSTRUMENTO DE <span style={{ fontStyle: 'italic', color: '#3F51B5' }}>{product.categoria.nombre}</span>
+          CONOCE UN POCO DE ESTE INSTRUMENTO DE <span style={{ fontStyle: 'italic', color: '#3F51B5', fontSize: '28.8px' }}>{product.categoria.nombre}</span>
         </h2>
         <p className='description'>{product.description}</p>
         <h2>CARACTERÍSTICAS DEL PRODUCTO</h2>

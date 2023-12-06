@@ -23,9 +23,6 @@ const BlackFooter = styled.div`
     height: 350px;
     bottom: 1px;
     font-family: 'Poppins', sans-serif;
-    width: 105%;
-    margin-left: -10px;
-    margin-right: -10px;
     .LogoFooter{
         margin-top: 1rem;
         padding: 1rem;

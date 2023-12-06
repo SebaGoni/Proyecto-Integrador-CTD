@@ -72,12 +72,6 @@ const handleCaracteristicaChange = (caracteristicaId) => {
   }
 };
 
-const handleRemoveCaracteristica = (caracteristicaId) => {
-  setEditedProducto((prevProduct) => ({
-    ...prevProduct,
-    caracteristicas: prevProduct.caracteristicas.filter((caract) => caract.id !== caracteristicaId),
-  }));
-};
 
 const handleEditProduct = () => {
   const formData = new FormData();
@@ -393,6 +387,7 @@ const ProductContainer = styled.div`
   }
 
 .BotonEditar{
+  cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -405,6 +400,7 @@ const ProductContainer = styled.div`
   color: white;
   text-decoration: none;
   cursor: pointer;
+  border: none;
 }
 .BotonEliminar{
   display: flex;
