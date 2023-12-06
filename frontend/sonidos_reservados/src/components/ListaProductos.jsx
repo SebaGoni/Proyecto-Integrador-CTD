@@ -191,23 +191,25 @@ const handleChange = (e) => {
                                 right: 'auto',
                                 bottom: 'auto',
                                 borderRadius: '20px',
+                                border: 'none',
                                 marginRight: '-50%',
                                 transform: 'translate(-50%, -50%)',
                                 color: 'black',
                                 width: '1000px',
-                                height: '500px',
+                                height: '650px',
                                 textAlign: 'center',
+                                boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.2)',
                             },
                             }}
                             isOpen={modalIsOpen}
                             onRequestClose={closeModal}
                         >
-                            <div className='divEditar' style={{ textAlign: 'center' }}>
+                            <div style={{ textAlign: 'center' }}>
                                 <h2 style={{ marginBottom: '30px' }}>Editar Producto</h2>
                                 <form style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', gap: '35px' }}>
                                     <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '25px', flexWrap: 'wrap' }}>
                                         <div style={{ width: '200px', display: 'flex', flexDirection: 'column', gap: '5px' }}>
-                                            <label style={{ fontWeight: 600 }} htmlFor='title'>Nombre</label>
+                                            <label style={{ fontWeight: 600, fontSize: '20px' }} htmlFor='title'>Nombre</label>
                                             <input
                                             style={{
                                                 borderRadius: '10px',
@@ -224,7 +226,7 @@ const handleChange = (e) => {
                                             />
                                         </div>
                                         <div style={{ width: '200px', display: 'flex', flexDirection: 'column', gap: '5px' }}>
-                                            <label style={{ fontWeight: 600 }} htmlFor='price'>Precio</label>
+                                            <label style={{ fontWeight: 600, fontSize: '20px' }} htmlFor='price'>Precio</label>
                                             <input
                                             style={{
                                                 borderRadius: '10px',
@@ -241,7 +243,7 @@ const handleChange = (e) => {
                                             />
                                         </div>
                                         <div style={{ width: '200px', display: 'flex', flexDirection: 'column', gap: '5px' }}>
-                                            <label style={{ fontWeight: 600 }} htmlFor='description'>Descripción</label>
+                                            <label style={{ fontWeight: 600, fontSize: '20px' }} htmlFor='description'>Descripción</label>
                                             <input
                                             style={{
                                                 borderRadius: '10px',
@@ -258,7 +260,7 @@ const handleChange = (e) => {
                                             />
                                         </div>
                                         <div style={{ width: '200px', display: 'flex', flexDirection: 'column', gap: '5px' }}>
-                                            <label style={{ fontWeight: 600 }} htmlFor='categoria'>Categoria</label>
+                                            <label style={{ fontWeight: 600, fontSize: '20px' }} htmlFor='categoria'>Categoria</label>
                                             <select className='inputs' id="categoria" name="categoria" value={selectedCategoriaId} onChange={handleCategoriaChange} required>
                                               <option value="" disabled>{editedProducto.categoria.nombre}</option>
                                               {categorias.map(categoria => (
@@ -267,7 +269,7 @@ const handleChange = (e) => {
                                             </select>
                                         </div>
                                         <div style={{ width: '200px', display: 'flex', flexDirection: 'column', gap: '5px' }}>
-                                            <label style={{ fontWeight: 600 }} htmlFor='image'>Imagen de portada</label>
+                                            <label style={{ fontWeight: 600 , fontSize: '20px'}} htmlFor='image'>Imagen de portada</label>
                                             <input
                                             style={{
                                                 borderRadius: '10px',
@@ -283,7 +285,7 @@ const handleChange = (e) => {
                                             />
                                         </div>
                                         <div style={{ width: '200px', display: 'flex', flexDirection: 'column', gap: '5px' }}>
-                                            <label style={{ fontWeight: 600 }} htmlFor='imagenes'>Imagenes</label>
+                                            <label style={{ fontWeight: 600, fontSize: '20px' }} htmlFor='imagenes'>Imagenes</label>
                                             <input
                                             style={{
                                                 borderRadius: '10px',
@@ -300,7 +302,7 @@ const handleChange = (e) => {
                                             />
                                         </div>
                                         <div>
-                                          <label style={{ fontWeight: 600 }}>Características Disponibles</label>
+                                          <label style={{ fontWeight: 600, fontSize: '20px'}}>Características Disponibles</label>
                                           {caracteristicas.map((caract) => (
                                             <div key={caract.id}>
                                               <input
@@ -392,10 +394,12 @@ const ProductContainer = styled.div`
   background-color: #32CD32;
   padding: .5rem;
   border-radius: 10px;
+  border: none;
   font-size: 1rem;
   font-weight: 600;
   color: white;
   text-decoration: none;
+  cursor: pointer;
   border: none;
 }
 .BotonEliminar{
@@ -412,9 +416,9 @@ const ProductContainer = styled.div`
   color: white;
   cursor: pointer;
 }
-
-.divEditar{
-  background-color: red;
+.BotonEditar:hover, .BotonEliminar:hover {
+  transform: scale(1.05); 
+  transition: transform 0.3s ease;
 }
 `
 

@@ -22,7 +22,7 @@ const Navbar = () => {
             </div>
             <div className='logoxs'>
                 <a href='/'>
-                    <img src={iconsr} alt="logo" height="60"></img>
+                    <img src={iconsr} alt="logo" height="55"></img>
                 </a>
             </div>
             {!token && (
@@ -75,6 +75,18 @@ const Navbar = () => {
                 </ul>
             </BgDiv>
         </NavContainer>
+        <BgDiv>
+            <ul>
+                <li><a href='/about'>CONOCE AL EQUIPO</a></li>
+                {token && (
+                    <>
+                        <li><a href='/reservations'>MIS  RESERVAS</a></li>
+                        <li><a href='/favorites'>MIS  FAVORITOS</a></li>
+                    </>
+                )}
+            </ul>
+        </BgDiv>
+    </>
   )
 }
 
@@ -94,30 +106,67 @@ const NavContainer = styled.nav`
     justify-content: space-between;
     color: white;
     z-index: 10;
-    @media (max-width: 786px) {
+    border-bottom: solid white .5px;
+    @media (max-width: 900px) {
             height: 80px;
           }
+    @media (max-width: 480px) {
+            flex-wrap: wrap;
+            height: 150px;
+            justify-content: center;
+          }
     
+//////////////////////////////////////////////////////////
     .logo{
         margin-left: 10px;
-        @media (max-width: 786px) {
+        @media (max-width: 900px) {
             display: none;
           }
     }
     .logoxs{
-        @media (min-width: 786px) {
+        @media (min-width: 900px) {
             display: none;
           }
     }
     .divAccount{
         margin-right: 10px;
+        font-size: 1.1rem;
+        font-weight: 500;
+        letter-spacing: 1px;
     }
+    a:hover{
+            color:#7E57C2;
+        }
     .titleLogin{
         color: white;
-        font-size: 18px;
-        font-weight: 800;
         text-decoration: none;
         padding: 8px;
+        margin-right: 1.2rem;
+        @media (max-width: 900px) {
+            display:none;
+        }
+    }
+    .iconLogin{
+        display: flex;
+        margin-right: 2rem;
+        gap: 30px;
+        @media (min-width: 900px) {
+            display:none;
+        }
+    }
+    .registerIcon,
+    .loginIcon {
+        transition: transform 0.3s ease;
+    }
+    .registerIcon:hover{
+        transform: scale(1.1); 
+    }
+    .loginIcon:hover{
+        transform: scale(1.1); 
+    }
+    .registerIcon:active,
+    .loginIcon:active {
+        transform: translateY(5px);
         margin: 0 1rem 1rem 1rem;
         padding-top: .5rem;
     }
@@ -129,7 +178,7 @@ const NavContainer = styled.nav`
         p{
             margin-right:1rem;
             letter-spacing: 1px;
-            font-weight: 600;
+            font-weight: 500;
             font-size: 1.2rem;
         }
     }
@@ -188,30 +237,46 @@ const NavContainer = styled.nav`
         -moz-box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.75);
     }
 `
+//////////////////////////////////////////////////////////
 const BgDiv = styled.nav`
-    position: absolute;
-    width: 100%;
-    top: 112px;
-    background-color: white;
-    @media (min-width: 786px){
-        ul{
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-        li{
-            list-style: none;
-        }
-        a{
-            text-decoration: none;
-            padding-left: 1rem;
-            font-size: .9rem;
-            font-weight: 600;
-            letter-spacing: 1px;
-            color: black;
-        }
+    position: relative;
+    top:10vh;
+    height: 65px;
+    width: 100vw;
+    left: -1vw;
+    background-color: black;
+    a:hover{
+            color: #7E57C2;
+    }
+    ul{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding-top: 30px;
+        width: 85vw;
+        margin:auto;
+    }
+    li{
+        list-style: none;
+        border: none;
+        text-align: center;
+    }
+    li:hover{
+        box-shadow: 0px 3px 1px rgb(255,255,255,0.5);
+    }
+    a{
+        text-decoration: none;
+        padding-left: 1rem;
+        font-size: 1.2rem;
+        font-weight: 500;
+        letter-spacing: 1px;
+        color: white;
+        
     }
     @media (max-width: 786px) {
+        width:102%;
+        height: 280px;
+
         ul{
             display: block;
             align-items: center;
@@ -228,11 +293,18 @@ const BgDiv = styled.nav`
         a{
             text-decoration: none;
             font-size: 1.5rem;
-            font-weight: 700;
+            font-weight: 500;
             letter-spacing: 1px;
-            color: black;
-        
+            color: white;
+        }
     }
+    @media (max-width: 430px) {
+        margin-top: 15vh;
+        width: 101vw;
+        margin-left: -2vw;
+        a{
+        font-size: 20px;
+        }
     }
 `
 
