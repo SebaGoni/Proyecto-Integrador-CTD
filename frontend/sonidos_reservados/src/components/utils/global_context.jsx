@@ -587,13 +587,13 @@ export const GlobalProvider = ({ children }) => {
     try {
       const confirmacion = await Swal.fire({
         title: '¿Estás seguro?',
-        text: 'Esta acción es irreversible.',
+        text: 'Esta acción es irreversible. Perderá todas las configuraciones actuales y esto podrá ocasionar problemas con los productos vigentes en esta categoría.',
         icon: 'warning',
         showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#702020',
         cancelButtonText: 'Cancelar',
-        confirmButtonText: 'Sí, eliminar',
+        confirmButtonText: 'Sí, Estoy seguro',
       });
   
       if (confirmacion.isConfirmed) {
