@@ -12,12 +12,6 @@ import { MdCancel } from "react-icons/md";
 Modal.setAppElement('#root');
 
 const BannerReserva = 'https://sonidos-reservados.s3.amazonaws.com/imgFront/musicians-stage-lights.jpg';
-const imageStyle = {
-  width: '100%',  
-  maxWidth: '1300px',   // Set a maximum width for larger screens
-  height: '445px',
-  objectFit: 'cover', 
-};
 const ProductCalendar = () => {
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -136,9 +130,7 @@ const ProductCalendar = () => {
   return (
     <ReservaContainer>
       <div className='banner'>
-        <a href='/'>
-          <img src={BannerReserva} alt="Banner" style={imageStyle}></img>
-        </a>
+        <img src={BannerReserva} alt="Banner" className="imgBanner"></img>
       </div>
       <button className="btnReserva" onClick={openModal}>RESERVA TU INSTRUMENTO</button>
       <Modal  style={{
@@ -288,24 +280,37 @@ const ReservaContainer = styled.div`
   align-items: center;
   background-color: black; 
   width: 100vw;
-  margin-left: -8px; 
+
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
   @media (min-width: 786px){
     margin-top: 15vh;
   }
   @media (max-width: 786px){
-    margin-top: 320px; 
+    margin-top: 10vh;
   }
-  @media (max-width: 430px){
-    margin-top: 460px; 
-    width:100vw;
-  }
-
   .banner{
-    justify-content: left;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: black;
     @media (max-width: 430px){ 
-    width:100vw;
+    
+    }
+    @media (max-width: 786px){
+        width: 100vw;
+    }
   }
+  .imgBanner{
+    width: 100%;
+    height: 450px;
+    object-fit: cover;
+    @media (max-width: 786px){
+        width: 100vw;
+    }
+    @media (max-width: 430px){ 
+      width: 100vw;
+    }
   }
   .btnReserva{
     position: absolute;

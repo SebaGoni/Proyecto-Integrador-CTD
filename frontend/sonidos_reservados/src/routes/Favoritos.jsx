@@ -9,50 +9,10 @@ const Favoritos = () => {
 
     const { productosFavoritos, eliminarProductoFavorito, agregarProductoFavorito, token } = useContext(GlobalContext);
 
-    const [ratings, setRatings] = useState({});
-
-    useEffect(() => {
-      window.scrollTo(0, 0);
-      productosFavoritos.forEach(product => {
-        obtenerValoraciones(product.id);
-      });
-    }, [productosFavoritos]);
-  
-    const obtenerValoraciones = (productId) => {
-      fetch(`http://ec2-54-198-119-206.compute-1.amazonaws.com:8080/valoraciones/producto/${productId}`)
-        .then((response) => response.json())
-        .then((data) => {
-          if (data && data.length > 0) {
-            const ratingsCopy = { ...ratings };
-            const average = calcularPromedio(data);
-            ratingsCopy[productId] = average;
-            setRatings(ratingsCopy);
-          }
-        })
-        .catch((error) => {
-          console.error('Error al obtener las valoraciones', error);
-        });
-    };
   
     const calcularPromedio = (ratings) => {
       const sum = ratings.reduce((accumulator, currentValue) => accumulator + currentValue.rating, 0);
       return sum / ratings.length;
-    };
-  
-    const renderStars = (averageRating) => {
-      const starIcons = [];
-      for (let i = 1; i <= 5; i++) {
-        if (i <= Math.round(averageRating)) {
-          starIcons.push(<AiFillStar key={i} className='star' />);
-        } else {
-          starIcons.push(<AiOutlineStar key={i} className='star' />);
-        }
-      }
-      return (
-        <div className='stars'>
-          {starIcons}
-        </div>
-      );
     };
   
     const estaEnFavoritos = (productId) => {
@@ -84,7 +44,6 @@ const Favoritos = () => {
                 <h3>{product.title}</h3>
               </Link> 
             </div>
-            {ratings[product.id] && renderStars(ratings[product.id])}
             {token && (
               <>
                 {estaEnFavoritos(product.id) ? (

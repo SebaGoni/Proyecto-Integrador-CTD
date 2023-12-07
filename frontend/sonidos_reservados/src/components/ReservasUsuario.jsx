@@ -176,11 +176,6 @@ const NuevoContainer = styled.div`
     margin-top:45vh;
   }
 
-  h1 {
-    display: block;
-    width: 1200px;
-  }
-
   .BotonAtras {
     background-color: #7e57c2;
     margin-left: 50rem;

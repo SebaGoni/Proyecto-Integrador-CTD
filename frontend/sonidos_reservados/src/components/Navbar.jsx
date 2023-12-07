@@ -2,6 +2,7 @@ import React, {useState, useContext} from 'react';
 import styled from "styled-components";
 import { GlobalContext } from './utils/global_context';
 import { Link } from 'react-router-dom';
+const logoFooterColor = 'https://sonidos-reservados.s3.amazonaws.com/imgFront/SonidosreservadosFooterV2.png'
 
 const Navbar = () => {
 
@@ -17,73 +18,70 @@ const Navbar = () => {
     const initials = `${firstname?.toUpperCase().charAt(0) || ''}${lastname?.toUpperCase().charAt(0) || ''}`;
   return (
         <NavContainer>
-            <div className='logo'>
-                <a href='/'>
-                    <img src={iconsr} alt="logo" height="80"></img>
-                </a>
-            </div>
-            <div className='logoxs'>
-                <a href='/'>
-                    <img src={iconsr} alt="logo" height="55"></img>
-                </a>
-            </div>
-            {!token && (
-                <div className='divAccount'>
-                    <a className='titleLogin' href='/register'>CREAR CUENTA</a>
-                    <a className='titleLogin' href='/login'>INICIAR SESIÓN</a>
-                    <div className='iconLogin'>
-                        <a className= 'registerIcon' href='/register'>
-                            <img src={iconRegister} alt="register" height="60"></img>
-                        </a>
-                        <a className= 'loginIcon' href='/login'>
-                            <img src={iconLogin} alt="login" height="60"></img>
-                        </a>
-                    </div>
+            <div className='containerNav'>
+                <div className='logo'>
+                    <a href='/'>
+                        <img className='logoNavbar' src={iconsr} alt="logo" height="60"></img>
+                    </a>
                 </div>
-            )}
-            {token && userRol === 'USER' &&(
-                <div className='divUser'>
-                    <p>{firstname}</p>
-                   <div className='divInitials' onClick={handleClickInitials}>
-                        <h2 className='initials'>{initials}</h2>
-                    </div>
-                    {clickedInitials && (
-                        <div className='divCampos'>
-                            <Link to='/account'>
-                                <h2 className='perfil'>PERFIL</h2>
-                            </Link>
-                            <h3 className='logout' onClick={logout}>CERRAR SESIÓN</h3>
+                {!token && (
+                    <div className='divAccount'>
+                        <a className='titleLogin' href='/register'>CREAR CUENTA</a>
+                        <a className='titleLogin' href='/login'>INICIAR SESIÓN</a>
+                        <div className='iconLogin'>
+                            <a className= 'registerIcon' href='/register'>
+                                <img src={iconRegister} alt="register" height="40"></img>
+                            </a>
+                            <a className= 'loginIcon' href='/login'>
+                                <img src={iconLogin} alt="login" height="40"></img>
+                            </a>
                         </div>
-                    )}
-                </div>
-            ) || token && userRol === 'ADMIN' && (
-                <div className='divUser'>
-                    <p>{firstname}</p>
-                    <div className='divInitials' onClick={handleClickInitials}>
-                        <h2 className='initials'>{initials}</h2>
                     </div>
-                    {clickedInitials && (
-                        <div className='divCampos'>
-                            <Link to='/account'>
-                                <h2 className='perfil'>PERFIL</h2>
-                            </Link>
-                            <a className='linkAdmin' href="/admin">ADMINISTRACIÓN</a>
-                            <h3 className='logout' onClick={logout}>CERRAR SESIÓN</h3>
-                        </div>
-                    )}  
-                </div>
-            )}
-        <BgDiv>
-            <ul>
-                <li><a href='/about'>CONOCE AL EQUIPO</a></li>
-                {token && (
-                    <>
-                        <li><a href='/reservations'>MIS  RESERVAS</a></li>
-                        <li><a href='/favorites'>MIS  FAVORITOS</a></li>
-                    </>
                 )}
-            </ul>
-        </BgDiv>
+                {token && userRol === 'USER' &&(
+                    <div className='divUser'>
+                        <p className='firstname'>{firstname}</p>
+                    <div className='divInitials' onClick={handleClickInitials}>
+                            <h2 className='initials'>{initials}</h2>
+                        </div>
+                        {clickedInitials && (
+                            <div className='divCampos'>
+                                <Link to='/account'>
+                                    <h2 className='perfil'>PERFIL</h2>
+                                </Link>
+                                <h3 className='logout' onClick={logout}>CERRAR SESIÓN</h3>
+                            </div>
+                        )}
+                    </div>
+                ) || token && userRol === 'ADMIN' && (
+                    <div className='divUser'>
+                        <p className='firstname'>{firstname}</p>
+                        <div className='divInitials' onClick={handleClickInitials}>
+                            <h2 className='initials'>{initials}</h2>
+                        </div>
+                        {clickedInitials && (
+                            <div className='divCampos'>
+                                <Link to='/account'>
+                                    <h2 className='perfil'>PERFIL</h2>
+                                </Link>
+                                <a className='linkAdmin' href="/admin">ADMINISTRACIÓN</a>
+                                <h3 className='logout' onClick={logout}>CERRAR SESIÓN</h3>
+                            </div>
+                        )}  
+                    </div>
+                )}
+            </div>
+            <BgDiv>
+                <ul>
+                    <li><a href='/about'>CONOCE AL EQUIPO</a></li>
+                    {token && (
+                        <>
+                            <li><a href='/reservations'>MIS  RESERVAS</a></li>
+                            <li><a href='/favorites'>MIS  FAVORITOS</a></li>
+                        </>
+                    )}
+                </ul>
+            </BgDiv>
     </NavContainer>
     )
 }
@@ -95,46 +93,37 @@ const NavContainer = styled.nav`
     position: fixed;
     top: 0;
     left: 0;
-    width: 100vw;
+    width: 100%;
     margin: auto;
     padding: 1rem 0 1rem 0;
     background-color: black;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     color: white;
     z-index: 10;
-    border-bottom: solid white .5px;
-    @media (max-width: 900px) {
-            height: 80px;
-          }
-    @media (max-width: 480px) {
-            flex-wrap: wrap;
-            height: 150px;
-            justify-content: center;
-          }
-    
-//////////////////////////////////////////////////////////
+    .containerNav{
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+    }
     .logo{
         margin-left: 10px;
-        @media (max-width: 900px) {
-            display: none;
-          }
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
-    .logoxs{
-        @media (min-width: 900px) {
-            display: none;
-          }
-    }
+    
     .divAccount{
+        display: flex;
+        justify-content: center;
+        align-items: center;
         margin-right: 10px;
         font-size: 1.1rem;
         font-weight: 500;
         letter-spacing: 1px;
     }
-    a:hover{
-            color:#7E57C2;
-        }
     .titleLogin{
         color: white;
         text-decoration: none;
@@ -143,6 +132,9 @@ const NavContainer = styled.nav`
         @media (max-width: 900px) {
             display:none;
         }
+    }
+    .titleLogin:hover{
+        color:#7E57C2;
     }
     .iconLogin{
         display: flex;
@@ -233,27 +225,66 @@ const NavContainer = styled.nav`
         box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.75);
         -webkit-box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.75);
         -moz-box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.75);
+        @media (max-width: 600px) {
+            right: 30px;
+        }
+    }
+    .firstname{
+        display: block;
+        @media (max-width: 600px) {
+            display: none;
+        }
+    }
+    .LogoFooter{
+        display: none;
+        @media (max-width: 600px) {
+            display: block;
+            width: 80px;
+            height: 80px;
+        }
+    }
+    .logoNavbar{
+        @media (max-width: 600px) {
+           width: 250px;
+           height: 40px;
+        }
     }
 `
-//////////////////////////////////////////////////////////
 const BgDiv = styled.nav`
-    position: absolute;
     z-index: -1;
-    width: 100vw;
-    top:118px;
-    padding-top:15px;
-    padding-bottom: 25px;
+    width: 100%;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    padding-bottom: 5px;
     background-color: black;
+    padding-left: 4rem;
+    @media (max-width: 600px) {
+        z-index: -1;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding-bottom: 5px;
+        background-color: black;
+        padding: 0;
+    }
     a:hover{
-            color: #7E57C2;
+        color: #7E57C2;
     }
     ul{
         display: flex;
-        justify-content: space-evenly;
+        justify-content: space-around;
         align-items: center;
-        padding-top: 20px;
-        width: 85vw;
-        margin:auto;
+        gap: 20px;
+        padding: 0;
+        @media (max-width: 600px) {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            gap: 20px;
+            padding: 0;
+        }
     }
     li{
         list-style: none;
@@ -262,44 +293,17 @@ const BgDiv = styled.nav`
     }
     a{
         text-decoration: none;
-        padding-left: 1rem;
-        font-size: 1.2rem;
+        font-size: 1.1rem;
         font-weight: 500;
-        letter-spacing: 1px;
-        color: white;
-        
-    }
-    @media (max-width: 786px) {
-        width: 104vw;
-        top:114px;
-
-        ul{
-            display: block;
-            align-items: center;
-            gap: 15px;
-        }
-        li{
-            list-style: none;
-            padding: 1.5rem;
-            margin:auto;
-            border-bottom: solid #d9d9d9 1px;
-            width: 80%;
-            margin-left:-5px;
-        }
-        a{
+        color: #ffffff94; 
+        @media (max-width: 600px) {
             text-decoration: none;
-            font-size: 1.5rem;
+            font-size: 0.8rem;
             font-weight: 500;
-            letter-spacing: 1px;
-            color: white;
+            color: white; 
         }
     }
-    @media (max-width: 430px) {
-        top: 183px;
-        a{
-        font-size: 20px;
-        }
-    }
+    
 `
 
 
