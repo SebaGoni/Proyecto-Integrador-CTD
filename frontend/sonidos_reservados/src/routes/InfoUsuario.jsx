@@ -87,14 +87,24 @@ const FormContainer = styled.div`
     @media (max-width: 786px) {
     margin-top:45vh;
     display:block;
-    height: 95vh;
-  }
+    height: 950px;
+    }
+    @media (max-width: 430px) {
+      margin: auto;
+      margin-top: 500px;
+      margin-bottom: 2rem;
+      height: 850px;
+    }
     .icon{
         font-size: 300px;
         padding: 30px;
         background:#3F51B5;
         background-image: linear-gradient(#7E57C2 50%, #3F51B5);
         border-radius: 100%;
+        @media (max-width: 430px) {
+          height: 160px;
+          width: 160px;
+        }
     }
     .divBodyInfo{
         display: flex;

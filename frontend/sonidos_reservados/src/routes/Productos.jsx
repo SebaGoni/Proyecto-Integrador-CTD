@@ -12,6 +12,8 @@ const Productos = () => {
   const { productos, agregarProductoFavorito, eliminarProductoFavorito, token, productosFavoritos, reservas, getReservas, categorias, getCategorias } = useContext(
     GlobalContext
   );
+
+  
   
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
@@ -78,37 +80,33 @@ const Productos = () => {
     setEndDate('');
   };
 
-  const obtenerValoraciones = async (productId) => {
-      const response = await fetch(
-        `http://ec2-54-198-119-206.compute-1.amazonaws.com:8080/valoraciones/producto/${productId}`
-      );
-      const data = await response.json();
-      if (data && data.length > 0) {
-        const average = calcularPromedio(data);
-        setLocalRatings((prevRatings) => ({ ...prevRatings, [productId]: average }));
-      }
-  };
+  // const obtenerValoraciones = async (productId) => {
+  //     const response = await fetch(
+  //       `http://ec2-54-198-119-206.compute-1.amazonaws.com:8080/valoraciones/producto/${productId}`
+  //     );
+  //     const data = await response.json();
+  //     if (data && data.length > 0) {
+  //       const average = calcularPromedio(data);
+  //       setLocalRatings((prevRatings) => ({ ...prevRatings, [productId]: average }));
+  //     }
+  // };
 
-  const calcularPromedio = (ratings) => {
-    const sum = ratings.reduce((accumulator, currentValue) => accumulator + currentValue.rating, 0);
-    return sum / ratings.length;
-  };
+  // const calcularPromedio = (ratings) => {
+  //   const sum = ratings.reduce((accumulator, currentValue) => accumulator + currentValue.rating, 0);
+  //   return sum / ratings.length;
+  // };
 
-  const renderStars = (averageRating) => {
-    const starIcons = [];
-    for (let i = 1; i <= 5; i++) {
-      if (i <= Math.round(averageRating)) {
-        starIcons.push(<AiFillStar key={i} className='star' />);
-      } else {
-        starIcons.push(<AiOutlineStar key={i} className='star' />);
-      }
-    }
-    return <div className='stars'>{starIcons}</div>;
-  };
-
-  useEffect(() => {
-    currentItems2.forEach((product) => obtenerValoraciones(product.id));
-  }, [currentItems2]);
+  // const renderStars = (averageRating) => {
+  //   const starIcons = [];
+  //   for (let i = 1; i <= 5; i++) {
+  //     if (i <= Math.round(averageRating)) {
+  //       starIcons.push(<AiFillStar key={i} className='star' />);
+  //     } else {
+  //       starIcons.push(<AiOutlineStar key={i} className='star' />);
+  //     }
+  //   }
+  //   return <div className='stars'>{starIcons}</div>;
+  // };
 
   const paginate = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -125,6 +123,10 @@ const Productos = () => {
   const handleAgregarFavorito = (producto) => {
     agregarProductoFavorito(producto);
   };
+
+  // useEffect(() => {
+  //   currentItems2.forEach((product) => obtenerValoraciones(product.id));
+  // }, [currentItems2]);
 
   const handleCheckboxChange = (event) => {
     const selectedValue = event.target.value;
@@ -217,12 +219,14 @@ const Productos = () => {
           <div className='container-items'>
             {currentItems2.map((product) => (
               <div className='item' key={product.id}>
-                <Link className='link' to={`/details/${product.id}`} key={product.id}>
-                  <figure>
-                    <img src={product.image} alt={product.title} className='cardImage' />
-                  </figure>
-                  <h3>{product.title}</h3>
-                </Link>
+                <figure>
+                  <img src={product.image} alt={product.title} className='cardImage' />
+                </figure>
+                <div className='info-product'>
+                  <Link className='link' to={`/details/${product.id}`} key={product.id}>
+                    <h3>{product.title}</h3>
+                  </Link>
+                </div>
                 {localRatings[product.id] && renderStars(localRatings[product.id])}
                 {token && (
                   <>
