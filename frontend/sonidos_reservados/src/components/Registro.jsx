@@ -102,13 +102,13 @@ const FormContainer = styled.div`
     margin-top: 200px;
     margin-bottom: 100px;
     width: 600px;
-    height: 600px;
+    height: 500px;
     background-color: white;
     color: black;
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 2rem;
+    padding: 0rem 2rem;
     font-family: 'Poppins', sans-serif;
     text-align: center; 
     @media (max-width: 786px) {
@@ -119,6 +119,9 @@ const FormContainer = styled.div`
     h2{ 
         padding-bottom: 5px;
         border-bottom: solid #E7E7E7;
+        @media (max-width: 430px) {
+            border: none;
+        }
     }
     .input-container{
       display: flex;

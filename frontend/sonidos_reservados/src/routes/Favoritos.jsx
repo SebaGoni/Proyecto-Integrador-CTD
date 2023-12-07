@@ -102,7 +102,7 @@ const Recomendaciones = styled.div`
     border-radius:  20px;
     display: block;
     @media (max-width: 786px) {
-    margin-top:45vh;
+    margin-top: 25vh;
   }
     .link {
       color: #000000;
@@ -122,11 +122,16 @@ const Recomendaciones = styled.div`
       color: #3F51B5;
       font-size: 40px;
       cursor: pointer;
+      @media(max-width: 786px){
+        font-size: 30px;
+        right: 20px;
+      }
     }
     .container-items{
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
+        gap: 20px;
     }
     .item{
         position: relative;
@@ -158,15 +163,15 @@ const Recomendaciones = styled.div`
         @media(max-width: 1000px){
           font-size:1.3rem;
         }
+        @media(max-width: 786px){
+          margin: 0;
+        }
     }
 
     .cardImage{
       height: 200px;
       width: 200px;
       object-fit: cover;
-      @media(min-width: 1000px){
-        
-        }
       @media(max-width: 1000px){
         width: 50vw;  
         }

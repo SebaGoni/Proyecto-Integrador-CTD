@@ -94,7 +94,6 @@ const NavContainer = styled.nav`
     top: 0;
     left: 0;
     width: 100%;
-    margin: auto;
     padding: 1rem 0 1rem 0;
     background-color: black;
     display: flex;
@@ -176,7 +175,6 @@ const NavContainer = styled.nav`
         display: flex;
         align-items: center;
         justify-content: center;
-        align-items: center;
         background:#3F51B5;
         background-image: linear-gradient(#7E57C2 50%, #3F51B5);
         width: 50px;
@@ -184,9 +182,15 @@ const NavContainer = styled.nav`
         color: white;
         padding: .1px 10px;
         cursor: pointer;
+        @media (max-width: 430px) {
+          padding: 4px 1px;
+        }
     }
     .initials{
         text-align: center;
+        @media (max-width: 430px) {
+            font-size: 15px;
+        }
     }
     .logout{
         margin: 0;
@@ -227,6 +231,9 @@ const NavContainer = styled.nav`
         -moz-box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.75);
         @media (max-width: 600px) {
             right: 30px;
+        }
+        @media (max-width: 430px) {
+          top: 70px;
         }
     }
     .firstname{

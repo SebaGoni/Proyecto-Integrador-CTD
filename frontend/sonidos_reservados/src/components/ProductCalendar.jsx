@@ -8,6 +8,7 @@ import Swal from 'sweetalert2';
 import Modal from 'react-modal';
 import styled from "styled-components";
 import { MdCancel } from "react-icons/md";
+import { FaRegCalendarCheck } from "react-icons/fa";
 
 Modal.setAppElement('#root');
 
@@ -135,7 +136,7 @@ const ProductCalendar = () => {
       <button className="btnReserva" onClick={openModal}>RESERVA TU INSTRUMENTO</button>
       <Modal  style={{
             content: {
-              top: '50%',
+              top: '58%',
               left: '50%',
               right: 'auto',
               bottom: 'auto',
@@ -145,8 +146,8 @@ const ProductCalendar = () => {
               transform: 'translate(-50%, -50%)',
               color: 'black',
               textAlign: 'center',
-              width: '1000px',
-              height: '300px',
+              width: '80%',
+              height: '60%',
               display: "flex",
               flexDirection: "column",
               justifyContent: "space-between",
@@ -202,10 +203,13 @@ const ProductCalendar = () => {
         </li>
       ))}
     </ul>
-    <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+    <div style={{ display: "flex", justifyContent: "center", alignItems: "center", width: '80%' }}>
   
     <button onClick={closeModal} style={{
             marginRight: "10px",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
             padding: "8px 18px",
             background: "#b20e0e",
             color: "white",
@@ -215,7 +219,8 @@ const ProductCalendar = () => {
             transition: "background 0.3s ease",
             fontFamily: 'Poppins',
             fontWeight: 600,
-          }}>Cerrar</button>
+            width: '20%'
+          }}><MdCancel/></button>
       <DatePicker
         showIcon
         icon={
@@ -226,7 +231,7 @@ const ProductCalendar = () => {
               viewBox="0 0 48 48"
             >
               <mask id="ipSApplication0">
-                <g fill="none" stroke="#fff" strokeLinejoin="round" strokeWidth="4">
+                <g fill="none" stroke="#ffffff" strokeLinejoin="round" strokeWidth="2">
                   <path strokeLinecap="round" d="M40.04 22v20h-32V22"></path>
                   <path
                     fill="#fff"
@@ -256,6 +261,9 @@ const ProductCalendar = () => {
       />
       <button onClick={handleReserveClick}style={{
             marginLeft: "10px",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
             padding: "8px 18px",
             background: "#3F51B5",
             color: "white",
@@ -265,7 +273,8 @@ const ProductCalendar = () => {
             transition: "background 0.3s ease",
             fontFamily: 'Poppins',
             fontWeight: 600,
-          }}>Reservar</button>
+            width: '20%'
+          }}><FaRegCalendarCheck /></button>
     </div>
       </Modal>
     </ReservaContainer>
@@ -280,7 +289,6 @@ const ReservaContainer = styled.div`
   align-items: center;
   background-color: black; 
   width: 100vw;
-
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
   @media (min-width: 786px){
     margin-top: 15vh;
@@ -294,9 +302,6 @@ const ReservaContainer = styled.div`
     justify-content: center;
     align-items: center;
     background-color: black;
-    @media (max-width: 430px){ 
-    
-    }
     @media (max-width: 786px){
         width: 100vw;
     }
