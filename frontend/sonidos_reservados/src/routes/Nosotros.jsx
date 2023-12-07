@@ -28,9 +28,14 @@ const UsContainer = styled.div`
     padding: 2rem;
     font-family: 'Poppins', sans-serif;
     font-size: 1.5rem;
+    margin-top: 20vh;
     @media (max-width: 786px) {
-      margin-top: 45vh;
-      height: 80vh;  
+      margin-top: 40vh;  
+    }
+    @media (max-width: 430px) {
+      margin-top: 55vh;  
+      margin-left: 1rem;
+      margin-right: 1rem;
     }
     li{
       margin: auto;

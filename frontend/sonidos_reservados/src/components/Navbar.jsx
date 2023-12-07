@@ -11,6 +11,8 @@ const Navbar = () => {
         setClickedInitials(!clickedInitials)
     }
     const iconsr= 'https://sonidos-reservados.s3.amazonaws.com/imgFront/SonidosreservadosV2.png';
+    const iconLogin = 'https://sonidos-reservados.s3.amazonaws.com/imgFront/login.png';
+    const iconRegister= 'https://sonidos-reservados.s3.amazonaws.com/imgFront/register.png';
 
     const initials = `${firstname?.toUpperCase().charAt(0) || ''}${lastname?.toUpperCase().charAt(0) || ''}`;
   return (
@@ -29,6 +31,14 @@ const Navbar = () => {
                 <div className='divAccount'>
                     <a className='titleLogin' href='/register'>CREAR CUENTA</a>
                     <a className='titleLogin' href='/login'>INICIAR SESIÓN</a>
+                    <div className='iconLogin'>
+                        <a className= 'registerIcon' href='/register'>
+                            <img src={iconRegister} alt="register" height="60"></img>
+                        </a>
+                        <a className= 'loginIcon' href='/login'>
+                            <img src={iconLogin} alt="login" height="60"></img>
+                        </a>
+                    </div>
                 </div>
             )}
             {token && userRol === 'USER' &&(
@@ -63,18 +73,6 @@ const Navbar = () => {
                     )}  
                 </div>
             )}
-            <BgDiv>
-                <ul>
-                    <li><a href='/about'>SOBRE  NOSOTROS</a></li>
-                    {token && (
-                        <>
-                            <li><a href='/reservations'>MIS  RESERVAS</a></li>
-                            <li><a href='/favorites'>MIS  FAVORITOS</a></li>
-                        </>
-                    )}
-                </ul>
-            </BgDiv>
-        </NavContainer>
         <BgDiv>
             <ul>
                 <li><a href='/about'>CONOCE AL EQUIPO</a></li>
@@ -86,8 +84,8 @@ const Navbar = () => {
                 )}
             </ul>
         </BgDiv>
-    </>
-  )
+    </NavContainer>
+    )
 }
 
 export default Navbar
@@ -97,8 +95,8 @@ const NavContainer = styled.nav`
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    margin: 0;
+    width: 100vw;
+    margin: auto;
     padding: 1rem 0 1rem 0;
     background-color: black;
     display: flex;
@@ -239,20 +237,21 @@ const NavContainer = styled.nav`
 `
 //////////////////////////////////////////////////////////
 const BgDiv = styled.nav`
-    position: relative;
-    top:10vh;
-    height: 65px;
+    position: absolute;
+    z-index: -1;
     width: 100vw;
-    left: -1vw;
+    top:118px;
+    padding-top:15px;
+    padding-bottom: 25px;
     background-color: black;
     a:hover{
             color: #7E57C2;
     }
     ul{
         display: flex;
-        justify-content: center;
+        justify-content: space-evenly;
         align-items: center;
-        padding-top: 30px;
+        padding-top: 20px;
         width: 85vw;
         margin:auto;
     }
@@ -260,9 +259,6 @@ const BgDiv = styled.nav`
         list-style: none;
         border: none;
         text-align: center;
-    }
-    li:hover{
-        box-shadow: 0px 3px 1px rgb(255,255,255,0.5);
     }
     a{
         text-decoration: none;
@@ -274,8 +270,8 @@ const BgDiv = styled.nav`
         
     }
     @media (max-width: 786px) {
-        width:102%;
-        height: 280px;
+        width: 104vw;
+        top:114px;
 
         ul{
             display: block;
@@ -299,9 +295,7 @@ const BgDiv = styled.nav`
         }
     }
     @media (max-width: 430px) {
-        margin-top: 15vh;
-        width: 101vw;
-        margin-left: -2vw;
+        top: 183px;
         a{
         font-size: 20px;
         }
