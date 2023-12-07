@@ -110,7 +110,7 @@ const ListaCategorias = () => {
                         <Modal
                             style={{
                             content: {
-                                top: '50%',
+                                top: '60%',
                                 left: '50%',
                                 right: 'auto',
                                 bottom: 'auto',
