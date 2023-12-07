@@ -2,6 +2,8 @@ import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { GlobalContext } from '../components/utils/global_context';
 import { AiOutlineArrowLeft, AiOutlineArrowRight, AiFillStar, AiOutlineStar } from 'react-icons/ai';
+import { FaRegCalendarCheck } from "react-icons/fa";
+import { MdCancel } from "react-icons/md";
 import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
 import Modal from 'react-modal';
@@ -269,7 +271,7 @@ const Details = () => {
             transition: "background 0.3s ease",
             fontFamily: 'Poppins',
             fontWeight: 600,
-          }}>Cerrar</button>
+          }}><MdCancel/></button>
       <DatePicker
         showIcon
         icon={
@@ -319,7 +321,7 @@ const Details = () => {
             transition: "background 0.3s ease",
             fontFamily: 'Poppins',
             fontWeight: 600,
-          }}>Reservar</button>
+          }}><FaRegCalendarCheck /></button>
     </div>
       </Modal>
           </div>
@@ -432,6 +434,7 @@ const DetailContainer = styled.div`
     @media(max-width: 786px){
             text-align: center;
             justify-content: center;
+            margin-top: 10vh;
         }
     .divTitle{
       background-color: white;

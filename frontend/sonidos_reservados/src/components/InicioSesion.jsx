@@ -57,6 +57,9 @@ const FormContainer = styled.div`
     }
     h2{ 
         border-bottom: solid #E7E7E7;
+        @media (max-width: 430px) {
+            border: none;
+        }
     }
     .input-container{
         display: flex;

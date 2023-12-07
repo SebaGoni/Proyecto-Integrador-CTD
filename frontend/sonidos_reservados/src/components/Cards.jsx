@@ -179,9 +179,6 @@ const Recomendaciones = styled.div`
     border-radius:  20px;
     display: block;
     box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
-    @media (max-width: 430px){
-        
-      }
     h2{
       color: black;
       font-family: 'Poppins', sans-serif;

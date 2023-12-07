@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import Pagination from '../components/Pagination';
 import { AiFillStar, AiOutlineStar } from 'react-icons/ai';
 import { FaRegHeart, FaHeart, FaFacebookSquare, FaInstagram, FaWhatsapp, FaShareAlt, FaTwitterSquare   } from "react-icons/fa";
+import { MdCancel } from "react-icons/md";
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
@@ -13,8 +14,6 @@ const Productos = () => {
     GlobalContext
   );
 
-  
-  
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
   const [localRatings, setLocalRatings] = useState({});
@@ -67,7 +66,7 @@ const Productos = () => {
   useEffect(() => {
     getCategorias()
     getReservas()
-  }, [reservas, categorias]);
+  }, []);
 
   const handleDateChange = (dates) => {
     const [start, end] = dates;
@@ -210,6 +209,8 @@ const Productos = () => {
               placeholderText='Seleccionar fechas'
             />
             <button className='btnFecha' onClick={handleDateClick}>Quitar fecha</button>
+            <button className='btnFechaMovil' onClick={handleDateClick}><MdCancel/></button>
+            
           </div>
         </div>
       </Filter>
@@ -298,7 +299,7 @@ const Filter = styled.div`
   justify-content: center;
   align-items: center;
   @media (max-width: 786px) {
-    margin-top: 45vh;
+    margin-top: 25vh;
   }
   
   .divFilters{
@@ -352,13 +353,31 @@ const Filter = styled.div`
     @media (max-width: 786px) {
         flex-direction: column;
         align-items: stretch; 
-        
     }
-
+    @media (max-width: 430px) {
+      display: none;
+    }
+  }
+  .btnFechaMovil{
+    display: none;
+    @media (max-width: 430px) {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-weight: 600;
+      background-color: transparent;
+      outline: none;
+      border: #b20e0e solid 3px;
+      padding: 10px;
+      text-align: center;
+      color: #b20e0e;
+      cursor: pointer;
+    }
   }
 `
 const ProductosStyle = styled.div`
     margin: 5vh 2rem 2rem 2rem;
+    padding: 20px;
     background-color: white;
     border-radius:  20px;
     display: block;
@@ -391,10 +410,13 @@ const ProductosStyle = styled.div`
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
+        gap: 20px;
     }
     .item{
         position: relative;
         border-radius: 20px;
+        display: flex;
+        flex-direction: column;
         justify-content: center;
         align-items: center;
         box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.2);
@@ -404,10 +426,15 @@ const ProductosStyle = styled.div`
         width: 300px;
         @media(min-width: 1000px){
           width: 40vw; 
-          margin:1rem;
+          margin: 1rem;
         }
         @media(max-width: 1000px){
           width: 70vw;
+          margin:auto;
+        }
+        @media(max-width: 786px){
+          width: 80vw;
+          height: 500px;
           margin:auto;
         }
     }
@@ -422,18 +449,22 @@ const ProductosStyle = styled.div`
         @media(max-width: 1000px){
           font-size:1.3rem;
         }
+        @media(max-width: 786px){
+          margin: 0;
+        }
     }
 
     .cardImage{
       height: 200px;
       width: 200px;
       object-fit: cover;
-      @media(min-width: 1000px){
-        
-        }
       @media(max-width: 1000px){
         width: 50vw;  
         }
+      @media(max-width: 786px){
+        
+        
+      }
     }
 
     .linkProducts{

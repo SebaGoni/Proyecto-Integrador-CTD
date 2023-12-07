@@ -135,7 +135,7 @@ const NuevoContainer = styled.div`
 
   h1 {
     display: block;
-    width: 1200px;
+    
   }
 
   .BotonAtras {
