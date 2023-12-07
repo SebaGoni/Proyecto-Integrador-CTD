@@ -68,11 +68,15 @@ const DivCategorias = styled.div`
     letter-spacing: 4px;
     font-weight: 500;
     border-bottom: solid;
-    @media(min-width: 1000px){
+    @media(min-width: 900px){
           font-size:2rem;
         }
-        @media(max-width: 1000px){
-          font-size:1.8rem;
+    @media(max-width: 900px){
+      font-size:1.8rem;
+      text-align: center;
+    }
+    @media(max-width: 430px){
+          font-size:1.4rem;
           text-align: center;
         }
   }
