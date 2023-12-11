@@ -443,6 +443,7 @@ const ProductosStyle = styled.div`
         padding: 1rem;
         color:black;
         font-family: 'Poppins', sans-serif;
+        font-weight: normal;
         @media(min-width: 1000px){
           font-size:1.5rem;
         }
@@ -461,16 +462,11 @@ const ProductosStyle = styled.div`
       @media(max-width: 1000px){
         width: 50vw;  
         }
-      @media(max-width: 786px){
-        
-        
-      }
     }
 
     .linkProducts{
       text-decoration: none;
     }
-
     .titleProducts{
       text-align: center;
       border-radius: 20px;
@@ -478,10 +474,6 @@ const ProductosStyle = styled.div`
       background-color: black;
       transition: background-color 300ms ease-in-out;
       padding: 20px;
-    }
-
-    .titleProducts:hover{
-      background-color: #000000ec;
     }
     .shareButtons{
     position: absolute;

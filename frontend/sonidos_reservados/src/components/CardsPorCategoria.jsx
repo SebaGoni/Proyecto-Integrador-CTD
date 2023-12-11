@@ -197,6 +197,9 @@ const Recomendaciones = styled.div`
       left: 40px;
       color: #3F51B5;
       font-size: 20px;
+      @media (max-width: 430px) {
+        font-size: 15px;
+      }
     }
     .heartIconFilled{
       position: absolute;
@@ -205,6 +208,9 @@ const Recomendaciones = styled.div`
       color: #3F51B5;
       font-size: 40px;
       cursor: pointer;
+      @media (max-width: 430px) {
+        font-size: 30px;
+      }
     }
     .container-items{
         display: flex;
@@ -291,10 +297,10 @@ const Recomendaciones = styled.div`
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 500px; /* Ancho de la ventana */
-    height: 400px; /* Alto de la ventana */
+    width: 500px;
+    height: 400px;
     padding: 20px;
-    background-color: #3f51b5; /* Fondo blanco con transparencia */
+    background-color: #3f51b5; 
     border-radius: 10px;
     box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.8);
     display: flex;
@@ -302,6 +308,16 @@ const Recomendaciones = styled.div`
     justify-content: space-between;
     align-items: center;
     z-index: 1;
+    @media (max-width: 430px) {
+      width: 300px;
+      height: 400px; 
+    }
+    textarea{
+      @media (max-width: 430px) {
+        width: 250px;
+      
+      }
+    }
     } 
     .closeButton{
       padding: 10px 20px;
@@ -331,9 +347,16 @@ const ShareButtonContainer = styled.div`
     position: absolute;
     top: 45px;
     right: 95px;
+      @media (max-width: 430px) {
+        top: 43px;
+        right: 90px;
+      }
     .iconShare {
       cursor: pointer;
       color: #3F51B5;
       font-size: 30px;
+      @media (max-width: 430px) {
+        font-size: 25px;
+      }
   }
 `

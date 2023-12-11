@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { GlobalContext } from './utils/global_context';
 import { Link } from 'react-router-dom';
 import { AiOutlineArrowLeft } from 'react-icons/ai'
-import { MdCancel } from "react-icons/md";
+
 
 function AddProduct() {
   const { postProducto, categorias, getCategorias, caracteristicas, getCaracteristicas } = useContext(GlobalContext);
@@ -25,7 +25,7 @@ function AddProduct() {
     const formData = new FormData(productForm);
     formData.append('categoriaId', selectedCategoriaId);
     selectedCaracteristicas.forEach((caracteristica) => {
-      formData.append('caracteristicas[]', caracteristica.id);
+      formData.append('caracteristicas', caracteristica.id);
     });
     postProducto(formData);
   };
@@ -34,20 +34,22 @@ function AddProduct() {
     setSelectedCategoriaId(event.target.value);
   }
 
-  const handleCaracteristicasChange = (event) => {
-    const selectedOptions = Array.from(
-      event.target.selectedOptions,
-      (option) => caracteristicas.find((c) => c.id === parseInt(option.value))
-    );
-    setSelectedCaracteristicas(selectedOptions);
+  const handleCaracteristicaChange = (caracteristicaId) => {
+    const isSelected = selectedCaracteristicas.some((caract) => caract.id === caracteristicaId);
+
+    if (isSelected) {
+    
+      setSelectedCaracteristicas((prevCaracteristicas) =>
+        prevCaracteristicas.filter((caract) => caract.id !== caracteristicaId)
+      );
+    } else {
+      
+      const selectedCaracteristica2 = caracteristicas.find((caract) => caract.id === caracteristicaId);
+      setSelectedCaracteristicas((prevCaracteristicas) => [...prevCaracteristicas, selectedCaracteristica2]);
+    }
   };
 
-  const handleRemoveCaracteristica = (caracteristicaId) => {
-    const updatedSelectedCaracteristicas = selectedCaracteristicas.filter(
-      (caracteristica) => caracteristica.id !== caracteristicaId
-    );
-    setSelectedCaracteristicas(updatedSelectedCaracteristicas);
-  };
+
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -60,7 +62,7 @@ function AddProduct() {
           <AiOutlineArrowLeft className='iconArrow' />
         </Link>
       <form id="productForm">
-        <h1>Crear producto</h1>
+        <h1>CREAR PRODUCTO</h1>
 
         <GridContainer>
          
@@ -77,7 +79,7 @@ function AddProduct() {
         
           <GridItem>
             <label htmlFor="categoriaId">Categoría</label>
-            <select className='inputs' id="categoriaId" name="categoriaId" value={selectedCategoriaId} onChange={handleCategoriaChange} required>
+            <select style={{ cursor: 'pointer' }} className='inputs' id="categoriaId" name="categoriaId" value={selectedCategoriaId} onChange={handleCategoriaChange} required>
               <option value="" disabled>Selecciona una categoría</option>
               {categorias.map(categoria => (
                 <option key={categoria.id} value={categoria.id}>{categoria.nombre}</option>
@@ -87,7 +89,7 @@ function AddProduct() {
 
           <GridItem>
             <label htmlFor="price">Precio</label>
-            <input className='inputs' type="number" id="price" name="price" required />
+            <input className='inputs' type="number" id="price" name="price" required min={0}/>
           </GridItem>
 
           
@@ -101,35 +103,22 @@ function AddProduct() {
             <input className='inputsImagenes' type="file" id="imagenes" name="imagenes" accept="image/*" multiple />
           </GridItem>
 
-          <GridItem>
+          <GridItem colSpan={2} style={{ marginTop: '20px' }}>
             <label htmlFor="caracteristicas">Características</label>
-            <select
-              id="caracteristicas"
-              name="caracteristicas"
-              multiple
-              value={selectedCaracteristicas.map((c) => c.id)}
-              onChange={handleCaracteristicasChange}
-            >
-              {caracteristicas.map((caracteristica) => (
-                <option key={caracteristica.id} value={caracteristica.id}>
-                  {caracteristica.nombre}
-                </option>
-              ))}
-            </select>
-          </GridItem>
-
-          <GridItem>
-            <label>Características seleccionadas</label>
-            <ul className='ulCaracteristicas'>
-              {selectedCaracteristicas.map((caracteristica) => (
-                <li onClick={() =>
-                  handleRemoveCaracteristica(caracteristica.id)
-                } className='liCaracteristicas' key={caracteristica.id}>
-                  {caracteristica.nombre}{' '}
-                    <MdCancel />
-                </li>
-              ))}
-            </ul>
+            <div className='divCaract'>
+            {caracteristicas.map((caract) => (
+              <div key={caract.id}>
+                <label htmlFor={`caracteristicas-${caract.id}`}>{caract.nombre}</label>
+                <input
+                  type='checkbox'
+                  id={`caracteristicas-${caract.id}`}
+                  name={`caracteristicas-${caract.id}`}
+                  checked={selectedCaracteristicas.some((selectedCaract) => selectedCaract.id === caract.id)}
+                  onChange={() => handleCaracteristicaChange(caract.id)}
+                />
+              </div>
+            ))}
+          </div>
           </GridItem>
         </GridContainer>
         <div className='divButton'>
@@ -212,34 +201,34 @@ const GridItem = styled.div`
     padding-left: 8px;
   }
   .inputsImagenes{
-    background-color: black;
+    background-color: #3F51B5;
     color: white;
     border-radius: 10px;
     font-family: 'Poppins', sans-serif;
-    font-size: 1rem;
+    font-size: .8rem;
     font-weight: 600;
     padding: 5px 30px;
     cursor: pointer;
     margin: auto;
   }
-  .ulCaracteristicas{
-    list-style: none;
+  .divCaract{
     display: flex;
-    align-items: center;
     flex-wrap: wrap;
-    gap: 10px;
-  }
-  .liCaracteristicas{
-    background-color: #b20e0e;
-    padding: 8px;
-    border-radius: 10px;
-    cursor: pointer;
-    display: flex;
     justify-content: center;
     align-items: center;
-    gap: 3px;
-    color: white;
-    font-weight: 600;
-    font-family: 'Poppins';
+    gap: 20px;
+    margin-top: 10px;
+    div{
+      color: white;
+      display: flex;
+      gap: 5px;
+      background-color: #3F51B5;
+      padding: 8px;
+      border-radius: 10px;
+    }
+    input{
+      cursor: pointer;
+    }
   }
+  
 `;

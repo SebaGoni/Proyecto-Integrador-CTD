@@ -15,7 +15,7 @@ const ListaCaracteristicas = () => {
     const [loaded, setLoaded] = useState(false);
     const [editedCaracteristica, setEditedCaracteristica] = useState({
         nombre: '',
-        image: '', // Add any other properties that you want to edit
+        image: '', 
     });
 
     useEffect(() => {
@@ -73,7 +73,7 @@ const ListaCaracteristicas = () => {
       <Link to='/admin'>
         <AiOutlineArrowLeft className='iconArrow'/>
       </Link>
-      <h2>Características</h2>
+      <h2>CARACTERÍSTICAS</h2>
       <table className='TablaDeProductos'>
         <thead>
           <tr>
@@ -188,7 +188,7 @@ const ListaCaracteristicas = () => {
       </table>
       <Link to='/admin/newCharacteristic'
               className='BotonAdmin'
-              role="button"> Nueva Caracteristica
+              role="button"> Nueva característica
       </Link>
     </CaracteristicasContainer>
   )

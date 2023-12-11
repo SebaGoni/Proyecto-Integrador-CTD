@@ -149,14 +149,14 @@ const handleChange = (e) => {
       <Link to='/admin'>
         <AiOutlineArrowLeft className='iconArrow'/>
       </Link>
-      <h2>Productos</h2>
+      <h2>PRODUCTOS</h2>
       <table className='TablaDeProductos'>
         <thead>
           <tr>
             <th scope='col'>Id</th>
             <th scope='col'>Nombre</th>
             <th scope='col'>Categoria</th>
-            <th scope='col'>Caracteristicas</th>
+            <th scope='col'>Características</th>
             <th scope='col'>Descripción</th>
             <th scope='col'>Precio</th>
           </tr>
@@ -267,7 +267,7 @@ const handleChange = (e) => {
                                         </div>
                                         <div style={{ width: '200px', display: 'flex', flexDirection: 'column', gap: '5px' }}>
                                             <label style={{ fontWeight: 600, fontSize: '18px' }} htmlFor='categoria'>Categoria</label>
-                                            <select className='inputs' id="categoria" name="categoria" value={selectedCategoriaId} onChange={handleCategoriaChange} required>
+                                            <select style={{ padding: '6.4px', borderRadius: '10px' }}  id="categoria" name="categoria" value={selectedCategoriaId} onChange={handleCategoriaChange} required>
                                               <option value="" disabled>{editedProducto.categoria.nombre}</option>
                                               {categorias.map(categoria => (
                                                 <option key={categoria.id} value={categoria.id}>{categoria.nombre}</option>
@@ -275,16 +275,19 @@ const handleChange = (e) => {
                                             </select>
                                         </div>
                                         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column', gap: '20px' }}>
-                                          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '40px' }}>
-                                            <div style={{ width: '200px', display: 'flex', flexDirection: 'column', gap: '5px' }}>
+                                          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '80px' }}>
+                                            <div style={{ display: 'flex', flexDirection: 'column', gap: '5px', justifyContent: 'center', alignItems: 'center' }}>
                                               <label style={{ fontWeight: 600 , fontSize: '18px'}} htmlFor='image'>Imagen de portada</label>
                                               <input
                                               style={{
                                                   borderRadius: '10px',
-                                                  border: 'solid 0.5px #7A7A7A',
-                                                  height: '25px',
+                                                  backgroundColor: '#3F51B5',
                                                   width: '200px',
                                                   padding: '5px',
+                                                  color: 'white',
+                                                  fontFamily: 'Poppins',
+                                                  padding: '5px 30px',
+                                                  fontSize: '.8rem'
                                               }}
                                               type='file'
                                               id='image'
@@ -292,15 +295,18 @@ const handleChange = (e) => {
                                               onChange={handleChange}
                                               />
                                             </div>
-                                            <div style={{ width: '200px', display: 'flex', flexDirection: 'column', gap: '5px' }}>
+                                            <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
                                                 <label style={{ fontWeight: 600, fontSize: '18px' }} htmlFor='imagenes'>Imagenes</label>
                                                 <input
                                                 style={{
-                                                    borderRadius: '10px',
-                                                    border: 'solid 0.5px #7A7A7A',
-                                                    height: '25px',
-                                                    width: '200px',
-                                                    padding: '5px',
+                                                  borderRadius: '10px',
+                                                  backgroundColor: '#3F51B5',
+                                                  width: '200px',
+                                                  padding: '5px',
+                                                  color: 'white',
+                                                  fontFamily: 'Poppins',
+                                                  padding: '5px 30px',
+                                                  fontSize: '.8rem'
                                                 }}
                                                 multiple
                                                 type='file'
@@ -311,7 +317,7 @@ const handleChange = (e) => {
                                             </div>
                                           </div>
                                           <div style={{ display: 'flex', flexDirection: 'column', gap: '15px'}}>
-                                            <label style={{ fontWeight: 600, fontSize: '18px'}}>Características Disponibles</label>
+                                            <label style={{ fontWeight: 600, fontSize: '18px'}}>Características</label>
                                             <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexWrap: 'wrap', gap: '10px' }}>
                                               {caracteristicas.map((caract) => (
                                                 <div key={caract.id}>
@@ -354,7 +360,7 @@ const handleChange = (e) => {
       </table>
       <Link to='/admin/newProduct'
               className='BotonAdmin'
-              role="button"> Nuevo Producto
+              role="button"> Nuevo producto
       </Link>
     </ProductContainer>
   )
