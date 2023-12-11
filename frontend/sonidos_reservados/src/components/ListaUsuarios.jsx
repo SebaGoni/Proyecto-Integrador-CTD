@@ -58,7 +58,7 @@ const ListaUsuarios = () => {
       <Link to='/admin'>
         <AiOutlineArrowLeft className='iconArrow' />
       </Link>
-      <h2>Usuarios</h2>
+      <h2>USUARIOS</h2>
       <table className='TablaDeProductos'>
         <thead>
           <tr>

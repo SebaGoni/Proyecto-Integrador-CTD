@@ -638,6 +638,11 @@ const DetailContainer = styled.div`
       color:  #3F51B5;
       text-align: right;
       margin-right: 4rem;
+      @media (max-width: 1000px) {
+        font-size: 20px;
+        margin: 40px 0;
+        text-align: center;
+    }
     }
     //POLITICAS DEL PRODUCTO ///////////////////////////////////////////
     h3{

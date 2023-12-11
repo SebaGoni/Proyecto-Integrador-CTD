@@ -4,8 +4,7 @@ import styled from 'styled-components'
 const Nosotros = () => {
   return (
         <UsContainer>
-            <h2>Equipo 5</h2>
-            <p>Integrantes que participaron en el sprint y roles que asumieron:</p>
+            <h2>INTEGRANTES</h2>
             <ul>
                 <li>Sebastian Goñi (TL Backend)</li>
                 <li>Facundo Recabarren (TL Frontend)</li>
@@ -28,12 +27,12 @@ const UsContainer = styled.div`
     padding: 2rem;
     font-family: 'Poppins', sans-serif;
     font-size: 1.5rem;
-    margin-top: 20vh;
+    margin-top: 30vh;
     @media (max-width: 786px) {
-      margin-top: 40vh;  
+      margin-top: 30vh;  
     }
     @media (max-width: 430px) {
-      margin-top: 55vh;  
+      margin-top: 25vh;  
       margin-left: 1rem;
       margin-right: 1rem;
     }

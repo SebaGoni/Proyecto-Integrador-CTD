@@ -25,7 +25,7 @@ const AddCaracteristica = () => {
           <AiOutlineArrowLeft className='iconArrow' />
         </Link>
       <form id="caractForm">
-        <h1>Crear Característica</h1>
+        <h1>CREAR CARACTERÍSTICA</h1>
         <GridContainer>
          
           <GridItem>
@@ -117,11 +117,11 @@ const GridItem = styled.div`
     padding-left: 8px;
   }
   .inputsImagenes{
-    background-color: black;
+    background-color: #3F51B5;
     color: white;
     border-radius: 10px;
     font-family: 'Poppins', sans-serif;
-    font-size: 1rem;
+    font-size: .8rem;
     font-weight: 600;
     padding: 5px 30px;
     cursor: pointer;

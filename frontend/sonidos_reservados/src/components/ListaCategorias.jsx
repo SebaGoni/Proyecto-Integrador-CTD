@@ -73,7 +73,7 @@ const ListaCategorias = () => {
       <Link to='/admin'>
         <AiOutlineArrowLeft className='iconArrow'/>
       </Link>
-      <h2>Categorias</h2>
+      <h2>CATEGORIAS</h2>
       <table className='TablaDeProductos'>
         <thead>
           <tr>
@@ -188,7 +188,7 @@ const ListaCategorias = () => {
       </table>
       <Link to='/admin/newCategorie'
               className='BotonAdmin'
-              role="button"> Nueva Categoria
+              role="button"> Nueva categoria
       </Link>
     </CategoriaContainer>
   )

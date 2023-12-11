@@ -28,15 +28,9 @@ const WhatsAppButton = () => {
 
   const Wpp = styled.a`
     position: fixed;
-    bottom: 10px;
-    right: 10px;
+    bottom: 30px;
+    right: 30px;
     z-index: 100;
-    width: 50px;
-    height: 50px;
-    background-color: #000000;
-    padding: 10px;
-    border-radius: 100%;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.06);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -48,11 +42,11 @@ const WhatsAppButton = () => {
 
   img {
     z-index: 100;
+    width: 50px;
+    height: 50px;
+    @media (max-width: 430px) {
     width: 30px;
     height: 30px;
-    @media (max-width: 430px) {
-    width: 20px;
-    height: 20px;
     }
   }
   `

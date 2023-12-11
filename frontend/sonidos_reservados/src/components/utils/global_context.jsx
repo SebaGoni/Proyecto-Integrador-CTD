@@ -199,6 +199,7 @@ export const GlobalProvider = ({ children }) => {
         title: '¡Se ha cerrado su sesión!',
         icon: 'success',
       })
+      navigate('/')
     } catch (error) {
       Swal.fire({
         title: '¡Error al cerrar sesión!',
@@ -316,6 +317,7 @@ export const GlobalProvider = ({ children }) => {
           text: '¡Tu producto fue agregado a la lista!',
           icon: 'success',
         });
+        navigate('/admin/productList')
     } catch (error) {
       console.error('Error al crear el producto:', error);
       Swal.fire({
@@ -481,6 +483,7 @@ export const GlobalProvider = ({ children }) => {
           text: '¡Tu Caracteristica fue agregada a la lista!',
           icon: 'success',
         });
+        navigate('/admin/characteristicsList')
     } catch (error) {
       console.error('Error al crear la caracteristica:', error);
       Swal.fire({
@@ -517,16 +520,16 @@ export const GlobalProvider = ({ children }) => {
         dispatch({ type: "eliminarCaracteristica", payload: id });
   
         Swal.fire({
-          title: 'Caracteristica eliminada exitosamente!',
+          title: 'Característica eliminada exitosamente!',
           icon: 'success',
         });
       } else {
         console.log('Eliminación cancelada');
       }
     } catch (error) {
-      console.error("Error al eliminar caracteristica", error);
+      console.error("Error al eliminar característica", error);
       Swal.fire({
-        title: '¡Error al eliminar caracteristica!',
+        title: '¡Error al eliminar característica!',
         text: error.response?.data?.message || 'Ocurrió un error inesperado',
         icon: 'error',
       });
@@ -573,6 +576,7 @@ export const GlobalProvider = ({ children }) => {
           text: '¡Tu Categoria fue agregada a la lista!',
           icon: 'success',
         });
+        navigate('/admin/categoriesList')
     } catch (error) {
       console.error('Error al crear la categoria:', error);
       Swal.fire({
