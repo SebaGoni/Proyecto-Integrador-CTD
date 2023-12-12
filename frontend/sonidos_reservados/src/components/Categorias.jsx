@@ -1,26 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom'; // Import Link from react-router-dom
+import { Link } from 'react-router-dom';
+import { GlobalContext } from './utils/global_context';
 
 function Categorias() {
-  const [categories, setCategories] = useState([]);
+  const { categorias, getCategorias } = useContext(GlobalContext);
+
+  console.log(categorias);
 
   useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const response = await fetch('http://ec2-54-198-119-206.compute-1.amazonaws.com:8080/categorias');
-        if (response.ok) {
-          const data = await response.json();
-          setCategories(data);
-        } else {
-          console.error('Failed to fetch categories');
-        }
-      } catch (error) {
-        console.error('Error fetching categories:', error);
-      }
-    };
-
-    fetchCategories();
+    getCategorias()
   }, []);
 
   return (
@@ -29,9 +18,8 @@ function Categorias() {
         <div className='categorias'>
           <h2>CATEGORIAS</h2>
           <ButtonsContainer>
-            {categories.map((category) => (
-              <Link key={category.id} to={`/categorias/${encodeURIComponent(category.nombre)}`}>
-                {/* Enlace dinámico a la categoría */}
+            {categorias.map((category) => (
+              <Link className='link' key={category.id} to={`/categorias/${encodeURIComponent(category.nombre)}`}>
                 <button
                   style={{
                     backgroundImage: `url(${category.image})`,
@@ -85,7 +73,6 @@ const DivCategorias = styled.div`
 const ButtonsContainer = styled.div`
   display: grid;
   gap: 1.2rem;
-
   @media (min-width: 901px) and (max-width: 1200px) {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -97,8 +84,12 @@ const ButtonsContainer = styled.div`
   @media (max-width: 900px) {
     grid-template-columns: 1fr;
   }
-
-  
+  .link{
+    transition: opacity 0.3s ease;
+  }
+  .link:hover{
+    opacity: 0.9;
+  }
   button {
     width: 100%;
     height: 300px;

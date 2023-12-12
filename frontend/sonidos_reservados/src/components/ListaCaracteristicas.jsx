@@ -46,7 +46,7 @@ const ListaCaracteristicas = () => {
       const handleEditCaracteristica = () => {
         const formData = new FormData();
         formData.append('nombre', editedCaracteristica.nombre);
-        formData.append('imagen', editedCaracteristica.image);
+        formData.append('image', editedCaracteristica.image);
         updateCaracteristica(editedCaracteristica.id, formData);
         setModalIsOpen(false);
       };
@@ -267,5 +267,9 @@ const CaracteristicasContainer = styled.div`
   margin-left: 1rem;
   color: white;
   cursor: pointer;
+}
+.BotonEditar:hover, .BotonEliminar:hover {
+  transform: scale(1.05); 
+  transition: transform 0.3s ease;
 }
 `

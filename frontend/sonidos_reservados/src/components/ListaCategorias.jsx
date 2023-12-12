@@ -268,4 +268,8 @@ const CategoriaContainer = styled.div`
   color: white;
   cursor: pointer;
 }
+.BotonEditar:hover, .BotonEliminar:hover {
+  transform: scale(1.05); 
+  transition: transform 0.3s ease;
+}
 `

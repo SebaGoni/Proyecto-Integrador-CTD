@@ -135,7 +135,7 @@ const handleChange = (e) => {
     }, [getProductos, productos, getCategorias, categorias, caracteristicas, getCaracteristicas]);
 
     useEffect(() => {
-      // Cargar características del producto seleccionado
+     
       if (editedProducto.id) {
         setEditedProducto((prevProduct) => ({
           ...prevProduct,
@@ -167,12 +167,12 @@ const handleChange = (e) => {
                         <th>{producto.id}</th>
                         <td>{producto.title}</td>
                         <td>{producto.categoria.nombre}</td>
-                        <td>{producto.caracteristicas.map(caract => caract.nombre)}</td>
+                        <td style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center', padding: '32px 0'}}>{producto.caracteristicas.map((caract, index) => <span key={index} style={{ margin: '1px 2px', backgroundColor: '#000000', padding: '5px', borderRadius: '10px', color: 'white' }}>{caract.nombre}</span>)}</td>
                         <td>{producto.description.length > 20
                   ? `${producto.description.slice(0, 20)}...`
                   : producto.description}</td>
                         <td>${producto.price}</td>
-                        <td>
+                        <td style={{ padding: '0 0 0 5px' }}>
                             <button
                               className='BotonEditar'
                               onClick={() => openModal(producto)}
@@ -181,7 +181,7 @@ const handleChange = (e) => {
                               Editar
                             </button>
                         </td>
-                        <td>
+                        <td style={{ padding: '0' }}>
                             <button
                                 type="button"
                                 className='BotonEliminar'
@@ -384,11 +384,15 @@ const ProductContainer = styled.div`
     font-size: 40px;
     text-align: center;
   }
-  table, th, tr {
+  table thead tr th{
+    padding: 0;
+  }
+  table, th, td {
     text-align: center;
     border-bottom: solid .1px #e7e7e7;
-    padding: 2rem;
+    padding: 2rem 15px;
     margin: auto;
+    height: 100px;
   }
   .BotonAdmin{
     display: flex;
