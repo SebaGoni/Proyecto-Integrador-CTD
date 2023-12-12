@@ -209,6 +209,9 @@ const Recomendaciones = styled.div`
       left: 40px;
       color: #3F51B5;
       font-size: 20px;
+      @media (max-width: 430px) {
+        font-size: 15px;
+      }
     }
     .heartIconFilled{
       position: absolute;
@@ -217,6 +220,13 @@ const Recomendaciones = styled.div`
       color: #3F51B5;
       font-size: 40px;
       cursor: pointer;
+      transition: transform 0.3s ease;
+      @media (max-width: 430px) {
+        font-size: 30px;
+      }
+    }
+    .heartIconFilled:hover{
+      transform: scale(1.05); 
     }
     .container-items{
         display: flex;
@@ -229,7 +239,9 @@ const Recomendaciones = styled.div`
         border-radius: 20px;
         justify-content: center;
         align-items: center;
-        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.2);
+        box-shadow: 0px 3px 4px 0px rgba(0,0,0,0.5);
+        -webkit-box-shadow: 0px 3px 4px 0px rgba(0,0,0,0.5);
+        -moz-box-shadow: 0px 3px 4px 0px rgba(0,0,0,0.5);
         flex: 0 0 calc(50% - 50px);
         text-align: center;
         height: 400px;
@@ -242,6 +254,15 @@ const Recomendaciones = styled.div`
           width: 70vw;
           margin:auto;
         }
+    }
+    .info-product{
+      margin: 0;
+      @media(max-width: 1000px){
+          margin-top: 30px;
+        }
+      @media(max-width: 600px){
+        margin-top: 0;
+      }
     }
     h3{
         margin: 2rem;
@@ -259,15 +280,20 @@ const Recomendaciones = styled.div`
     }
 
     .cardImage{
-      height: 200px;
-      width: 200px;
+      height: 220px;
+      width: 220px;
       object-fit: cover;
-      @media(min-width: 1000px){
-        
-        }
       @media(max-width: 1000px){
-        width: 50vw;  
+        width: 500px;
+        margin: 0;
+        object-fit: contain;
         }
+        @media(max-width: 600px){
+        width: 50vw;
+        margin: 0;
+        object-fit: contain;
+        }
+        
     }
 
     .linkProducts{
@@ -314,6 +340,16 @@ const Recomendaciones = styled.div`
     justify-content: space-between;
     align-items: center;
     z-index: 1;
+    @media (max-width: 430px) {
+      width: 300px;
+      height: 400px; 
+    }
+    textarea{
+      @media (max-width: 430px) {
+        width: 250px;
+      
+      }
+    }
     } 
     .closeButton{
       padding: 10px 20px;
@@ -339,13 +375,24 @@ const Recomendaciones = styled.div`
     }
     `
     
-const ShareButtonContainer = styled.div`
+    const ShareButtonContainer = styled.div`
     position: absolute;
     top: 45px;
     right: 95px;
+    transition: transform 0.3s ease;
+    &:hover{
+      transform: scale(1.05);
+    }
+      @media (max-width: 430px) {
+        top: 43px;
+        right: 90px;
+      }
     .iconShare {
       cursor: pointer;
       color: #3F51B5;
       font-size: 30px;
+      @media (max-width: 430px) {
+        font-size: 25px;
+      }
   }
 `

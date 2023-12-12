@@ -217,18 +217,17 @@ const Productos = () => {
       <Pagination itemsPerPage={itemsPerPage} totalItems={finalFilteredItems.length} paginate={paginate} currentPage={currentPage} />
       <ProductosStyle>
         <div className='productos'>
-          <div className='container-items'>
-            {currentItems2.map((product) => (
-              <div className='item' key={product.id}>
-                <figure>
-                  <img src={product.image} alt={product.title} className='cardImage' />
-                </figure>
+        <div className='container-items'>
+          {currentItems2.map(product => (
+            <div className='item' key={product.id}>
                 <div className='info-product'>
                   <Link className='link' to={`/details/${product.id}`} key={product.id}>
+                    <figure>
+                      <img src={product.image} alt={product.title} className='cardImage' />
+                    </figure>
                     <h3>{product.title}</h3>
-                  </Link>
+                  </Link> 
                 </div>
-                {localRatings[product.id] && renderStars(localRatings[product.id])}
                 {token && (
                   <>
                     {estaEnFavoritos(product.id) ? (
@@ -241,26 +240,24 @@ const Productos = () => {
                 <ShareButtonContainer>
                   <FaShareAlt className='iconShare' onClick={() => openShareButtons(product)} />
                 </ShareButtonContainer>
-                {showShareButtons && selectedProduct === product && (
-                  <div className='shareButtons'>
-                    <img src={product.image} alt={product.title} className='productImage' />
-                    <h4 className='productTitle'>{product.title}</h4>
-                    <textarea value={customMessage} onChange={(e) => setCustomMessage(e.target.value)} placeholder="Escribe tu mensaje personalizado"
-                            rows={4} cols={50}
-                    />
-                    <div className='divIcons'>
-                      <FaFacebookSquare className='icons' onClick={() => shareOnFacebook(product.id)} />
-                      <FaInstagram className='icons'  onClick={() => shareOnInstagram(product.id)} />
-                      <FaWhatsapp className='icons'  onClick={() => shareOnWhatsApp(product.id)} />
-                      <FaTwitterSquare className='icons' onClick={() => shareOnTwitter(product.id)} />
-                    </div>
-                    <button className='closeButton' onClick={closeShareButtons}>Cerrar</button>
-                  </div>
-                )}
+              {showShareButtons && selectedProduct === product && (
+              <div className='shareButtons'>
+                <img src={product.image} alt={product.title} className='productImage' />
+                <h4 className='productTitle'>{product.title}</h4>
+                <textarea value={customMessage} onChange={(e) => setCustomMessage(e.target.value)} placeholder="Escribe tu mensaje personalizado"
+                        rows={4} cols={50}
+                />
+                <div className='divIcons'>
+                  <FaFacebookSquare className='icons' onClick={() => shareOnFacebook(product.id)} />
+                  <FaInstagram className='icons'  onClick={() => shareOnInstagram(product.id)} />
+                  <FaWhatsapp className='icons'  onClick={() => shareOnWhatsApp(product.id)} />
+                  <FaTwitterSquare className='icons' onClick={() => shareOnTwitter(product.id)} />
+                </div>
+                <button className='closeButton' onClick={closeShareButtons}>Cerrar</button>
+              </div>)}
               </div>
-              
-            ))}
-          </div>
+          ))}
+        </div>
         </div>
       </ProductosStyle>
     </>
@@ -390,6 +387,7 @@ const ProductosStyle = styled.div`
     .link {
       color: #000000;
       border-bottom: 1px solid transparent; 
+      text-decoration: none;
     }
     .stars {
       position: absolute;
@@ -397,6 +395,9 @@ const ProductosStyle = styled.div`
       left: 40px;
       color: #3F51B5;
       font-size: 20px;
+      @media (max-width: 430px) {
+        font-size: 15px;
+      }
     }
     .heartIconFilled{
       position: absolute;
@@ -405,67 +406,97 @@ const ProductosStyle = styled.div`
       color: #3F51B5;
       font-size: 40px;
       cursor: pointer;
+      transition: transform 0.3s ease;
+      @media (max-width: 430px) {
+        font-size: 30px;
+      }
+    }
+    .heartIconFilled:hover{
+      transform: scale(1.05); 
     }
     .container-items{
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
-        gap: 20px;
     }
     .item{
         position: relative;
+        padding-top: 4.5rem;
         border-radius: 20px;
-        display: flex;
-        flex-direction: column;
         justify-content: center;
         align-items: center;
-        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.2);
+        box-shadow: 0px 3px 4px 0px rgba(0,0,0,0.5);
+        -webkit-box-shadow: 0px 3px 4px 0px rgba(0,0,0,0.5);
+        -moz-box-shadow: 0px 3px 4px 0px rgba(0,0,0,0.5);
         flex: 0 0 calc(50% - 50px);
         text-align: center;
         height: 400px;
         width: 300px;
         @media(min-width: 1000px){
           width: 40vw; 
-          margin: 1rem;
+          margin:1rem;
         }
         @media(max-width: 1000px){
           width: 70vw;
           margin:auto;
         }
-        @media(max-width: 786px){
-          width: 80vw;
-          height: 500px;
-          margin:auto;
+    }
+    .info-product{
+      margin: 0;
+      @media(max-width: 1000px){
+          margin-top: 30px;
         }
+      @media(max-width: 600px){
+        margin-top: 0;
+      }
     }
     h3{
         margin: 2rem;
         padding: 1rem;
         color:black;
         font-family: 'Poppins', sans-serif;
-        font-weight: normal;
+        font-weight: 500;
+        letter-spacing: 1px;
         @media(min-width: 1000px){
           font-size:1.5rem;
         }
         @media(max-width: 1000px){
-          font-size:1.3rem;
-        }
-        @media(max-width: 786px){
-          margin: 0;
+          font-size:1rem;
         }
     }
 
     .cardImage{
-      height: 200px;
-      width: 200px;
+      height: 220px;
+      width: 220px;
       object-fit: cover;
       @media(max-width: 1000px){
-        width: 50vw;  
+        width: 500px;
+        margin: 0;
+        object-fit: contain;
         }
+        @media(max-width: 600px){
+        width: 50vw;
+        margin: 0;
+        object-fit: contain;
+        }
+        
     }
 
     .linkProducts{
       text-decoration: none;
+    }
+    .productTitle{
+      color: #ffffff;
+    }
+    .divIcons{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+    }
+    .icons{
+      font-size: 30px;
+      cursor: pointer;
     }
     .titleProducts{
       text-align: center;
@@ -474,6 +505,10 @@ const ProductosStyle = styled.div`
       background-color: black;
       transition: background-color 300ms ease-in-out;
       padding: 20px;
+    }
+
+    .titleProducts:hover{
+      background-color: #000000ec;
     }
     .shareButtons{
     position: absolute;
@@ -491,17 +526,17 @@ const ProductosStyle = styled.div`
     justify-content: space-between;
     align-items: center;
     z-index: 1;
+    @media (max-width: 430px) {
+      width: 300px;
+      height: 400px; 
+    }
+    textarea{
+      @media (max-width: 430px) {
+        width: 250px;
+      
+      }
+    }
     } 
-    .divIcons{
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 20px;
-    }
-    .icons{
-      font-size: 30px;
-      cursor: pointer;
-    }
     .closeButton{
       padding: 10px 20px;
       width: 200px;
@@ -523,15 +558,27 @@ const ProductosStyle = styled.div`
     width: 100px;
     height: 100px;
     object-fit: cover;
-    } 
+    }
     `
-  const ShareButtonContainer = styled.div`
-  position: absolute;
-  top: 45px;
-  right: 95px;
-  .iconShare {
-    cursor: pointer;
-    color: #3F51B5;
-    font-size: 30px;
-}
+    
+    const ShareButtonContainer = styled.div`
+    position: absolute;
+    top: 45px;
+    right: 95px;
+    transition: transform 0.3s ease;
+    &:hover{
+      transform: scale(1.05);
+    }
+      @media (max-width: 430px) {
+        top: 43px;
+        right: 90px;
+      }
+    .iconShare {
+      cursor: pointer;
+      color: #3F51B5;
+      font-size: 30px;
+      @media (max-width: 430px) {
+        font-size: 25px;
+      }
+  }
 `

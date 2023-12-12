@@ -434,7 +434,7 @@ const DetailContainer = styled.div`
     @media(max-width: 786px){
             text-align: center;
             justify-content: center;
-            margin-top: 10vh;
+            margin-top: 5vh;
         }
     .divTitle{
       background-color: white;

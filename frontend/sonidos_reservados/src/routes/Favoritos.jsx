@@ -72,7 +72,7 @@ const Favoritos = () => {
   return (
     <Recomendaciones>
       <div className='productos'>
-          <h2>PRODUCTOS FAVORITOS</h2>
+        <h2>PRODUCTOS FAVORITOS</h2>
         <div className='container-items'>
           {productosFavoritos.map(product => (
             <div className='item' key={product.id}>
@@ -123,8 +123,7 @@ const Favoritos = () => {
 export default Favoritos
 
 const Recomendaciones = styled.div`
-    margin: 2rem;
-    margin-top: 12rem;
+    margin: 12rem 2rem 2rem;
     padding: 1rem;
     background-color: white;
     border-radius:  20px;
@@ -144,6 +143,9 @@ const Recomendaciones = styled.div`
       @media(max-width: 1000px){
         font-size:2.2rem;
         text-align: center;  
+      }
+      @media (max-width: 430px){
+        font-size: 1rem; 
       }
     }
     .link {
@@ -168,9 +170,13 @@ const Recomendaciones = styled.div`
       color: #3F51B5;
       font-size: 40px;
       cursor: pointer;
+      transition: transform 0.3s ease;
       @media (max-width: 430px) {
         font-size: 30px;
       }
+    }
+    .heartIconFilled:hover{
+      transform: scale(1.05); 
     }
     .container-items{
         display: flex;
@@ -183,7 +189,9 @@ const Recomendaciones = styled.div`
         border-radius: 20px;
         justify-content: center;
         align-items: center;
-        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.2);
+        box-shadow: 0px 3px 4px 0px rgba(0,0,0,0.5);
+        -webkit-box-shadow: 0px 3px 4px 0px rgba(0,0,0,0.5);
+        -moz-box-shadow: 0px 3px 4px 0px rgba(0,0,0,0.5);
         flex: 0 0 calc(50% - 50px);
         text-align: center;
         height: 400px;
@@ -197,6 +205,15 @@ const Recomendaciones = styled.div`
           margin:auto;
         }
     }
+    .info-product{
+      margin: 0;
+      @media(max-width: 1000px){
+          margin-top: 30px;
+        }
+      @media(max-width: 600px){
+        margin-top: 0;
+      }
+    }
     h3{
         margin: 2rem;
         padding: 1rem;
@@ -208,23 +225,25 @@ const Recomendaciones = styled.div`
           font-size:1.5rem;
         }
         @media(max-width: 1000px){
-          font-size:1.3rem;
-        }
-        @media(max-width: 430px){
           font-size:1rem;
         }
     }
 
     .cardImage{
-      height: 200px;
-      width: 200px;
+      height: 220px;
+      width: 220px;
       object-fit: cover;
-      @media(min-width: 1000px){
-        
-        }
       @media(max-width: 1000px){
-        width: 50vw;  
+        width: 500px;
+        margin: 0;
+        object-fit: contain;
         }
+        @media(max-width: 600px){
+        width: 50vw;
+        margin: 0;
+        object-fit: contain;
+        }
+        
     }
 
     .linkProducts{
@@ -260,10 +279,10 @@ const Recomendaciones = styled.div`
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 500px;
-    height: 400px;
+    width: 500px; /* Ancho de la ventana */
+    height: 400px; /* Alto de la ventana */
     padding: 20px;
-    background-color: #3f51b5; 
+    background-color: #3f51b5; /* Fondo blanco con transparencia */
     border-radius: 10px;
     box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.8);
     display: flex;
@@ -306,10 +325,14 @@ const Recomendaciones = styled.div`
     }
     `
     
-const ShareButtonContainer = styled.div`
+    const ShareButtonContainer = styled.div`
     position: absolute;
     top: 45px;
     right: 95px;
+    transition: transform 0.3s ease;
+    &:hover{
+      transform: scale(1.05);
+    }
       @media (max-width: 430px) {
         top: 43px;
         right: 90px;
