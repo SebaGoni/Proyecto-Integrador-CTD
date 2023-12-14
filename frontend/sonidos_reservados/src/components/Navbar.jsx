@@ -175,16 +175,19 @@ const NavContainer = styled.nav`
         display: flex;
         align-items: center;
         justify-content: center;
-        background:#3F51B5;
-        background-image: linear-gradient(#7E57C2 50%, #3F51B5);
+        background-color:#7E57C2;
         width: 50px;
         border-radius: 100%;
         color: white;
         padding: .1px 10px;
         cursor: pointer;
+        transition: background-color 0.3s ease;
         @media (max-width: 430px) {
           padding: 4px 1px;
         }
+    }
+    .divInitials:hover{
+        background-color: #3F51B5;
     }
     .initials{
         text-align: center;
@@ -198,6 +201,10 @@ const NavContainer = styled.nav`
         color: white;
         font-size: 15px;
         font-weight: 500;
+        transition: color .3s ease;
+    }
+    .logout:hover{
+        color: #ffffffbb;
     }
     .perfil{
         margin: 0;
@@ -205,6 +212,10 @@ const NavContainer = styled.nav`
         color: white;
         font-size: 15px;
         font-weight: 500;
+        transition: color .3s ease;
+    }
+    .perfil:hover{
+        color: #ffffffbb;
     }
     .linkAdmin{
         margin: 0;
@@ -212,12 +223,16 @@ const NavContainer = styled.nav`
         color: white;
         font-size: 15px;
         font-weight: 500;
+        transition: color .3s ease;
+    }
+    .linkAdmin:hover{
+        color: #ffffffbb;
     }
     .divCampos{
         z-index: 10;
         position: absolute;
         top: 100px;
-        padding: 8px;
+        padding: 10px;
         background:#3F51B5;
         background-image: linear-gradient(#7E57C2 50%, #3F51B5);
         display: flex;

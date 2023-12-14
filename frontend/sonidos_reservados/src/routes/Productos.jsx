@@ -130,10 +130,10 @@ const Productos = () => {
   const handleCheckboxChange = (event) => {
     const selectedValue = event.target.value;
     if (event.target.checked) {
-      // If the checkbox is checked, add the category to the selected categories
+      
       setSelectedCategory((prevCategories) => [...prevCategories, selectedValue]);
     } else {
-      // If the checkbox is unchecked, remove the category from the selected categories
+     
       const updatedCategories = selectedCategory.filter((category) => category !== selectedValue);
       setSelectedCategory(updatedCategories);
     }
@@ -159,8 +159,8 @@ const Productos = () => {
   };
 
   const shareOnFacebook = (productId, customMessage) => {
-    const encodedMessage = encodeURIComponent(customMessage || ''); // Encodificar el mensaje personalizado
-    const productUrl = encodeURIComponent(`https://sonidos-reservados.vercel.app`); // Agregar el ID del producto si es necesario
+    const encodedMessage = encodeURIComponent(customMessage || ''); 
+    const productUrl = encodeURIComponent(`https://sonidos-reservados.vercel.app`); 
     const facebookUrl = `https://www.facebook.com/sharer.php?u=${productUrl}&quote=${encodedMessage}`;
     window.open(facebookUrl, '_blank');
   };
