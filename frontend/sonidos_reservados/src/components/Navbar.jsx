@@ -128,6 +128,7 @@ const NavContainer = styled.nav`
         text-decoration: none;
         padding: 8px;
         margin-right: 1.2rem;
+        transition: color .3s ease;
         @media (max-width: 900px) {
             display:none;
         }
@@ -318,6 +319,7 @@ const BgDiv = styled.nav`
         font-size: 1.1rem;
         font-weight: 500;
         color: #ffffff94; 
+        transition: color .3s ease;
         @media (max-width: 600px) {
             text-decoration: none;
             font-size: 0.8rem;
