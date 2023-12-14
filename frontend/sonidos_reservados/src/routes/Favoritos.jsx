@@ -145,7 +145,7 @@ const Recomendaciones = styled.div`
         text-align: center;  
       }
       @media (max-width: 430px){
-        font-size: 1rem; 
+        font-size: 1.2rem; 
       }
     }
     .link {

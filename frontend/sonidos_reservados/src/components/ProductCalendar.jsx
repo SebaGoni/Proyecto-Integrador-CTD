@@ -323,9 +323,10 @@ const ReservaContainer = styled.div`
     text-align: center;
     border-radius: 20px;
     color: white;
-    background-color: rgba(0, 0, 0, 0.4) ;
-    border: solid 1px;
-    border-color: rgba(255, 255, 255, 0.7);
+    background: linear-gradient(90deg, rgba(2,0,36,.7) 0%, rgba(63,81,181,.7) 100%);
+    transition: border-color 0.3s ease;
+    border: solid 3px;
+    border-color: rgba(255, 255, 255, 0.6);
     padding: 20px;
     font-family: 'Poppins', sans-serif;
     font-size: 1.2rem;
@@ -344,5 +345,9 @@ const ReservaContainer = styled.div`
       margin-left: 60%;
       margin-top: 30px;
   }
+}
+.btnReserva:hover {
+  border-color: rgba(255, 255, 255, 1);
+  /* Cambia el fondo al hacer hover */
 }
 `
